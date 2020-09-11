@@ -32,17 +32,16 @@ export function toAddressChecksum(address: string): string {
 
 export function isAddressHex(address: string): boolean {
     const addressClean = remove0xPrefix(address).toLowerCase()
-    if ( addressClean.match(/[0-9a-f]+/) && addressClean.length == 64) {
+    if (addressClean.match(/[0-9a-f]+/) && addressClean.length == 64) {
         return true
     }
     return false
 }
 
 export function isAddress(address: string): boolean {
-    if ( isAddressChecksum(address)) {
+    if (isAddressChecksum(address)) {
         return true
-    }
-    else if (isAddressHex(address)) {
+    } else if (isAddressHex(address)) {
         return true
     }
     return false
