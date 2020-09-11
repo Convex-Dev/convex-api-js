@@ -14,7 +14,7 @@ const PUBLIC_ADDRESS_CHECHKSUM = '0x5288Fec4153b702430771DFAC8AeD0B21CAFca4344da
 
 
 describe('Utils module', () => {
-    describe('Address testing', () => {
+    describe('Address validation tests', () => {
         it('should return assert to a valid address', () => {
             const address = randomHex(32)
             assert(isAddress(address))

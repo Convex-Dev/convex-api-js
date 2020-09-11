@@ -9,11 +9,14 @@ import fs from 'fs'
 import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey, sign } from 'crypto'
 import pem from 'pem-file'
 
+import { toAddressChecksum } from 'Utils'
+
 export class Account {
     readonly privateKey: KeyObject
     readonly publicKey: KeyObject
     readonly address: string
     readonly addressAPI: string
+    readonly addressChecksum: string
 
     public static createNew(password: string): Account {
         const { publicKey, privateKey } = generateKeyPairSync('ed25519', {
@@ -65,6 +68,7 @@ export class Account {
         })
         this.addressAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
         this.address = '0x' + this.addressAPI
+        this.addressChecksum = toAddressChecksum(this.address)
     }
 
     public exportToText(password: string): string {
