@@ -1,5 +1,5 @@
 
-
+import fs from 'fs'
 import { assert } from 'chai'
 import { Account } from '../../src/Account'
 
@@ -17,7 +17,7 @@ JAr4iFzPLkM18YEP2ZE=
 const PRIVATE_TEST_KEY_PASSWORD = 'secret'
 
 
-describe('Account tests', () => {
+describe('Account class tests', () => {
     describe('Key pair import from string', () => {
         it('should load a private PEM key text', () => {
             const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
@@ -35,4 +35,27 @@ describe('Account tests', () => {
             assert.equal(account.privateKey.asymmetricKeyType, 'ed25519')
         })
     })
+
+    describe('Export keys', () => {
+        it('should export/import account key too text', () => {
+            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const text = account.exportToText(PRIVATE_TEST_KEY_PASSWORD)
+            assert(text)
+            const accountRead = Account.importFromString(text, PRIVATE_TEST_KEY_PASSWORD)
+            assert.equal(accountRead.address, account.address)
+        })
+
+        it('should export/import account key too file', async () => {
+            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            let filename = '/tmp/testAccount.pem'
+            if (fs.existsSync(filename)) {
+                fs.unlinkSync(filename)
+            }
+            await account.exportToFile(filename, PRIVATE_TEST_KEY_PASSWORD)
+            const accountSaved = await Account.importFromFile(filename, PRIVATE_TEST_KEY_PASSWORD)
+            assert.equal(accountSaved.address, account.address)
+            fs.unlinkSync(filename)
+        })
+    })
+
 })

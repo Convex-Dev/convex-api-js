@@ -5,6 +5,7 @@
 
 */
 
+import fs from 'fs'
 import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey } from 'crypto'
 import pem from 'pem-file'
 
@@ -28,7 +29,6 @@ export class Account {
             },
         })
         return Account.importFromString(privateKey, password, publicKey)
-        // return new Account(publicKey, privateKey)
     }
 
     public static importFromString(text: string, password: string, publicKeyText?: string): Account {
@@ -48,6 +48,14 @@ export class Account {
         return new Account(publicKey, privateKey)
     }
 
+    public static async importFromFile(filename: string, password: string): Promise<Account> {
+        if (fs.existsSync(filename)) {
+            const data = await fs.promises.readFile(filename)
+            return Account.importFromString(data.toString(), password)
+        }
+        return null
+    }
+
     constructor(publicKey: KeyObject, privateKey: KeyObject) {
         this.publicKey = publicKey
         this.privateKey = privateKey
@@ -57,5 +65,20 @@ export class Account {
         })
         this.addressAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
         this.address = '0x' + this.addressAPI
+    }
+
+    public exportToText(password: string): string {
+        return this.privateKey
+            .export({
+                type: 'pkcs8',
+                format: 'pem',
+                cipher: 'aes-256-cbc',
+                passphrase: password,
+            })
+            .toString()
+    }
+
+    public async exportToFile(filename: string, password: string): Promise<unknown> {
+        return await fs.promises.writeFile(filename, this.exportToText(password))
     }
 }
