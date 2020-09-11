@@ -7,12 +7,15 @@
 
 import { createHash } from 'crypto'
 
-export function removeLeading0x(address: string): string {
-    return address.replace(/^0x/, '')
+export function remove0xPrefix(address: string): string {
+    if (address) {
+        return address.replace(/^0x/, '')
+    }
+    return null
 }
 
 export function toAddressChecksum(address: string): string {
-    const addressClean = removeLeading0x(address).toLowerCase()
+    const addressClean = remove0xPrefix(address).toLowerCase()
     let result = '0x'
     const hash = createHash('SHA3-256')
     hash.update(Buffer.from(addressClean, 'hex'))
@@ -25,4 +28,26 @@ export function toAddressChecksum(address: string): string {
         }
     }
     return result
+}
+
+export function isAddressHex(address: string): boolean {
+    const addressClean = remove0xPrefix(address).toLowerCase()
+    if ( addressClean.match(/[0-9a-f]+/) && addressClean.length == 64) {
+        return true
+    }
+    return false
+}
+
+export function isAddress(address: string): boolean {
+    if ( isAddressChecksum(address)) {
+        return true
+    }
+    else if (isAddressHex(address)) {
+        return true
+    }
+    return false
+}
+
+export function isAddressChecksum(address: string): boolean {
+    return remove0xPrefix(address) && remove0xPrefix(address) == remove0xPrefix(toAddressChecksum(address))
 }
