@@ -17,6 +17,9 @@ JAr4iFzPLkM18YEP2ZE=
 const PRIVATE_TEST_KEY_PASSWORD = 'secret'
 
 
+const SIGN_HASH_TEXT = '5bb1ce718241bfec110552b86bb7cccf0d95b8a5f462fbf6dff7c48543622ba5'
+const SIGN_TEXT = '0x7eceffab47295be3891ea745838a99102bfaf525ec43632366c7ec3f54db4822b5d581573aecde94c420554f963baebbf412e4304ad8636886ddfa7b1049f70e'
+
 describe('Account class tests', () => {
     describe('Key pair import from string', () => {
         it('should load a private PEM key text', () => {
@@ -57,5 +60,10 @@ describe('Account class tests', () => {
             fs.unlinkSync(filename)
         })
     })
-
+    describe('Sign text', () => {
+        const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+        assert(account)
+        const value = account.sign(SIGN_HASH_TEXT)
+        assert.equal(value, SIGN_TEXT)
+    })
 })

@@ -1,7 +1,7 @@
 
 
 import { assert } from 'chai'
-import { createPrivateKey, createPublicKey, generateKeyPairSync } from 'crypto'
+import { createPrivateKey, createPublicKey, generateKeyPairSync, sign } from 'crypto'
 import pem from 'pem-file'
 
 const PUBLIC_ADDRESS = '0x5288fec4153b702430771dfac8aed0b21cafca4344dae0d47b97f0bf532b3306'
@@ -16,6 +16,9 @@ JAr4iFzPLkM18YEP2ZE=
 `
 
 const PRIVATE_TEST_KEY_PASSWORD = 'secret'
+
+const SIGN_HASH_TEXT = '5bb1ce718241bfec110552b86bb7cccf0d95b8a5f462fbf6dff7c48543622ba5'
+const SIGN_TEXT = '0x7eceffab47295be3891ea745838a99102bfaf525ec43632366c7ec3f54db4822b5d581573aecde94c420554f963baebbf412e4304ad8636886ddfa7b1049f70e'
 
 
 describe('Basic Crypto tests', () => {
@@ -65,35 +68,18 @@ describe('Basic Crypto tests', () => {
             assert.equal(publicKeyHex, PUBLIC_ADDRESS)
         })
     })
-/*
- *  does not work.. cannot find matching cipher
- *
- *
-    describe('Find out the cipher used by python to encrypt the private key', () => {
-        it('should be  a known cipher', () => {
+    describe('Sign a message', () => {
+        it('should sign a message with the correct result', () => {
             const privateKey = createPrivateKey({
                 key: PRIVATE_TEST_KEY_TEXT,
                 type: 'pkcs8',
                 passphrase: PRIVATE_TEST_KEY_PASSWORD
             })
-            getCiphers().forEach(cipher => {
-                console.log(cipher)
-                try {
-                    const keyText = privateKey.export({
-                        type: 'pkcs8',
-                        format: 'pem',
-                        cipher: cipher,
-                        passphrase: PRIVATE_TEST_KEY_PASSWORD,
-                    }).toString()
-                    if ( keyText == PRIVATE_TEST_KEY_TEXT) {
-                        console.log('!!!!!!!!!!!!!!!!! found ', cipher)
-                        return
-                    }
-                } catch(error) {
-                    console.log(error)
-                }
-            })
+            assert(privateKey)
+            const data = sign(null, Buffer.from(SIGN_HASH_TEXT, 'hex'), privateKey)
+            assert(data)
+            const signedText = '0x' + data.toString('hex')
+            assert.equal(signedText, SIGN_TEXT)
         })
     })
-*/
 })

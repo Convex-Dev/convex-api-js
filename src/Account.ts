@@ -6,7 +6,7 @@
 */
 
 import fs from 'fs'
-import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey } from 'crypto'
+import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey, sign } from 'crypto'
 import pem from 'pem-file'
 
 export class Account {
@@ -80,5 +80,10 @@ export class Account {
 
     public async exportToFile(filename: string, password: string): Promise<unknown> {
         return await fs.promises.writeFile(filename, this.exportToText(password))
+    }
+
+    public sign(text: string): string {
+        const data = sign(null, Buffer.from(text, 'hex'), this.privateKey)
+        return '0x' + data.toString('hex')
     }
 }
