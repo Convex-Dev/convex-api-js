@@ -61,9 +61,11 @@ describe('Account class tests', () => {
         })
     })
     describe('Sign text', () => {
-        const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
-        assert(account)
-        const value = account.sign(SIGN_HASH_TEXT)
-        assert.equal(value, SIGN_TEXT)
+        it('should sign a standard hash text to produce a confirmed signed result', () => {
+            const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            assert(account)
+            const value = account.sign(SIGN_HASH_TEXT)
+            assert.equal(value, SIGN_TEXT)
+        })
     })
 })
