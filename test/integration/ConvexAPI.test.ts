@@ -174,14 +174,21 @@ describe('ConvexAPI Class', () => {
         })
     })
     describe('Transfer funds', async () => {
+        let convex
+        let account
+        before( async () => {
+            convex = new ConvexAPI(CONVEX_URL)
+            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            await topupAccount(convex, account, MIN_BALANCE)
+        })
+
         it('should transfer a set amount of funds from the test account to a new account', async () => {
             const accountNew = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
             const amount = 1000
-            const transferAmount = convex.transfer(accountNew, amount, account)
+            const transferAmount = await convex.transfer(accountNew, amount, account)
             assert.equal(transferAmount, amount)
             const balance = await convex.getBalance(accountNew)
             assert.equal(amount, balance)
-
         })
     })
 

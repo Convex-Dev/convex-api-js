@@ -70,7 +70,7 @@ export class ConvexAPI {
         return result['value']
     }
 
-    public async trasnfer(toAddressAccount: string: Account, amount: number, fromAccount: Account): Promise<number> {
+    public async transfer(toAddressAccount: string | Account, amount: number, fromAccount: Account): Promise<number> {
         let toAddress
         if (typeof toAddressAccount === 'string') {
             toAddress = remove0xPrefix(toAddressAccount)
