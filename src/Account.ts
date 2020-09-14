@@ -12,11 +12,11 @@ import pem from 'pem-file'
 import { toAddressChecksum } from 'Utils'
 
 export class Account {
-    readonly privateKey: KeyObject
-    readonly publicKey: KeyObject
-    readonly address: string
-    readonly addressAPI: string
-    readonly addressChecksum: string
+    readonly privateKey: KeyObject          // private key object
+    readonly publicKey: KeyObject           // public key object
+    readonly address: string                // address as hex string with prefix of '0x'
+    readonly addressAPI: string             // address as hex string without leading '0x'
+    readonly addressChecksum: string        // address as hex string with checksum upper an lower case hex letters
 
     /**
      * Creates a new account
