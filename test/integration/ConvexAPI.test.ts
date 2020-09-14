@@ -70,4 +70,31 @@ describe('ConvexAPI Class', () => {
             assert.equal(result['value'], account.addressChecksum)
         })
     })
+
+    describe('Balance query', async () => {
+        it('should get a 0 balance on a new account', async () => {
+            const convex = new ConvexAPI(CONVEX_URL)
+            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const value = await convex.balance(account)
+            assert.equal(value, 0)
+        })
+        it('should get a small balance on a new account', async () => {
+            const convex = new ConvexAPI(CONVEX_URL)
+            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const amount = 100
+            const result = await convex.requestFunds(amount, account)
+            assert.equal(result, amount)
+            const value = await convex.balance(account)
+            assert.equal(value, amount)
+        })
+        it('should get a small balance on a new account using the address only field', async () => {
+            const convex = new ConvexAPI(CONVEX_URL)
+            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const amount = 100
+            const result = await convex.requestFunds(amount, account)
+            assert.equal(result, amount)
+            const value = await convex.balance(account.address)
+            assert.equal(value, amount)
+        })
+    })
 })

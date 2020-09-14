@@ -20,7 +20,6 @@ class ConvexAPIBaseError extends Error {
     }
 }
 
-
 export class ConvexAPIError extends ConvexAPIBaseError {
     constructor(source: string, code: string, text: string) {
         super(source, code, text, 'ConvexAPIError')
