@@ -16,10 +16,26 @@ import urljoin from 'url-join'
 export class ConvexAPI {
     readonly url: string
 
+    /**
+     * Initaliizes a new ConvexAPI object, you need to provide the URL of a Convex Network Node.
+     *
+     * @param url URL of the convex network node.
+     *
+     */
     public constructor(url: string) {
         this.url = url
     }
 
+    /**
+     * Request funds from the development account. This method only works on development and test
+     * networks that provide free funds.
+     *
+     * @param amount The amount to request.
+     * @param account The Account object to request funds for.
+     *
+     * @returns The amount of funds provided for this request.
+     *
+     */
     public async requestFunds(amount: number, account: Account): Promise<number> {
         const queryURL = urljoin(this.url, '/api/v1/faucet')
         const data = {
@@ -37,6 +53,14 @@ export class ConvexAPI {
         return 0
     }
 
+    /**
+     * Get the current balance of an account.
+     *
+     * @param addressAccount Account object or string address of the account to get the balance.
+     *
+     * @returns The balance of funds held by the account address.
+     *
+     */
     public async getBalance(addressAccount: string | Account): Promise<number> {
         let address
         let balance = 0
@@ -58,6 +82,17 @@ export class ConvexAPI {
         return balance
     }
 
+    /**
+     * Get the address of a deployed function. The function must be owned by the account address passed,
+     * for this method to work.
+     *
+     * @param functionName The deployed function go get the address off.
+     * @param addressAccount Account or address string to use as the query address. This address
+     * is the address used by the owner of the deployed function
+     *
+     * @returns The address of the deployed function
+     *
+     */
     public async getAddress(functionName: string, addressAccount: string | Account): Promise<string> {
         let address
         if (typeof addressAccount === 'string') {
@@ -70,6 +105,17 @@ export class ConvexAPI {
         return result['value']
     }
 
+    /**
+     * Transfer funds from one account to another.
+     *
+     * @param toAddressAccount To address string or account , that the funds need to be sent too.
+     * @param amount Amount to send for the transfer.
+     * @param fromAccount Account to send the funds from. This must be an account object so that the transfer transaction
+     * can be sent from the account.
+     *
+     * @results The amount of funds transfered.
+     *
+     */
     public async transfer(toAddressAccount: string | Account, amount: number, fromAccount: Account): Promise<number> {
         let toAddress
         if (typeof toAddressAccount === 'string') {
@@ -82,6 +128,16 @@ export class ConvexAPI {
         return result['value']
     }
 
+    /**
+     * Send a transaction to the network. This assumes that the network state will change, and as a result
+     * a transaction fee will be deducted from the  account.
+     *
+     * @param transaction State changing transaction to execute.
+     * @param account Account to sign the transaction.
+     *
+     * @returns The result from executing the transaction.
+     *
+     */
     public async send(transaction: string, account: Account): Promise<unknown> {
         const hashResult = await this.transaction_prepare(account.address, transaction)
         const hashData = hashResult['hash']
@@ -89,6 +145,17 @@ export class ConvexAPI {
         return this.transaction_submit(account.address, hashData, signedData)
     }
 
+    /**
+     * Send a query transaction to the network. A query transaction does not change the network state
+     *  and so does not need any funds to perform a transaction. Possible query transactions are balance query, address
+     * query and calling read operations in contracts.
+     *
+     * @param transaction Read only transaction to perform.
+     * @prama addressAccount Address string or Account object to use for the query transaction.
+     *
+     * @returns The query results.
+     *
+     */
     public async query(transaction: string, addressAccount: string | Account): Promise<unknown> {
         let address
         if (typeof addressAccount === 'string') {
