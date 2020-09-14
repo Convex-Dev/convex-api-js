@@ -10,6 +10,7 @@ chai.use(require('chai-as-promised'))
 
 import { Account } from '../../src/Account'
 import { ConvexAPI } from '../../src/ConvexAPI'
+import { isAddress } from '../../src/Utils'
 
 const PRIVATE_TEST_KEY_TEXT = `
 -----BEGIN ENCRYPTED PRIVATE KEY-----
@@ -51,6 +52,7 @@ describe('ConvexAPI Class', () => {
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
         })
+
         it('should request funds from the test account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
@@ -60,7 +62,7 @@ describe('ConvexAPI Class', () => {
         })
     })
 
-    describe('Basic Query tests', async () => {
+    describe('query', async () => {
         it('should throw a ConvexAPIRequestError on a syntax error', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
@@ -79,6 +81,7 @@ describe('ConvexAPI Class', () => {
                 convex.query(`(balance "${address}")`, account)
             ).to.be.rejectedWith(/NOBODY/)
         })
+
         it('should return a valid checksum address from a query', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
@@ -88,13 +91,14 @@ describe('ConvexAPI Class', () => {
         })
     })
 
-    describe('Balance query', async () => {
+    describe('getBalance', async () => {
         it('should get a 0 balance on a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const account = Account.createNew()
             const value = await convex.getBalance(account)
             assert.equal(value, 0)
         })
+
         it('should get a small balance on a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const account = Account.createNew()
@@ -104,6 +108,7 @@ describe('ConvexAPI Class', () => {
             const value = await convex.getBalance(account)
             assert.equal(value, amount)
         })
+
         it('should get a small balance on a new account using the address only field', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const account = Account.createNew()
@@ -115,7 +120,7 @@ describe('ConvexAPI Class', () => {
         })
     })
 
-    describe('Send transaction', async () => {
+    describe('send', async () => {
         let convex
         let account
         before( async () => {
@@ -123,12 +128,14 @@ describe('ConvexAPI Class', () => {
             account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             await topupAccount(convex, account, MIN_BALANCE)
         })
+
         it('should send a single transaction to the convex network', async () => {
             const line = '(map inc [1 2 3 4 5])'
             const result = await convex.send(line, account)
             assert(result)
             assert.deepEqual(result['value'], [ 2, 3, 4, 5, 6 ])
         })
+
         it('should deploy a test function', async () => {
             const testFunctionDeploy = `
 (def storage-example-address
@@ -142,10 +149,11 @@ describe('ConvexAPI Class', () => {
             const result = await convex.send(testFunctionDeploy, account)
             assert(result)
             assert(result['value'])
+            assert(isAddress(result['value']))
 
         })
     })
-    describe('Address query', async () => {
+    describe('getAddress', async () => {
         let convex
         let account
         let functionName
@@ -166,14 +174,16 @@ describe('ConvexAPI Class', () => {
 `
             const result = await convex.send(testFunctionDeploy, account)
             functionAddress = result['value']
+            assert(functionAddress)
         })
+
         it('should get a function address from a new deployed function', async () => {
             const address = await convex.getAddress(functionName, account)
             assert(address)
             assert.equal(address, functionAddress)
         })
     })
-    describe('Transfer funds', async () => {
+    describe('transfer', async () => {
         let convex
         let account
         before( async () => {
