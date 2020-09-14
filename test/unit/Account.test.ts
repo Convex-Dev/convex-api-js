@@ -32,7 +32,7 @@ describe('Account class tests', () => {
     })
     describe('Create new key pair', () => {
         it('should create a new account with a new key pair', () => {
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             assert(account)
             assert.equal(account.publicKey.asymmetricKeyType, 'ed25519')
             assert.equal(account.privateKey.asymmetricKeyType, 'ed25519')
@@ -41,7 +41,7 @@ describe('Account class tests', () => {
 
     describe('Export keys', () => {
         it('should export/import account key too text', () => {
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             const text = account.exportToText(PRIVATE_TEST_KEY_PASSWORD)
             assert(text)
             const accountRead = Account.importFromString(text, PRIVATE_TEST_KEY_PASSWORD)
@@ -49,7 +49,7 @@ describe('Account class tests', () => {
         })
 
         it('should export/import account key too file', async () => {
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             let filename = '/tmp/testAccount.pem'
             if (fs.existsSync(filename)) {
                 fs.unlinkSync(filename)

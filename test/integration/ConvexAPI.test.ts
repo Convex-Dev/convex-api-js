@@ -46,7 +46,7 @@ describe('ConvexAPI Class', () => {
     describe('requestFunds', async () => {
         it('should request funds from a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             const amount = 1000
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
@@ -73,7 +73,7 @@ describe('ConvexAPI Class', () => {
 
         it('should throw a ConvexAPIError on a new account balance', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             const address = account.addressAPI
             expect(
                 convex.query(`(balance "${address}")`, account)
@@ -91,13 +91,13 @@ describe('ConvexAPI Class', () => {
     describe('Balance query', async () => {
         it('should get a 0 balance on a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             const value = await convex.getBalance(account)
             assert.equal(value, 0)
         })
         it('should get a small balance on a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             const amount = 100
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
@@ -106,7 +106,7 @@ describe('ConvexAPI Class', () => {
         })
         it('should get a small balance on a new account using the address only field', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const account = Account.createNew()
             const amount = 100
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
@@ -183,7 +183,7 @@ describe('ConvexAPI Class', () => {
         })
 
         it('should transfer a set amount of funds from the test account to a new account', async () => {
-            const accountNew = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const accountNew = Account.createNew()
             const amount = 1000
             const transferAmount = await convex.transfer(accountNew, amount, account)
             assert.equal(transferAmount, amount)
