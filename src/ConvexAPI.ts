@@ -47,7 +47,7 @@ export class ConvexAPI {
         return 0
     }
 
-    public async balance(addressAccount: string | Account): Promise<number> {
+    public async getBalance(addressAccount: string | Account): Promise<number> {
         let address
         let balance = 0
         if (typeof addressAccount === 'string') {
@@ -68,7 +68,7 @@ export class ConvexAPI {
         return balance
     }
 
-    public async address(functionName: string, addressAccount: string | Account): Promise<number> {
+    public async getAddress(functionName: string, addressAccount: string | Account): Promise<string> {
         let address
         let result
         if (typeof addressAccount === 'string') {
@@ -77,7 +77,7 @@ export class ConvexAPI {
             address = addressAccount.addressAPI
         }
         try {
-            const transaction = `(addres "${functionName}")`
+            const transaction = `(address ${functionName})`
             result = await this.transaction_query(address, transaction)
         } catch (error) {
             throw error
@@ -85,6 +85,54 @@ export class ConvexAPI {
         return result['value']
     }
 
+    public async send(transaction: string, account: Account): Promise <unknown> {
+        const hashResult = await this.transaction_prepare(account.address, transaction)
+        const hashData = hashResult['hash']
+        const signedData = account.sign(hashData)
+        return this.transaction_submit(account.address, hashData, signedData)
+    }
+
+    protected async transaction_prepare(address: string, transaction: string): Promise<unknown> {
+        const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
+        const data = {
+            address: remove0xPrefix(address),
+            lang: 'convex-lisp',
+            source: transaction,
+        }
+        const response = await fetch(prepareURL, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        })
+        if (await !response.ok) {
+            throw new ConvexAPIRequestError('transaction_prepare', await response.status, await response.statusText)
+        }
+        const result = await response.json()
+        if (result['error-code']) {
+            throw new ConvexAPIError('transaction_prepare', result['error-code'], result['value'])
+        }
+        return result
+    }
+
+    protected async transaction_submit(address: string, hashData: string, signedData: string): Promise<unknown> {
+        const submitURL = urljoin(this.url, '/api/v1/transaction/submit')
+        const data = {
+            address: remove0xPrefix(address),
+            hash: hashData,
+            sig: remove0xPrefix(signedData),
+        }
+        const response = await fetch(submitURL, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        })
+        if (await !response.ok) {
+            throw new ConvexAPIRequestError('transaction_submit', await response.status, await response.statusText)
+        }
+        const result = await response.json()
+        if (result['error-code']) {
+            throw new ConvexAPIError('transaction_submit', result['error-code'], result['value'])
+        }
+        return result
+    }
 
     protected async transaction_query(address: string, transaction: string): Promise<unknown> {
         const queryURL = urljoin(this.url, '/api/v1/query')
@@ -97,13 +145,14 @@ export class ConvexAPI {
             method: 'POST',
             body: JSON.stringify(data),
         })
-        if (await response.ok) {
-            const result = await response.json()
-            if (result['error-code']) {
-                throw new ConvexAPIError('query', result['error-code'], result['value'])
-            }
-            return result
+        if (await !response.ok) {
+            throw new ConvexAPIRequestError('transaction_query', await response.status, await response.statusText)
         }
-        throw new ConvexAPIRequestError('query', await response.status, await response.message)
+
+        const result = await response.json()
+        if (result['error-code']) {
+            throw new ConvexAPIError('transaction_query', result['error-code'], result['value'])
+        }
+        return result
     }
 }
