@@ -20,16 +20,6 @@ export class ConvexAPI {
         this.url = url
     }
 
-    public async query(transaction: string, addressAccount: string | Account): Promise<unknown> {
-        let address
-        if (typeof addressAccount === 'string') {
-            address = remove0xPrefix(addressAccount)
-        } else {
-            address = addressAccount.addressAPI
-        }
-        return this.transaction_query(address, transaction)
-    }
-
     public async requestFunds(amount: number, account: Account): Promise<number> {
         const queryURL = urljoin(this.url, '/api/v1/faucet')
         const data = {
@@ -80,11 +70,33 @@ export class ConvexAPI {
         return result['value']
     }
 
+    public async trasnfer(toAddressAccount: string: Account, amount: number, fromAccount: Account): Promise<number> {
+        let toAddress
+        if (typeof toAddressAccount === 'string') {
+            toAddress = remove0xPrefix(toAddressAccount)
+        } else {
+            toAddress = toAddressAccount.addressAPI
+        }
+        const transaction = `(transfer "${toAddress}" ${amount})`
+        const result = await this.send(transaction, fromAccount)
+        return result['value']
+    }
+
     public async send(transaction: string, account: Account): Promise<unknown> {
         const hashResult = await this.transaction_prepare(account.address, transaction)
         const hashData = hashResult['hash']
         const signedData = account.sign(hashData)
         return this.transaction_submit(account.address, hashData, signedData)
+    }
+
+    public async query(transaction: string, addressAccount: string | Account): Promise<unknown> {
+        let address
+        if (typeof addressAccount === 'string') {
+            address = remove0xPrefix(addressAccount)
+        } else {
+            address = addressAccount.addressAPI
+        }
+        return this.transaction_query(address, transaction)
     }
 
     protected async transaction_prepare(address: string, transaction: string): Promise<unknown> {
