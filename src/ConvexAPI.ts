@@ -68,6 +68,24 @@ export class ConvexAPI {
         return balance
     }
 
+    public async address(functionName: string, addressAccount: string | Account): Promise<number> {
+        let address
+        let result
+        if (typeof addressAccount === 'string') {
+            address = remove0xPrefix(addressAccount)
+        } else {
+            address = addressAccount.addressAPI
+        }
+        try {
+            const transaction = `(addres "${functionName}")`
+            result = await this.transaction_query(address, transaction)
+        } catch (error) {
+            throw error
+        }
+        return result['value']
+    }
+
+
     protected async transaction_query(address: string, transaction: string): Promise<unknown> {
         const queryURL = urljoin(this.url, '/api/v1/query')
         const data = {

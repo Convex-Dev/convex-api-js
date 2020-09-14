@@ -24,6 +24,18 @@ const PRIVATE_TEST_KEY_PASSWORD = 'secret'
 
 const CONVEX_URL = 'https://convex.world'
 
+TOPUP_AMOUNT = 1000000
+
+function async topupAccount(convex: ConvexAPI, account: Account): Promise<number> {
+    let balance = convex.balance(account)
+    const amount = TOPUP_AMOUNT
+    while ( balance < TOPUP_AMOUNT) {
+        const result = await convex.requestFunds(amount, account)
+        balance = await convex.balance(account)
+    }
+    return balance
+}
+
 describe('ConvexAPI Class', () => {
     describe('requestFunds', async () => {
         it('should request funds from a new account', async () => {
@@ -97,4 +109,34 @@ describe('ConvexAPI Class', () => {
             assert.equal(value, amount)
         })
     })
+
+    describe('Send transactions', async () => {
+        it('should send transactions to the network', async () => {
+            const convex = new ConvexAPI(CONVEX_URL)
+            const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            await topupAccount(convex, account)
+            const line = '(map inc [1 2 3 4 5])'
+            const result = await convex.submit(line, account)
+            assert(result)
+            console.log(result)
+        })
+    })
+    describe('Address query', async () => {
+        it('should get a function address from a new deployed function', async () => {
+            const convex = new ConvexAPI(CONVEX_URL)
+            const testFunctionDeploy = `
+(def storage-example-address
+  (deploy
+   '(do
+     (def stored-data nil)
+     (defn get [] stored-data)
+     (defn set [x] (def stored-data x))
+     (export get set))))
+`
+            const result = convex.send(testFunctionDeploy, account)
+            assert(result)
+        })
+    })
+
+
 })
