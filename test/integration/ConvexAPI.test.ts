@@ -5,7 +5,8 @@
 
 */
 
-import { assert } from 'chai'
+import chai, { assert, expect } from 'chai'
+chai.use(require('chai-as-promised'))
 
 import { Account } from '../../src/Account'
 import { ConvexAPI } from '../../src/ConvexAPI'
@@ -39,9 +40,28 @@ describe('ConvexAPI Class', () => {
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
         })
-
     })
+
     describe('Basic Query tests', async () => {
+        it('should throw a ConvexAPIRequestError on a syntax error', async () => {
+            const convex = new ConvexAPI(CONVEX_URL)
+            const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const badLine = "(concat [*address*] 'test')"
+            expect(
+                convex.query(badLine, account)
+            ).to.be.rejectedWith(/400/)
+
+        })
+
+
+        it('should throw a ConvexAPIError on a new account balance', async () => {
+            const convex = new ConvexAPI(CONVEX_URL)
+            const account = Account.createNew(PRIVATE_TEST_KEY_PASSWORD)
+            const address = account.addressAPI
+            expect(
+                convex.query(`(balance "${address}")`, account)
+            ).to.be.rejectedWith(/NOBODY/)
+        })
         it('should return a valid checksum address from a query', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)

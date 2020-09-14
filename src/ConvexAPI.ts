@@ -8,6 +8,7 @@
 
 import { Account } from 'Account'
 import { remove0xPrefix } from 'Utils'
+import { ConvexAPIRequestError, ConvexAPIError } from 'Errors'
 
 import fetch from 'node-fetch'
 import urljoin from 'url-join'
@@ -57,8 +58,13 @@ export class ConvexAPI {
             method: 'POST',
             body: JSON.stringify(data),
         })
-        if (response.ok) {
-            return response.json()
+        if (await response.ok) {
+            const result = await response.json()
+            if (result['error-code']) {
+                throw new ConvexAPIError('query', result['error-code'], result['value'])
+            }
+            return result
         }
+        throw new ConvexAPIRequestError('query', await response.status, await response.message)
     }
 }
