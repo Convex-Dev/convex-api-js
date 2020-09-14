@@ -14,7 +14,7 @@ import fetch from 'node-fetch'
 import urljoin from 'url-join'
 
 export class ConvexAPI {
-    readonly url: string        // url of the convex network
+    readonly url: string // url of the convex network
 
     /**
      * Initaliizes a new ConvexAPI object, you need to provide the URL of a Convex Network Node.
