@@ -1,9 +1,0 @@
-node_modules/
-dist/
-.nyc_output/
-coverage/
-test/**/*.js
-src/**/*.js
-build
-docs/
-
