@@ -13,8 +13,21 @@ import { ConvexAPIRequestError, ConvexAPIError } from 'Errors'
 import fetch from 'node-fetch'
 import urljoin from 'url-join'
 
+const enum Language {
+    Lisp = 'convex-lisp',
+    Scrypt = 'convex-scrypt',
+}
+
 export class ConvexAPI {
-    readonly url: string // url of the convex network
+    /**
+     * URL of the network
+     */
+    readonly url: string
+
+    /**
+     * Default language to use
+     */
+    language: Language
 
     /**
      * Initaliizes a new ConvexAPI object, you need to provide the URL of a Convex Network Node.
@@ -22,8 +35,11 @@ export class ConvexAPI {
      * @param url URL of the convex network node.
      *
      */
-    public constructor(url: string) {
+    public constructor(url: string, language?: Language) {
         this.url = url
+        if (!language) {
+            this.language = Language.Lisp
+        }
     }
 
     /**
@@ -70,8 +86,11 @@ export class ConvexAPI {
             address = addressAccount.addressAPI
         }
         try {
-            const transaction = `(balance "${address}")`
-            const result = await this.transaction_query(address, transaction)
+            let transaction = `(balance "${address}")`
+            if (this.language == Language.Scrypt) {
+                transaction = `balance ("${address}")`
+            }
+            const result = await this.transaction_query(address, transaction, this.language)
             balance = result['value']
         } catch (error) {
             if (error.name == 'ConvexAPIError' && error.code === 'NOBODY') {
@@ -100,8 +119,11 @@ export class ConvexAPI {
         } else {
             address = addressAccount.addressAPI
         }
-        const transaction = `(address ${functionName})`
-        const result = await this.transaction_query(address, transaction)
+        let transaction = `(address ${functionName})`
+        if (this.language == Language.Scrypt) {
+            transaction = `address (${functionName})`
+        }
+        const result = await this.transaction_query(address, transaction, this.language)
         return result['value']
     }
 
@@ -123,7 +145,10 @@ export class ConvexAPI {
         } else {
             toAddress = toAddressAccount.addressAPI
         }
-        const transaction = `(transfer "${toAddress}" ${amount})`
+        let transaction = `(transfer "${toAddress}" ${amount})`
+        if (this.language == Language.Scrypt) {
+            transaction = `transfer ("${toAddress}" ${amount})`
+        }
         const result = await this.send(transaction, fromAccount)
         return result['value']
     }
@@ -138,8 +163,12 @@ export class ConvexAPI {
      * @returns The result from executing the transaction.
      *
      */
-    public async send(transaction: string, account: Account): Promise<unknown> {
-        const hashResult = await this.transaction_prepare(account.address, transaction)
+    public async send(transaction: string, account: Account, language?: Language): Promise<unknown> {
+        let transaction_language = this.language
+        if (language) {
+            transaction_language = language
+        }
+        const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
         const hashData = hashResult['hash']
         const signedData = account.sign(hashData)
         return this.transaction_submit(account.address, hashData, signedData)
@@ -156,21 +185,25 @@ export class ConvexAPI {
      * @returns The query results.
      *
      */
-    public async query(transaction: string, addressAccount: string | Account): Promise<unknown> {
+    public async query(transaction: string, addressAccount: string | Account, language?: Language): Promise<unknown> {
+        let transaction_language = this.language
+        if (language) {
+            transaction_language = language
+        }
         let address
         if (typeof addressAccount === 'string') {
             address = remove0xPrefix(addressAccount)
         } else {
             address = addressAccount.addressAPI
         }
-        return this.transaction_query(address, transaction)
+        return this.transaction_query(address, transaction, transaction_language)
     }
 
-    protected async transaction_prepare(address: string, transaction: string): Promise<unknown> {
+    protected async transaction_prepare(address: string, transaction: string, language: Language): Promise<unknown> {
         const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
         const data = {
             address: remove0xPrefix(address),
-            lang: 'convex-lisp',
+            lang: language,
             source: transaction,
         }
         return this.do_transaction_post('transaction_prepare', prepareURL, data)
@@ -186,11 +219,11 @@ export class ConvexAPI {
         return this.do_transaction_post('transaction_submit', submitURL, data)
     }
 
-    protected async transaction_query(address: string, transaction: string): Promise<unknown> {
+    protected async transaction_query(address: string, transaction: string, language: Language): Promise<unknown> {
         const queryURL = urljoin(this.url, '/api/v1/query')
         const data = {
             address: address,
-            lang: 'convex-lisp',
+            lang: language,
             source: transaction,
         }
         return this.do_transaction_post('transaction_query', queryURL, data)
