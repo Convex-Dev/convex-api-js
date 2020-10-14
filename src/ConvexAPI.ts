@@ -9,6 +9,7 @@
 import { Account } from 'Account'
 import { remove0xPrefix } from 'Utils'
 import { ConvexAPIRequestError, ConvexAPIError } from 'Errors'
+import { IAccountInformation } from 'Interfaces'
 
 import fetch from 'node-fetch'
 import urljoin from 'url-join'
@@ -128,6 +129,37 @@ export class ConvexAPI {
     }
 
     /**
+     * Request account information, from the convex network.
+     *
+     * @param addressAccount Account or address string to use as the query the account.
+     *
+     * @returns The account information of the type IAccountInformation, for example:
+     *
+     *  {
+     *      "address": "7E66429CA9c10e68eFae2dCBF1804f0F6B3369c7164a3187D6233683c258710f",
+     *      "is_library": false,
+     *      "is_actor": false,
+     *      "memory_size": 75,
+     *      "allowance": 10000000,
+     *      "type": "user",
+     *      "balance": 10000000000,
+     *      "sequence": 0,
+     *      "environment": {}
+     * }
+     *
+     */
+    public async getAccountInfo(addressAccount: string | Account): Promise<IAccountInformation> {
+        let address
+        if (typeof addressAccount === 'string') {
+            address = remove0xPrefix(addressAccount)
+        } else {
+            address = addressAccount.addressAPI
+        }
+        const queryURL = urljoin(this.url, `/api/v1/accounts/${address}`)
+        return <IAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
+    }
+
+    /**
      * Transfer funds from one account to another.
      *
      * @param toAddressAccount To address string or account , that the funds need to be sent too.
@@ -165,13 +197,37 @@ export class ConvexAPI {
      */
     public async send(transaction: string, account: Account, language?: Language): Promise<unknown> {
         let transaction_language = this.language
+        let retry_counter = 10
+        let result = null
         if (language) {
             transaction_language = language
         }
-        const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
-        const hashData = hashResult['hash']
-        const signedData = account.sign(hashData)
-        return this.transaction_submit(account.address, hashData, signedData)
+        while ( retry_counter > 0) {
+            try {
+                const info = await this.getAccountInfo(account)
+                const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language, info.sequence)
+                const hashData = hashResult['hash']
+                const signedData = account.sign(hashData)
+                result = await this.transaction_submit(account.address, hashData, signedData)
+            }
+            catch (error) {
+                if ( error instanceof ConvexAPIError && error.code === 'SEQUENCE' ) {
+                    if ( retry_counter == 0) {
+                        throw(error)
+                    }
+                    retry_counter -= 1
+                    await new Promise(request => setTimeout(request, 2000));
+                }
+                else {
+                    throw(error)
+                }
+            }
+            finally {
+                break
+            }
+
+        }
+        return result
     }
 
     /**
@@ -199,12 +255,13 @@ export class ConvexAPI {
         return this.transaction_query(address, transaction, transaction_language)
     }
 
-    protected async transaction_prepare(address: string, transaction: string, language: Language): Promise<unknown> {
+    protected async transaction_prepare(address: string, transaction: string, language: Language, sequenceNumber?: number): Promise<unknown> {
         const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
         const data = {
             address: remove0xPrefix(address),
             lang: language,
             source: transaction,
+            sequence: sequenceNumber
         }
         return this.do_transaction_post('transaction_prepare', prepareURL, data)
     }
@@ -232,6 +289,20 @@ export class ConvexAPI {
         const response = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(data),
+        })
+        if (await !response.ok) {
+            throw new ConvexAPIRequestError(name, await response.status, await response.statusText)
+        }
+
+        const result = await response.json()
+        if (result['error-code']) {
+            throw new ConvexAPIError(name, result['error-code'], result['value'])
+        }
+        return result
+    }
+    protected async do_transaction_get(name: string, url: string): Promise<unknown> {
+        const response = await fetch(url, {
+            method: 'GET'
         })
         if (await !response.ok) {
             throw new ConvexAPIRequestError(name, await response.status, await response.statusText)

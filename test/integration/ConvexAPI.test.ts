@@ -183,6 +183,27 @@ describe('ConvexAPI Class', () => {
             assert.equal(address, functionAddress)
         })
     })
+    describe('getAccountInfo', async () => {
+        let convex
+        let account
+        before( async () => {
+            convex = new ConvexAPI(CONVEX_URL)
+            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            await topupAccount(convex, account, MIN_BALANCE)
+        })
+        it('should reqeust information about an account object', async() => {
+            const result = await convex.getAccountInfo(account)
+            assert(result)
+            assert(result.sequence)
+            assert(result.balance)
+        })
+        it('should reqeust information about an account adress', async() => {
+            const result = await convex.getAccountInfo(account.address)
+            assert(result)
+            assert(result.sequence)
+            assert(result.balance)
+        })
+    })
     describe('transfer', async () => {
         let convex
         let account
@@ -200,6 +221,26 @@ describe('ConvexAPI Class', () => {
             const balance = await convex.getBalance(accountNew)
             assert.equal(amount, balance)
         })
+    })
+
+
+    describe('multi threaded operation', async () => {
+        let convex
+        let account
+        before( async () => {
+            convex = new ConvexAPI(CONVEX_URL)
+            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            await topupAccount(convex, account, MIN_BALANCE)
+        })
+        it('should run multiple transactions on the convex network', async () => {
+            for ( let counter = 0; counter < 8; counter ++ ) {
+                const line = '(map inc [1 2 3 4 5])'
+                convex.send(line, account, async (result) => {
+                    assert(result)
+                    assert.deepEqual(result['value'], [ 2, 3, 4, 5, 6 ])
+                })
+            }
+        }).timeout(10 * 1000)
     })
 
 })
