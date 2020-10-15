@@ -205,7 +205,7 @@ export class ConvexAPI {
         while ( retry_counter > 0) {
             try {
                 const info = await this.getAccountInfo(account)
-                const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language, info.sequence)
+                const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
                 const hashData = hashResult['hash']
                 const signedData = account.sign(hashData)
                 result = await this.transaction_submit(account.address, hashData, signedData)
