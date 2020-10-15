@@ -3,7 +3,6 @@
 
 */
 
-
 export interface IAccountInformation {
     address: string
     is_library: boolean
@@ -13,5 +12,5 @@ export interface IAccountInformation {
     type: string
     balance: number
     sequence: number
-    environment: any
+    environment: unknown
 }

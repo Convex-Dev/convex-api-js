@@ -202,30 +202,26 @@ export class ConvexAPI {
         if (language) {
             transaction_language = language
         }
-        while ( retry_counter > 0) {
+        while (retry_counter > 0) {
             try {
-                const info = await this.getAccountInfo(account)
+                // const info = await this.getAccountInfo(account)
                 const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
                 const hashData = hashResult['hash']
                 const signedData = account.sign(hashData)
                 result = await this.transaction_submit(account.address, hashData, signedData)
-            }
-            catch (error) {
-                if ( error instanceof ConvexAPIError && error.code === 'SEQUENCE' ) {
-                    if ( retry_counter == 0) {
-                        throw(error)
+            } catch (error) {
+                if (error instanceof ConvexAPIError && error.code === 'SEQUENCE') {
+                    if (retry_counter == 0) {
+                        throw error
                     }
                     retry_counter -= 1
-                    await new Promise(request => setTimeout(request, 2000));
+                    await new Promise((request) => setTimeout(request, 2000))
+                } else {
+                    throw error
                 }
-                else {
-                    throw(error)
-                }
+            } finally {
+                retry_counter = 0
             }
-            finally {
-                break
-            }
-
         }
         return result
     }
@@ -255,13 +251,18 @@ export class ConvexAPI {
         return this.transaction_query(address, transaction, transaction_language)
     }
 
-    protected async transaction_prepare(address: string, transaction: string, language: Language, sequenceNumber?: number): Promise<unknown> {
+    protected async transaction_prepare(
+        address: string,
+        transaction: string,
+        language: Language,
+        sequenceNumber?: number
+    ): Promise<unknown> {
         const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
         const data = {
             address: remove0xPrefix(address),
             lang: language,
             source: transaction,
-            sequence: sequenceNumber
+            sequence: sequenceNumber,
         }
         return this.do_transaction_post('transaction_prepare', prepareURL, data)
     }
@@ -302,7 +303,7 @@ export class ConvexAPI {
     }
     protected async do_transaction_get(name: string, url: string): Promise<unknown> {
         const response = await fetch(url, {
-            method: 'GET'
+            method: 'GET',
         })
         if (await !response.ok) {
             throw new ConvexAPIRequestError(name, await response.status, await response.statusText)
