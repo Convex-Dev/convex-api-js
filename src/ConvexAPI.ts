@@ -197,30 +197,31 @@ export class ConvexAPI {
      */
     public async send(transaction: string, account: Account, language?: Language): Promise<unknown> {
         let transaction_language = this.language
-        let retry_counter = 10
+        let retry_counter = 20
         let result = null
         if (language) {
             transaction_language = language
         }
-        while (retry_counter > 0) {
+        while (retry_counter > 0 && result == null) {
+            // const info = await this.getAccountInfo(account)
             try {
-                // const info = await this.getAccountInfo(account)
+                // console.log('trying ', retry_counter)
                 const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
                 const hashData = hashResult['hash']
                 const signedData = account.sign(hashData)
                 result = await this.transaction_submit(account.address, hashData, signedData)
             } catch (error) {
-                if (error instanceof ConvexAPIError && error.code === 'SEQUENCE') {
+                if (error.code === 'SEQUENCE') {
+                    // console.log('sequence error', retry_counter)
                     if (retry_counter == 0) {
                         throw error
                     }
                     retry_counter -= 1
-                    await new Promise((request) => setTimeout(request, 2000))
+                    await new Promise((request) => setTimeout(request, 500 + Math.random() * 1000))
+                    result = null
                 } else {
                     throw error
                 }
-            } finally {
-                retry_counter = 0
             }
         }
         return result

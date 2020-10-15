@@ -223,8 +223,8 @@ describe('ConvexAPI Class', () => {
         })
     })
 
-/*
- * This crashes convex network
+
+// * This crashes convex network
     describe('multi threaded operation', async () => {
         let convex
         let account
@@ -234,14 +234,18 @@ describe('ConvexAPI Class', () => {
             await topupAccount(convex, account, MIN_BALANCE)
         })
         it('should run multiple transactions before waiting for the result on the convex network', async () => {
+            let results = Array(10)
             for ( let counter = 0; counter < 8; counter ++ ) {
                 const line = '(map inc [1 2 3 4 5])'
-                convex.send(line, account, async (result) => {
-                    assert(result)
-                    assert.deepEqual(result['value'], [ 2, 3, 4, 5, 6 ])
-                })
+                results[counter] = convex.send(line, account)
+                // need to wait or we get 503 errors
+                await new Promise((request) => setTimeout(request, Math.random() * 1000))
             }
-        }).timeout(10 * 1000)
+            for ( let counter = 0; counter < 8; counter ++ ) {
+                let result = await results[counter]
+                assert(result)
+                assert.deepEqual(result['value'], [ 2, 3, 4, 5, 6 ])
+            }
+        }).timeout(20 * 1000)
     })
-*/
 })
