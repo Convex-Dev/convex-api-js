@@ -17,10 +17,6 @@
     "build:watch": "tsc -w",
     "build:docs": "typedoc --mode modules --out ./docs/ ./src/",
     "run": "ts-node",
-    "release": "./node_modules/release-it/bin/release-it.js --src.tagName='v%s' --github.release --npm.publish --non-interactive",
-    "release-minor": "./node_modules/release-it/bin/release-it.js minor --src.tagName='v%s' --github.release --npm.publish --non-interactive",
-    "release-major": "./node_modules/release-it/bin/release-it.js major --src.tagName='v%s' --github.release --npm.publish --non-interactive",
-    "prepublishOnly": "npm run build"
   },
   "nyc": {
     "include": [
