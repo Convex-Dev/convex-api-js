@@ -1,5 +1,5 @@
 {
-  "name": "@dex/convex-api-js",
+  "name": "@convex-dev/convex-api-js",
   "version": "0.0.1",
   "description": "JavaScript client library to access Convex Network",
   "main": "./dist/node/convex-api.js",
@@ -42,15 +42,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DEX-Company/convex-api-js.git"
+    "url": "git+https://github.com/Convex-Dev/convex-api-js.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [],
   "author": "Dex <devops@dex.sg>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/DEX-Company/convex-api-js/issues"
+    "url": "https://github.com/Convex-Dev/convex-api-js/issues"
   },
-  "homepage": "https://github.com/DEX-Company/convex-api-js#README",
+  "homepage": "https://github.com/Convex-Dev/convex-api-js#README",
   "dependencies": {
     "node-fetch": "^2.6.0",
     "pem-file": "^1.0.1",
