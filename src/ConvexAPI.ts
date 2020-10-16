@@ -211,13 +211,14 @@ export class ConvexAPI {
                 const signedData = account.sign(hashData)
                 result = await this.transaction_submit(account.address, hashData, signedData)
             } catch (error) {
+                // console.log(error)
                 if (error.code === 'SEQUENCE') {
                     // console.log('sequence error', retry_counter)
                     if (retry_counter == 0) {
                         throw error
                     }
                     retry_counter -= 1
-                    await new Promise((request) => setTimeout(request, 500 + Math.random() * 1000))
+                    await new Promise((request) => setTimeout(request, 1000 + Math.random() * 2000))
                     result = null
                 } else {
                     throw error

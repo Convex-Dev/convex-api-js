@@ -224,8 +224,7 @@ describe('ConvexAPI Class', () => {
     })
 
 
-// * This crashes convex network
-    describe('multi threaded operation', async () => {
+    describe('multi threaded test', async () => {
         let convex
         let account
         before( async () => {
@@ -235,12 +234,12 @@ describe('ConvexAPI Class', () => {
         })
         it('should run multiple transactions before waiting for the result on the convex network', async () => {
             let results = Array(10)
+            // first send transactions all at once
             for ( let counter = 0; counter < 8; counter ++ ) {
                 const line = '(map inc [1 2 3 4 5])'
                 results[counter] = convex.send(line, account)
-                // need to wait or we get 503 errors
-                await new Promise((request) => setTimeout(request, Math.random() * 1000))
             }
+            // now wait for the results
             for ( let counter = 0; counter < 8; counter ++ ) {
                 let result = await results[counter]
                 assert(result)
