@@ -16,7 +16,7 @@
     "build:dist": "cross-env NODE_ENV=production webpack",
     "build:watch": "tsc -w",
     "build:docs": "typedoc --mode modules --out ./docs/ ./src/",
-    "run": "ts-node",
+    "run": "ts-node"
   },
   "nyc": {
     "include": [
