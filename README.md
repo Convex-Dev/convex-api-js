@@ -12,9 +12,9 @@ API toolkit to access convex network.
 
     const convex = new ConvexAPI('https:convex.world')
     const account = ConvexAccount.createNew()
-    const amount = await convex.createFunds(10000000, account)
+    const amount = await convex.requestFunds(10000000, account)
     console.log(`requested ${amount} funds.`)
-    const balance = convex.getBalance(account)
+    const balance = await convex.getBalance(account)
     console.log(`The account ${account.address} has a balance of ${balance}`)
 
 ```
