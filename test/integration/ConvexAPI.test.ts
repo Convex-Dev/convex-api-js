@@ -8,8 +8,7 @@
 import chai, { assert, expect } from 'chai'
 chai.use(require('chai-as-promised'))
 
-import { Account } from '../../src/Account'
-import { ConvexAPI } from '../../src/ConvexAPI'
+import { ConvexAccount, ConvexAPI } from '../../src'
 import { isAddress } from '../../src/Utils'
 
 const PRIVATE_TEST_KEY_TEXT = `
@@ -29,7 +28,7 @@ const TOPUP_AMOUNT = 1000000
 const MIN_BALANCE = TOPUP_AMOUNT * 10
 
 
-async function topupAccount(convex: ConvexAPI, account: Account, minBalance?: number): Promise<number> {
+async function topupAccount(convex: ConvexAPI, account: ConvexAccount, minBalance?: number): Promise<number> {
     let balance = await convex.getBalance(account)
 //    console.log('topup start balance', balance)
     const amount = TOPUP_AMOUNT
@@ -47,7 +46,7 @@ describe('ConvexAPI Class', () => {
     describe('requestFunds', async () => {
         it('should request funds from a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew()
+            const account = ConvexAccount.createNew()
             const amount = 1000
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
@@ -55,7 +54,7 @@ describe('ConvexAPI Class', () => {
 
         it('should request funds from the test account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             const amount = 1000000
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
@@ -65,7 +64,7 @@ describe('ConvexAPI Class', () => {
     describe('query', async () => {
         it('should throw a ConvexAPIRequestError on a syntax error', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             const badLine = "(concat [*address*] 'test')"
             expect(
                 convex.query(badLine, account)
@@ -75,7 +74,7 @@ describe('ConvexAPI Class', () => {
 
         it('should throw a ConvexAPIError on a new account balance', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew()
+            const account = ConvexAccount.createNew()
             const address = account.addressAPI
             expect(
                 convex.query(`(balance "${address}")`, account)
@@ -84,7 +83,7 @@ describe('ConvexAPI Class', () => {
 
         it('should return a valid checksum address from a query', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             const address = account.addressAPI
             const result = await convex.query(`(address "${address}")`, account)
             assert.equal('0x' + result['value'], account.addressChecksum)
@@ -94,14 +93,14 @@ describe('ConvexAPI Class', () => {
     describe('getBalance', async () => {
         it('should get a 0 balance on a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew()
+            const account = ConvexAccount.createNew()
             const value = await convex.getBalance(account)
             assert.equal(value, 0)
         })
 
         it('should get a small balance on a new account', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew()
+            const account = ConvexAccount.createNew()
             const amount = 100
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
@@ -111,7 +110,7 @@ describe('ConvexAPI Class', () => {
 
         it('should get a small balance on a new account using the address only field', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
-            const account = Account.createNew()
+            const account = ConvexAccount.createNew()
             const amount = 100
             const result = await convex.requestFunds(amount, account)
             assert.equal(result, amount)
@@ -125,7 +124,7 @@ describe('ConvexAPI Class', () => {
         let account
         before( async () => {
             convex = new ConvexAPI(CONVEX_URL)
-            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             await topupAccount(convex, account, MIN_BALANCE)
         })
 
@@ -160,7 +159,7 @@ describe('ConvexAPI Class', () => {
         let functionAddress
         before( async () => {
             convex = new ConvexAPI(CONVEX_URL)
-            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             await topupAccount(convex, account, MIN_BALANCE)
             functionName = 'test-storage'
             const testFunctionDeploy = `
@@ -188,7 +187,7 @@ describe('ConvexAPI Class', () => {
         let account
         before( async () => {
             convex = new ConvexAPI(CONVEX_URL)
-            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             await topupAccount(convex, account, MIN_BALANCE)
         })
         it('should reqeust information about an account object', async() => {
@@ -209,12 +208,12 @@ describe('ConvexAPI Class', () => {
         let account
         before( async () => {
             convex = new ConvexAPI(CONVEX_URL)
-            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             await topupAccount(convex, account, MIN_BALANCE)
         })
 
         it('should transfer a set amount of funds from the test account to a new account', async () => {
-            const accountNew = Account.createNew()
+            const accountNew =  ConvexAccount.createNew()
             const amount = 1000
             const transferAmount = await convex.transfer(accountNew, amount, account)
             assert.equal(transferAmount, amount)
@@ -229,7 +228,7 @@ describe('ConvexAPI Class', () => {
         let account
         before( async () => {
             convex = new ConvexAPI(CONVEX_URL)
-            account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            account = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             await topupAccount(convex, account, MIN_BALANCE)
         })
         it('should run multiple transactions before waiting for the result on the convex network', async () => {

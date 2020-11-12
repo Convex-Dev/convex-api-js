@@ -1,6 +1,6 @@
 /*
 
-    Account.ts class to manage private/public key for signing hashed text on the Convex Network.
+    ConvexAccount.ts class to manage private/public key for signing hashed text on the Convex Network.
 
 
 */
@@ -11,7 +11,7 @@ import pem from 'pem-file'
 
 import { toAddressChecksum } from 'Utils'
 
-export class Account {
+export class ConvexAccount {
     readonly privateKey: KeyObject // private key object
     readonly publicKey: KeyObject // public key object
     readonly address: string // address as hex string with prefix of '0x'
@@ -21,9 +21,9 @@ export class Account {
     /**
      * Creates a new account
      *
-     * @returns a new Account Object
+     * @returns a new ConvexAccount Object
      */
-    public static createNew(): Account {
+    public static createNew(): ConvexAccount {
         // create a temporary password for generating a random private/public keys
         const password = randomBytes(64).toString('hex')
         const { publicKey, privateKey } = generateKeyPairSync('ed25519', {
@@ -38,7 +38,7 @@ export class Account {
                 passphrase: password,
             },
         })
-        return Account.importFromString(privateKey, password, publicKey)
+        return ConvexAccount.importFromString(privateKey, password, publicKey)
     }
 
     /**
@@ -53,7 +53,7 @@ export class Account {
      * @returns an account object with the private and public key pairs.
      *
      */
-    public static importFromString(text: string, password: string, publicKeyText?: string): Account {
+    public static importFromString(text: string, password: string, publicKeyText?: string): ConvexAccount {
         const privateKey = createPrivateKey({
             key: text,
             type: 'pkcs8',
@@ -67,7 +67,7 @@ export class Account {
             publicKey = createPublicKey(privateKey)
         }
 
-        return new Account(publicKey, privateKey)
+        return new ConvexAccount(publicKey, privateKey)
     }
 
     /**
@@ -76,13 +76,13 @@ export class Account {
      * @param filename Filename containing the encrypted private key.
      * @param password Password to decrypt the private key.
      *
-     * @returns An Account object with the private and public keys.
+     * @returns An ConvexAccount object with the private and public keys.
      *
      */
-    public static async importFromFile(filename: string, password: string): Promise<Account> {
+    public static async importFromFile(filename: string, password: string): Promise<ConvexAccount> {
         if (fs.existsSync(filename)) {
             const data = await fs.promises.readFile(filename)
-            return Account.importFromString(data.toString(), password)
+            return ConvexAccount.importFromString(data.toString(), password)
         }
         return null
     }

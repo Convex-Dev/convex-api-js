@@ -6,7 +6,7 @@
  *
  */
 
-export { Account } from 'Account'
+export { ConvexAccount } from 'ConvexAccount'
 export { ConvexAPI } from 'ConvexAPI'
 export { ConvexAPIRequestError, ConvexAPIError } from 'Errors'
-export { IAccountInformation } from 'Interfaces'
+export { IConvexAccountInformation } from 'Interfaces'

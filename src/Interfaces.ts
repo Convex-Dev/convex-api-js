@@ -3,7 +3,7 @@
 
 */
 
-export interface IAccountInformation {
+export interface IConvexAccountInformation {
     address: string
     is_library: boolean
     is_actor: boolean

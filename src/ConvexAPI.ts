@@ -6,10 +6,10 @@
 
 */
 
-import { Account } from 'Account'
+import { ConvexAccount } from 'ConvexAccount'
 import { remove0xPrefix } from 'Utils'
 import { ConvexAPIRequestError, ConvexAPIError } from 'Errors'
-import { IAccountInformation } from 'Interfaces'
+import { IConvexAccountInformation } from 'Interfaces'
 
 import fetch from 'node-fetch'
 import urljoin from 'url-join'
@@ -48,12 +48,12 @@ export class ConvexAPI {
      * networks that provide free funds.
      *
      * @param amount The amount to request.
-     * @param account The Account object to request funds for.
+     * @param account The ConvexAccount object to request funds for.
      *
      * @returns The amount of funds provided for this request.
      *
      */
-    public async requestFunds(amount: number, account: Account): Promise<number> {
+    public async requestFunds(amount: number, account: ConvexAccount): Promise<number> {
         const queryURL = urljoin(this.url, '/api/v1/faucet')
         const data = {
             address: account.addressAPI,
@@ -73,12 +73,12 @@ export class ConvexAPI {
     /**
      * Get the current balance of an account.
      *
-     * @param addressAccount Account object or string address of the account to get the balance.
+     * @param addressAccount ConvexAccount object or string address of the account to get the balance.
      *
      * @returns The balance of funds held by the account address.
      *
      */
-    public async getBalance(addressAccount: string | Account): Promise<number> {
+    public async getBalance(addressAccount: string | ConvexAccount): Promise<number> {
         let address
         let balance = 0
         if (typeof addressAccount === 'string') {
@@ -107,13 +107,13 @@ export class ConvexAPI {
      * for this method to work.
      *
      * @param functionName The deployed function go get the address off.
-     * @param addressAccount Account or address string to use as the query address. This address
+     * @param addressAccount ConvexAccount or address string to use as the query address. This address
      * is the address used by the owner of the deployed function
      *
      * @returns The address of the deployed function
      *
      */
-    public async getAddress(functionName: string, addressAccount: string | Account): Promise<string> {
+    public async getAddress(functionName: string, addressAccount: string | ConvexAccount): Promise<string> {
         let address
         if (typeof addressAccount === 'string') {
             address = remove0xPrefix(addressAccount)
@@ -131,9 +131,9 @@ export class ConvexAPI {
     /**
      * Request account information, from the convex network.
      *
-     * @param addressAccount Account or address string to use as the query the account.
+     * @param addressAccount ConvexAccount or address string to use as the query the account.
      *
-     * @returns The account information of the type IAccountInformation, for example:
+     * @returns The account information of the type IConvexAccountInformation, for example:
      *
      *  {
      *      "address": "7E66429CA9c10e68eFae2dCBF1804f0F6B3369c7164a3187D6233683c258710f",
@@ -148,7 +148,7 @@ export class ConvexAPI {
      * }
      *
      */
-    public async getAccountInfo(addressAccount: string | Account): Promise<IAccountInformation> {
+    public async getAccountInfo(addressAccount: string | ConvexAccount): Promise<IConvexAccountInformation> {
         let address
         if (typeof addressAccount === 'string') {
             address = remove0xPrefix(addressAccount)
@@ -156,7 +156,7 @@ export class ConvexAPI {
             address = addressAccount.addressAPI
         }
         const queryURL = urljoin(this.url, `/api/v1/accounts/${address}`)
-        return <IAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
+        return <IConvexAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
     }
 
     /**
@@ -164,13 +164,13 @@ export class ConvexAPI {
      *
      * @param toAddressAccount To address string or account , that the funds need to be sent too.
      * @param amount Amount to send for the transfer.
-     * @param fromAccount Account to send the funds from. This must be an account object so that the transfer transaction
+     * @param fromAccount ConvexAccount to send the funds from. This must be an account object so that the transfer transaction
      * can be sent from the account.
      *
      * @results The amount of funds transfered.
      *
      */
-    public async transfer(toAddressAccount: string | Account, amount: number, fromAccount: Account): Promise<number> {
+    public async transfer(toAddressAccount: string | ConvexAccount, amount: number, fromAccount: ConvexAccount): Promise<number> {
         let toAddress
         if (typeof toAddressAccount === 'string') {
             toAddress = remove0xPrefix(toAddressAccount)
@@ -190,12 +190,12 @@ export class ConvexAPI {
      * a transaction fee will be deducted from the  account.
      *
      * @param transaction State changing transaction to execute.
-     * @param account Account to sign the transaction.
+     * @param account ConvexAccount to sign the transaction.
      *
      * @returns The result from executing the transaction.
      *
      */
-    public async send(transaction: string, account: Account, language?: Language): Promise<unknown> {
+    public async send(transaction: string, account: ConvexAccount, language?: Language): Promise<unknown> {
         let transaction_language = this.language
         let retry_counter = 20
         let result = null
@@ -234,12 +234,12 @@ export class ConvexAPI {
      * query and calling read operations in contracts.
      *
      * @param transaction Read only transaction to perform.
-     * @prama addressAccount Address string or Account object to use for the query transaction.
+     * @prama addressAccount Address string or ConvexAccount object to use for the query transaction.
      *
      * @returns The query results.
      *
      */
-    public async query(transaction: string, addressAccount: string | Account, language?: Language): Promise<unknown> {
+    public async query(transaction: string, addressAccount: string | ConvexAccount, language?: Language): Promise<unknown> {
         let transaction_language = this.language
         if (language) {
             transaction_language = language
