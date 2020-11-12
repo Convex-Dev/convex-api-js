@@ -14,7 +14,7 @@
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outDir": "./dist/node/",
+    "outDir": "./dist",
     "baseUrl": "src",
     "paths": {
       "starfish/*": ["*"],

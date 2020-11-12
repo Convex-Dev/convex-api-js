@@ -2,7 +2,8 @@
   "name": "@convex-dev/convex-api-js",
   "version": "0.0.2",
   "description": "JavaScript client library to access Convex Network",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "mocha",
     "clean": "rm -rf ./dist/ ./doc/ ./coverage ./.nyc_output",
