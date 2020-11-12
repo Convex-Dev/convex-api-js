@@ -9,7 +9,7 @@ import fs from 'fs'
 import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey, randomBytes, sign } from 'crypto'
 import pem from 'pem-file'
 
-import { toAddressChecksum } from 'Utils'
+import { toAddressChecksum } from './Utils'
 
 export class ConvexAccount {
     readonly privateKey: KeyObject // private key object

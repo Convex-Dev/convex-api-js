@@ -6,10 +6,10 @@
 
 */
 
-import { ConvexAccount } from 'ConvexAccount'
-import { remove0xPrefix } from 'Utils'
-import { ConvexAPIRequestError, ConvexAPIError } from 'Errors'
-import { IConvexAccountInformation } from 'Interfaces'
+import { ConvexAccount } from './ConvexAccount'
+import { remove0xPrefix } from './Utils'
+import { ConvexAPIRequestError, ConvexAPIError } from './Errors'
+import { IConvexAccountInformation } from './Interfaces'
 
 import fetch from 'node-fetch'
 import urljoin from 'url-join'

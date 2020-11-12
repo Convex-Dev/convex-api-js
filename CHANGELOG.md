@@ -2,7 +2,7 @@
 
 ## Beta Testing
 
-### Release 0.0.6
+### Release 0.0.6, 0.0.7
 +   Absolute paths on import of modules
 
 ### Release 0.0.5
