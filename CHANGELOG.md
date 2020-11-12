@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release 0.0.4
++   Rename Account to ConvexAccount
+
 ### Release 0.0.3
 +   index.ts for library packages
 
