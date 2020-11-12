@@ -1,0 +1,28 @@
+name: docs_deploy
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  docs_delpoy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up node js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Install dependencies
+      run: npm install
+    - name: Build Docs
+      run: |
+        npm run build:docs
+        touch docs/.nojekyll
+    - name: Docs Deploy
+      uses: peaceiris/actions-gh-pages@v2.5.0
+      env:
+        PERSONAL_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: docs/

@@ -1,0 +1,29 @@
+name: package_deploy
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  package_deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up node js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Install dependencies
+      run: npm install
+    - name: Build dependencies
+      run: npm run build --if-present
+    - name: Set up node js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+        registry-url: https://npm.pkg.github.com/convex-dev
+    - name: Package Deploy
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.ACCESS_TOKEN }
