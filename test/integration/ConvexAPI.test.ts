@@ -87,7 +87,7 @@ describe('ConvexAPI Class', () => {
             const account = Account.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             const address = account.addressAPI
             const result = await convex.query(`(address "${address}")`, account)
-            assert.equal(result['value'], account.addressChecksum)
+            assert.equal('0x' + result['value'], account.addressChecksum)
         })
     })
 
