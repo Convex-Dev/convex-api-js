@@ -74,7 +74,7 @@
 				</a>
 				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { ConvexAccount, ConvexAPI } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@convex-dev/convex-api-js&#x27;</span>
 
-    <span class="hljs-keyword">const</span> convex = <span class="hljs-keyword">new</span> ConvexAPI(<span class="hljs-string">&#x27;https:convex.world&#x27;</span>)
+    <span class="hljs-keyword">const</span> convex = <span class="hljs-keyword">new</span> ConvexAPI(<span class="hljs-string">&#x27;https://convex.world&#x27;</span>)
     <span class="hljs-keyword">const</span> account = ConvexAccount.createNew()
     <span class="hljs-keyword">const</span> amount = <span class="hljs-keyword">await</span> convex.requestFunds(<span class="hljs-number">10000000</span>, account)
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`requested <span class="hljs-subst">${amount}</span> funds.`</span>)
