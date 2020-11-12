@@ -12,6 +12,7 @@
     "build:tsc": "tsc",
     "build:watch": "tsc -w",
     "build:docs": "typedoc --mode modules --out ./docs/ ./src/",
+    "release": "npm run build && npm run build:docs && npm publish",
     "run": "ts-node"
   },
   "nyc": {

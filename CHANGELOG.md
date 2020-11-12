@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release 0.0.5
++   Better build/publish method using `npm run release`
+
 ### Release 0.0.4
 +   Rename Account to ConvexAccount
 
