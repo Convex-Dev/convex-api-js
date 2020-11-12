@@ -3,7 +3,7 @@ name: package_deploy
 on:
   push:
     branches:
-    - master
+    - master-disabled
 
 jobs:
   package_deploy:
