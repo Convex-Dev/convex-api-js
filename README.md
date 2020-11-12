@@ -3,5 +3,5 @@
 
 API toolkit to access convex network.
 
-[Documentation](https://dex-company.github.io/convex-api-js)
+[Documentation](https://convex-dev.github.io/convex-api-js)
 
