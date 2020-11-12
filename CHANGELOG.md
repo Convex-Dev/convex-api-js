@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release 0.0.3
++   index.ts for library packages
+
 ### Release 0.0.2
 +   Better workflows
 +   Run tests with address returned with no leading 0x
