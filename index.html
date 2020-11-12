@@ -69,6 +69,18 @@
 				</a>
 				<p>API toolkit to access convex network.</p>
 				<p><a href="https://convex-dev.github.io/convex-api-js">Documentation</a></p>
+				<a href="#example-of-using-the-library" id="example-of-using-the-library" style="color: inherit; text-decoration: none;">
+					<h2>Example of using the library</h2>
+				</a>
+				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { ConvexAccount, ConvexAPI } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@convex-dev/convex-api-js&#x27;</span>
+
+    <span class="hljs-keyword">const</span> convex = <span class="hljs-keyword">new</span> ConvexAPI(<span class="hljs-string">&#x27;https:convex.world&#x27;</span>)
+    <span class="hljs-keyword">const</span> account = ConvexAccount.createNew()
+    <span class="hljs-keyword">const</span> amount = <span class="hljs-keyword">await</span> convex.requestFunds(<span class="hljs-number">10000000</span>, account)
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`requested <span class="hljs-subst">${amount}</span> funds.`</span>)
+    <span class="hljs-keyword">const</span> balance = <span class="hljs-keyword">await</span> convex.getBalance(account)
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`The account <span class="hljs-subst">${account.address}</span> has a balance of <span class="hljs-subst">${balance}</span>`</span>)
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -78,10 +90,10 @@
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_account_.html">&quot;<wbr>Account&quot;</a>
+						<a href="modules/_convexapi_.html">&quot;<wbr>ConvexAPI&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_convexapi_.html">&quot;<wbr>ConvexAPI&quot;</a>
+						<a href="modules/_convexaccount_.html">&quot;<wbr>Convex<wbr>Account&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_errors_.html">&quot;<wbr>Errors&quot;</a>
