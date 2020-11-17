@@ -176,8 +176,13 @@ describe('ConvexAPI Class', () => {
             assert(functionAddress)
         })
 
-        it('should get a function address from a new deployed function', async () => {
+        it('should get a function address using an account from a new deployed function', async () => {
             const address = await convex.getAddress(functionName, account)
+            assert(address)
+            assert.equal(address, functionAddress)
+        })
+        it('should get a function address using a string from a new deployed function', async () => {
+            const address = await convex.getAddress(functionName, account.addressAPI)
             assert(address)
             assert.equal(address, functionAddress)
         })
