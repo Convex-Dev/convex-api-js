@@ -23,7 +23,7 @@ export class ConvexAccount {
      *
      * @returns a new ConvexAccount Object
      */
-    public static createNew(): ConvexAccount {
+    public static create(): ConvexAccount {
         // create a temporary password for generating a random private/public keys
         const password = randomBytes(64).toString('hex')
         const { publicKey, privateKey } = generateKeyPairSync('ed25519', {

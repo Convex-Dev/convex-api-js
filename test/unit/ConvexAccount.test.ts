@@ -32,7 +32,7 @@ describe('ConvexAccount class tests', () => {
     })
     describe('Create new key pair', () => {
         it('should create a new account with a new key pair', () => {
-            const account = ConvexAccount.createNew()
+            const account = ConvexAccount.create()
             assert(account)
             assert.equal(account.publicKey.asymmetricKeyType, 'ed25519')
             assert.equal(account.privateKey.asymmetricKeyType, 'ed25519')
@@ -41,7 +41,7 @@ describe('ConvexAccount class tests', () => {
 
     describe('Export keys', () => {
         it('should export/import account key too text', () => {
-            const account = ConvexAccount.createNew()
+            const account = ConvexAccount.create()
             const text = account.exportToText(PRIVATE_TEST_KEY_PASSWORD)
             assert(text)
             const accountRead = ConvexAccount.importFromString(text, PRIVATE_TEST_KEY_PASSWORD)
@@ -49,7 +49,7 @@ describe('ConvexAccount class tests', () => {
         })
 
         it('should export/import account key too file', async () => {
-            const account = ConvexAccount.createNew()
+            const account = ConvexAccount.create()
             let filename = '/tmp/testAccount.pem'
             if (fs.existsSync(filename)) {
                 fs.unlinkSync(filename)
