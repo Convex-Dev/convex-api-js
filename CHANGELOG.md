@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release 0.0.8
++   Rename Account createNew to create
+
 ### Release 0.0.6, 0.0.7
 +   Absolute paths on import of modules
 
