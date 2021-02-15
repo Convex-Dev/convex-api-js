@@ -3,7 +3,7 @@ import fs from 'fs'
 import { assert } from 'chai'
 import { ConvexAccount } from '../../src'
 
-const PUBLIC_ADDRESS = '0x5288fec4153b702430771dfac8aed0b21cafca4344dae0d47b97f0bf532b3306'
+const PUBLIC_KEY = '5288fec4153b702430771dfac8aed0b21cafca4344dae0d47b97f0bf532b3306'
 
 const PRIVATE_TEST_KEY_TEXT = `
 -----BEGIN ENCRYPTED PRIVATE KEY-----
@@ -27,7 +27,7 @@ describe('ConvexAccount class tests', () => {
             assert(account)
             assert.equal(account.publicKey.asymmetricKeyType, 'ed25519')
             assert.equal(account.privateKey.asymmetricKeyType, 'ed25519')
-            assert.equal(account.address, PUBLIC_ADDRESS)
+            assert.equal(account.publicKeyAPI, PUBLIC_KEY)
         })
     })
     describe('Create new key pair', () => {

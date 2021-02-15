@@ -9,14 +9,14 @@ import fs from 'fs'
 import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey, randomBytes, sign } from 'crypto'
 import pem from 'pem-file'
 
-import { toAddressChecksum } from './Utils'
+import { toPublicKeyChecksum } from './Utils'
 
 export class ConvexAccount {
     readonly privateKey: KeyObject // private key object
     readonly publicKey: KeyObject // public key object
-    readonly address: string // address as hex string with prefix of '0x'
-    readonly addressAPI: string // address as hex string without leading '0x'
-    readonly addressChecksum: string // address as hex string with checksum upper an lower case hex letters
+    readonly address: BigInt // address for this account
+    readonly publicKeyAPI: string // address as hex string without leading '0x'
+    readonly publicKeyChecksum: string // address as hex string with checksum upper an lower case hex letters
 
     /**
      * Creates a new account
@@ -38,7 +38,7 @@ export class ConvexAccount {
                 passphrase: password,
             },
         })
-        return ConvexAccount.importFromString(privateKey, password, publicKey)
+        return ConvexAccount.importFromString(privateKey, password, null, publicKey)
     }
 
     /**
@@ -47,13 +47,14 @@ export class ConvexAccount {
      *
      * @param text PKCS8 fromated text with the private key encrypted.
      * @param password Password to decrypt the private key.
+     * @param address Optional address used for this account.
      * @param publicKeyText Optional public key encoded in PEM format, if non provided, the public key
      * can be obtained from the private key.
      *
      * @returns an account object with the private and public key pairs.
      *
      */
-    public static importFromString(text: string, password: string, publicKeyText?: string): ConvexAccount {
+    public static importFromString(text: string, password: string, address?: BigInt, publicKeyText?: string): ConvexAccount {
         const privateKey = createPrivateKey({
             key: text,
             type: 'pkcs8',
@@ -67,7 +68,7 @@ export class ConvexAccount {
             publicKey = createPublicKey(privateKey)
         }
 
-        return new ConvexAccount(publicKey, privateKey)
+        return new ConvexAccount(publicKey, privateKey, address)
     }
 
     /**
@@ -79,24 +80,24 @@ export class ConvexAccount {
      * @returns An ConvexAccount object with the private and public keys.
      *
      */
-    public static async importFromFile(filename: string, password: string): Promise<ConvexAccount> {
+    public static async importFromFile(filename: string, password: string, address?: BigInt): Promise<ConvexAccount> {
         if (fs.existsSync(filename)) {
             const data = await fs.promises.readFile(filename)
-            return ConvexAccount.importFromString(data.toString(), password)
+            return ConvexAccount.importFromString(data.toString(), password, address)
         }
         return null
     }
 
-    constructor(publicKey: KeyObject, privateKey: KeyObject) {
+    constructor(publicKey: KeyObject, privateKey: KeyObject, address?: BigInt) {
         this.publicKey = publicKey
         this.privateKey = privateKey
         const exportPublicKey = publicKey.export({
             type: 'spki',
             format: 'pem',
         })
-        this.addressAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
-        this.address = '0x' + this.addressAPI
-        this.addressChecksum = toAddressChecksum(this.address)
+        this.publicKeyAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
+        this.publicKeyChecksum = toPublicKeyChecksum(this.publicKeyAPI)
+        this.address = address
     }
 
     /**

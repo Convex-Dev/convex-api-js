@@ -7,46 +7,46 @@
 
 import { createHash } from 'crypto'
 
-export function remove0xPrefix(address: string): string {
-    if (address) {
-        return address.replace(/^0x/, '')
+export function remove0xPrefix(publicKey: string): string {
+    if (publicKey) {
+        return publicKey.replace(/^0x/, '')
     }
     return null
 }
 
-export function toAddressChecksum(address: string): string {
-    const addressClean = remove0xPrefix(address).toLowerCase()
+export function toPublicKeyChecksum(publicKey: string): string {
+    const publicKeyClean = remove0xPrefix(publicKey).toLowerCase()
     let result = '0x'
     const hash = createHash('SHA3-256')
-    hash.update(Buffer.from(addressClean, 'hex'))
+    hash.update(Buffer.from(publicKeyClean, 'hex'))
     const hashData = hash.digest('hex')
-    for (let index = 0; index < hashData.length && index < addressClean.length; index++) {
+    for (let index = 0; index < hashData.length && index < publicKeyClean.length; index++) {
         if (parseInt(hashData.charAt(index), 16) > 7) {
-            result = result.concat(addressClean.charAt(index).toUpperCase())
+            result = result.concat(publicKeyClean.charAt(index).toUpperCase())
         } else {
-            result = result.concat(addressClean.charAt(index))
+            result = result.concat(publicKeyClean.charAt(index))
         }
     }
     return result
 }
 
-export function isAddressHex(address: string): boolean {
-    const addressClean = remove0xPrefix(address).toLowerCase()
-    if (addressClean.match(/[0-9a-f]+/) && addressClean.length == 64) {
-        return true
+export function isAddress(address: string | number | BigInt): boolean {
+    try {
+        return BigInt(address) >= BigInt(0)
+    } catch {
+        return false
     }
     return false
 }
 
-export function isAddress(address: string): boolean {
-    if (isAddressChecksum(address)) {
-        return true
-    } else if (isAddressHex(address)) {
-        return true
+export function toAddress(address: string | number | BigInt): BigInt {
+    let result = address
+    if (typeof address === 'string') {
+        result = address.replace(/^#/, '')
     }
-    return false
+    return BigInt(result)
 }
 
-export function isAddressChecksum(address: string): boolean {
-    return remove0xPrefix(address) && remove0xPrefix(address) == remove0xPrefix(toAddressChecksum(address))
+export function isPublicKeyChecksum(publicKey: string): boolean {
+    return remove0xPrefix(publicKey) && remove0xPrefix(publicKey) == remove0xPrefix(toPublicKeyChecksum(publicKey))
 }

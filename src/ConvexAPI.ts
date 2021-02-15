@@ -5,6 +5,7 @@
 
 
 */
+import { randomBytes } from 'crypto'
 
 import { ConvexAccount } from './ConvexAccount'
 import { remove0xPrefix } from './Utils'
@@ -43,6 +44,30 @@ export class ConvexAPI {
         }
     }
 
+    public async createAccount(account?: ConvexAccount): Promise<ConvexAccount> {
+        let newAccount: ConvexAccount = account
+
+        if (!account) {
+            newAccount = ConvexAccount.create()
+        }
+
+        const queryURL = urljoin(this.url, '/api/v1/createAccount')
+        const data = {
+            accountKey: newAccount.publicKeyAPI,
+        }
+        const response = await fetch(queryURL, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        })
+        if (response.ok) {
+            const result = await response.json()
+            const password = randomBytes(64).toString('hex')
+            const accounText = newAccount.exportToText(password)
+            return ConvexAccount.importFromString(accounText, password, BigInt(result['address']))
+        }
+        return null
+    }
+
     /**
      * Request funds from the development account. This method only works on development and test
      * networks that provide free funds.
@@ -53,11 +78,11 @@ export class ConvexAPI {
      * @returns The amount of funds provided for this request.
      *
      */
-    public async requestFunds(amount: number, account: ConvexAccount): Promise<number> {
+    public async requestFunds(amount: BigInt | number, account: ConvexAccount): Promise<BigInt> {
         const queryURL = urljoin(this.url, '/api/v1/faucet')
         const data = {
-            address: account.addressAPI,
-            amount: amount,
+            address: parseInt(account.address.toString()),
+            amount: parseInt(BigInt(amount).toString()),
         }
         const response = await fetch(queryURL, {
             method: 'POST',
@@ -65,9 +90,9 @@ export class ConvexAPI {
         })
         if (response.ok) {
             const result = await response.json()
-            return parseInt(result['value'])
+            return BigInt(result['value'])
         }
-        return 0
+        return BigInt(0)
     }
 
     /**
@@ -78,21 +103,23 @@ export class ConvexAPI {
      * @returns The balance of funds held by the account address.
      *
      */
-    public async getBalance(addressAccount: string | ConvexAccount): Promise<number> {
-        let address
-        let balance = 0
-        if (typeof addressAccount === 'string') {
-            address = remove0xPrefix(addressAccount)
+    public async getBalance(addressAccount: BigInt | ConvexAccount): Promise<BigInt> {
+        let address: BigInt
+        let balance: BigInt = BigInt(0)
+        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
+            address = BigInt(addressAccount)
         } else {
-            address = addressAccount.addressAPI
+            address = (<ConvexAccount>addressAccount).address
         }
         try {
-            let transaction = `(balance "${address}")`
+            let transaction = `(balance ${address})`
             if (this.language == Language.Scrypt) {
-                transaction = `balance ("${address}")`
+                transaction = `balance (${address})`
             }
             const result = await this.transaction_query(address, transaction, this.language)
-            balance = result['value']
+            if (result['value']) {
+                balance = BigInt(result['value'])
+            }
         } catch (error) {
             if (error.name == 'ConvexAPIError' && error.code === 'NOBODY') {
                 return balance
@@ -113,12 +140,12 @@ export class ConvexAPI {
      * @returns The address of the deployed function
      *
      */
-    public async getAddress(functionName: string, addressAccount: string | ConvexAccount): Promise<string> {
+    public async getAddress(functionName: string, addressAccount: BigInt | ConvexAccount): Promise<string> {
         let address
-        if (typeof addressAccount === 'string') {
-            address = remove0xPrefix(addressAccount)
+        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
+            address = addressAccount
         } else {
-            address = addressAccount.addressAPI
+            address = (<ConvexAccount>addressAccount).address
         }
         let transaction = `(address ${functionName})`
         if (this.language == Language.Scrypt) {
@@ -148,12 +175,12 @@ export class ConvexAPI {
      * }
      *
      */
-    public async getAccountInfo(addressAccount: string | ConvexAccount): Promise<IConvexAccountInformation> {
+    public async getAccountInfo(addressAccount: BigInt | ConvexAccount): Promise<IConvexAccountInformation> {
         let address
-        if (typeof addressAccount === 'string') {
-            address = remove0xPrefix(addressAccount)
+        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
+            address = addressAccount
         } else {
-            address = addressAccount.addressAPI
+            address = (<ConvexAccount>addressAccount).address
         }
         const queryURL = urljoin(this.url, `/api/v1/accounts/${address}`)
         return <IConvexAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
@@ -170,16 +197,20 @@ export class ConvexAPI {
      * @results The amount of funds transfered.
      *
      */
-    public async transfer(toAddressAccount: string | ConvexAccount, amount: number, fromAccount: ConvexAccount): Promise<number> {
+    public async transfer(
+        toAddressAccount: BigInt | ConvexAccount,
+        amount: BigInt | number,
+        fromAccount: ConvexAccount
+    ): Promise<BigInt> {
         let toAddress
-        if (typeof toAddressAccount === 'string') {
-            toAddress = remove0xPrefix(toAddressAccount)
+        if (Object.prototype.toString.call(toAddressAccount) === '[object BigInt]') {
+            toAddress = toAddressAccount
         } else {
-            toAddress = toAddressAccount.addressAPI
+            toAddress = (<ConvexAccount>toAddressAccount).address
         }
-        let transaction = `(transfer "${toAddress}" ${amount})`
+        let transaction = `(transfer ${toAddress} ${amount})`
         if (this.language == Language.Scrypt) {
-            transaction = `transfer ("${toAddress}" ${amount})`
+            transaction = `transfer (${toAddress} ${amount})`
         }
         const result = await this.send(transaction, fromAccount)
         return result['value']
@@ -209,7 +240,7 @@ export class ConvexAPI {
                 const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
                 const hashData = hashResult['hash']
                 const signedData = account.sign(hashData)
-                result = await this.transaction_submit(account.address, hashData, signedData)
+                result = await this.transaction_submit(account.address, account.publicKeyAPI, hashData, signedData)
             } catch (error) {
                 // console.log(error)
                 if (error.code === 'SEQUENCE') {
@@ -239,29 +270,29 @@ export class ConvexAPI {
      * @returns The query results.
      *
      */
-    public async query(transaction: string, addressAccount: string | ConvexAccount, language?: Language): Promise<unknown> {
+    public async query(transaction: string, addressAccount: BigInt | ConvexAccount, language?: Language): Promise<unknown> {
         let transaction_language = this.language
         if (language) {
             transaction_language = language
         }
         let address
-        if (typeof addressAccount === 'string') {
-            address = remove0xPrefix(addressAccount)
+        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
+            address = addressAccount
         } else {
-            address = addressAccount.addressAPI
+            address = (<ConvexAccount>addressAccount).address
         }
         return this.transaction_query(address, transaction, transaction_language)
     }
 
     protected async transaction_prepare(
-        address: string,
+        address: BigInt,
         transaction: string,
         language: Language,
-        sequenceNumber?: number
+        sequenceNumber?: BigInt
     ): Promise<unknown> {
         const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
         const data = {
-            address: remove0xPrefix(address),
+            address: parseInt(address.toString()),
             lang: language,
             source: transaction,
             sequence: sequenceNumber,
@@ -269,20 +300,21 @@ export class ConvexAPI {
         return this.do_transaction_post('transaction_prepare', prepareURL, data)
     }
 
-    protected async transaction_submit(address: string, hashData: string, signedData: string): Promise<unknown> {
+    protected async transaction_submit(address: BigInt, publicKey: string, hashData: string, signedData: string): Promise<unknown> {
         const submitURL = urljoin(this.url, '/api/v1/transaction/submit')
         const data = {
-            address: remove0xPrefix(address),
+            address: parseInt(address.toString()),
+            accountKey: remove0xPrefix(publicKey),
             hash: hashData,
             sig: remove0xPrefix(signedData),
         }
         return this.do_transaction_post('transaction_submit', submitURL, data)
     }
 
-    protected async transaction_query(address: string, transaction: string, language: Language): Promise<unknown> {
+    protected async transaction_query(address: BigInt, transaction: string, language: Language): Promise<unknown> {
         const queryURL = urljoin(this.url, '/api/v1/query')
         const data = {
-            address: address,
+            address: parseInt(address.toString()),
             lang: language,
             source: transaction,
         }
@@ -298,8 +330,8 @@ export class ConvexAPI {
         }
 
         const result = await response.json()
-        if (result['error-code']) {
-            throw new ConvexAPIError(name, result['error-code'], result['value'])
+        if (result['errorCode']) {
+            throw new ConvexAPIError(name, result['errorCode'], result['value'])
         }
         return result
     }
@@ -312,8 +344,8 @@ export class ConvexAPI {
         }
 
         const result = await response.json()
-        if (result['error-code']) {
-            throw new ConvexAPIError(name, result['error-code'], result['value'])
+        if (result['errorCode']) {
+            throw new ConvexAPIError(name, result['errorCode'], result['value'])
         }
         return result
     }

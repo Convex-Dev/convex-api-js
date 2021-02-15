@@ -4,10 +4,10 @@
 */
 
 export interface IConvexAccountInformation {
-    address: string
-    is_library: boolean
-    is_actor: boolean
-    memory_size: number
+    address: BigInt
+    isLibrary: boolean
+    isActor: boolean
+    memorySize: number
     allowance: number
     type: string
     balance: number

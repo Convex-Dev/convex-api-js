@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release 0.1.0
++   Create an account using ConvexAPI class
+
 ### Release 0.0.8
 +   Rename Account createNew to create
 
