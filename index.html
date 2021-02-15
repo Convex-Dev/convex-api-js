@@ -72,14 +72,16 @@
 				<a href="#example-of-using-the-library" id="example-of-using-the-library" style="color: inherit; text-decoration: none;">
 					<h2>Example of using the library</h2>
 				</a>
-				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { ConvexAccount, ConvexAPI } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@convex-dev/convex-api-js&#x27;</span>
+				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { ConvexAPI } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@convex-dev/convex-api-js&#x27;</span>
 
     <span class="hljs-keyword">const</span> convex = <span class="hljs-keyword">new</span> ConvexAPI(<span class="hljs-string">&#x27;https://convex.world&#x27;</span>)
-    <span class="hljs-keyword">const</span> account = ConvexAccount.createNew()
+    <span class="hljs-keyword">const</span> account = convex.createAccount()
     <span class="hljs-keyword">const</span> amount = <span class="hljs-keyword">await</span> convex.requestFunds(<span class="hljs-number">10000000</span>, account)
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`requested <span class="hljs-subst">${amount}</span> funds.`</span>)
     <span class="hljs-keyword">const</span> balance = <span class="hljs-keyword">await</span> convex.getBalance(account)
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`The account <span class="hljs-subst">${account.address}</span> has a balance of <span class="hljs-subst">${balance}</span>`</span>)
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> convex.send(<span class="hljs-string">&#x27;(map inc [1 2 3 4 5])&#x27;</span>, account)
+    consol.log(<span class="hljs-string">`Result from calculation <span class="hljs-subst">${result}</span>`</span>)
 </code></pre>
 			</div>
 		</div>

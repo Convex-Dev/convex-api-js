@@ -97,6 +97,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#createaccount" class="tsd-kind-icon">create<wbr>Account</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_convexapi_.convexapi.html#do_transaction_get" class="tsd-kind-icon">do_<wbr>transaction_<wbr>get</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_convexapi_.convexapi.html#do_transaction_post" class="tsd-kind-icon">do_<wbr>transaction_<wbr>post</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#getaccountinfo" class="tsd-kind-icon">get<wbr>Account<wbr>Info</a></li>
@@ -126,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L31">src/ConvexAPI.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L32">src/ConvexAPI.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -161,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L31">src/ConvexAPI.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L32">src/ConvexAPI.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -176,7 +177,7 @@
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L26">src/ConvexAPI.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L27">src/ConvexAPI.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -188,6 +189,39 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createaccount" class="tsd-anchor"></a>
+					<h3>create<wbr>Account</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Account<span class="tsd-signature-symbol">(</span>account<span class="tsd-signature-symbol">?: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L57">src/ConvexAPI.ts:57</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a new account address with the convex network. You can provide an already
+									existing account Public/Private keys or leave empty, and a new ConvexAccount will be created.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> account: <a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional ConvexAccount object to assign the new address too.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A ConvexAccount object with a new account address.</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="do_transaction_get" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> do_<wbr>transaction_<wbr>get</h3>
@@ -198,7 +232,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L306">src/ConvexAPI.ts:306</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L348">src/ConvexAPI.ts:348</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -224,7 +258,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L291">src/ConvexAPI.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L333">src/ConvexAPI.ts:333</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -247,13 +281,13 @@
 					<a name="getaccountinfo" class="tsd-anchor"></a>
 					<h3>get<wbr>Account<wbr>Info</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Account<wbr>Info<span class="tsd-signature-symbol">(</span>addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_interfaces_.iconvexaccountinformation.html" class="tsd-signature-type">IConvexAccountInformation</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Account<wbr>Info<span class="tsd-signature-symbol">(</span>addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_interfaces_.iconvexaccountinformation.html" class="tsd-signature-type">IConvexAccountInformation</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L151">src/ConvexAPI.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L188">src/ConvexAPI.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -264,9 +298,9 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>addressAccount: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+									<h5>addressAccount: <span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>ConvexAccount or address string to use as the query the account.</p>
+										<p>ConvexAccount or address BigInt to use as the query the account.</p>
 									</div>
 								</li>
 							</ul>
@@ -290,13 +324,13 @@
 					<a name="getaddress" class="tsd-anchor"></a>
 					<h3>get<wbr>Address</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Address<span class="tsd-signature-symbol">(</span>functionName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Address<span class="tsd-signature-symbol">(</span>functionName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L116">src/ConvexAPI.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L153">src/ConvexAPI.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,9 +348,9 @@
 									</div>
 								</li>
 								<li>
-									<h5>addressAccount: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+									<h5>addressAccount: <span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>ConvexAccount or address string to use as the query address. This address
+										<p>ConvexAccount or address BigInt to use as the query address. This address
 										is the address used by the owner of the deployed function</p>
 									</div>
 								</li>
@@ -330,13 +364,13 @@
 					<a name="getbalance" class="tsd-anchor"></a>
 					<h3>get<wbr>Balance</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Balance<span class="tsd-signature-symbol">(</span>addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Balance<span class="tsd-signature-symbol">(</span>addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L81">src/ConvexAPI.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L116">src/ConvexAPI.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -347,13 +381,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>addressAccount: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+									<h5>addressAccount: <span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>ConvexAccount object or string address of the account to get the balance.</p>
+										<p>ConvexAccount object or BigInt address of the account to get the balance.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>The balance of funds held by the account address.</p>
 						</li>
 					</ul>
@@ -362,13 +396,13 @@
 					<a name="query" class="tsd-anchor"></a>
 					<h3>query</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">query<span class="tsd-signature-symbol">(</span>transaction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a>, language<span class="tsd-signature-symbol">?: </span><a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">query<span class="tsd-signature-symbol">(</span>transaction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, addressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a>, language<span class="tsd-signature-symbol">?: </span><a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L242">src/ConvexAPI.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L283">src/ConvexAPI.ts:283</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -379,7 +413,7 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>prama</dt>
-									<dd><p>addressAccount Address string or ConvexAccount object to use for the query transaction.</p>
+									<dd><p>addressAccount Address BigInt or ConvexAccount object to use for the query transaction.</p>
 									</dd>
 								</dl>
 							</div>
@@ -392,7 +426,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>addressAccount: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+									<h5>addressAccount: <span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> language: <a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a></h5>
@@ -407,13 +441,13 @@
 					<a name="requestfunds" class="tsd-anchor"></a>
 					<h3>request<wbr>Funds</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">request<wbr>Funds<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, account<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">request<wbr>Funds<span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span>, account<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L56">src/ConvexAPI.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L91">src/ConvexAPI.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -425,7 +459,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+									<h5>amount: <span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The amount to request.</p>
 									</div>
@@ -437,7 +471,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>The amount of funds provided for this request.</p>
 						</li>
 					</ul>
@@ -452,7 +486,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L198">src/ConvexAPI.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L239">src/ConvexAPI.ts:239</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,19 +522,19 @@
 					<a name="transaction_prepare" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> transaction_<wbr>prepare</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">transaction_<wbr>prepare<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, transaction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, language<span class="tsd-signature-symbol">: </span><a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a>, sequenceNumber<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">transaction_<wbr>prepare<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span>, transaction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, language<span class="tsd-signature-symbol">: </span><a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a>, sequenceNumber<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L256">src/ConvexAPI.ts:256</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L297">src/ConvexAPI.ts:297</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<h5>address: <span class="tsd-signature-type">BigInt</span></h5>
 								</li>
 								<li>
 									<h5>transaction: <span class="tsd-signature-type">string</span></h5>
@@ -509,7 +543,7 @@
 									<h5>language: <a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sequenceNumber: <span class="tsd-signature-type">number</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sequenceNumber: <span class="tsd-signature-type">BigInt</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -520,19 +554,19 @@
 					<a name="transaction_query" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> transaction_<wbr>query</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">transaction_<wbr>query<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, transaction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, language<span class="tsd-signature-symbol">: </span><a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">transaction_<wbr>query<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span>, transaction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, language<span class="tsd-signature-symbol">: </span><a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L282">src/ConvexAPI.ts:282</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L324">src/ConvexAPI.ts:324</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<h5>address: <span class="tsd-signature-type">BigInt</span></h5>
 								</li>
 								<li>
 									<h5>transaction: <span class="tsd-signature-type">string</span></h5>
@@ -549,19 +583,22 @@
 					<a name="transaction_submit" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> transaction_<wbr>submit</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">transaction_<wbr>submit<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, hashData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signedData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">transaction_<wbr>submit<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span>, publicKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, hashData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, signedData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L272">src/ConvexAPI.ts:272</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L313">src/ConvexAPI.ts:313</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<h5>address: <span class="tsd-signature-type">BigInt</span></h5>
+								</li>
+								<li>
+									<h5>publicKey: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>hashData: <span class="tsd-signature-type">string</span></h5>
@@ -578,13 +615,13 @@
 					<a name="transfer" class="tsd-anchor"></a>
 					<h3>transfer</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">transfer<span class="tsd-signature-symbol">(</span>toAddressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, fromAccount<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">transfer<span class="tsd-signature-symbol">(</span>toAddressAccount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a>, amount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span>, fromAccount<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAPI.ts#L173">src/ConvexAPI.ts:173</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAPI.ts#L210">src/ConvexAPI.ts:210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -600,13 +637,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>toAddressAccount: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+									<h5>toAddressAccount: <span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>To address string or account , that the funds need to be sent too.</p>
+										<p>To address BigInt or account , that the funds need to be sent too.</p>
 									</div>
 								</li>
 								<li>
-									<h5>amount: <span class="tsd-signature-type">number</span></h5>
+									<h5>amount: <span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Amount to send for the transfer.</p>
 									</div>
@@ -619,7 +656,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -669,6 +706,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_convexapi_.convexapi.html#url" class="tsd-kind-icon">url</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#createaccount" class="tsd-kind-icon">create<wbr>Account</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="_convexapi_.convexapi.html#do_transaction_get" class="tsd-kind-icon">do_<wbr>transaction_<wbr>get</a>

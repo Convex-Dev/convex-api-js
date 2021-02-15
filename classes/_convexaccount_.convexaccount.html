@@ -91,10 +91,10 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexaccount_.convexaccount.html#address" class="tsd-kind-icon">address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexaccount_.convexaccount.html#addressapi" class="tsd-kind-icon">addressAPI</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexaccount_.convexaccount.html#addresschecksum" class="tsd-kind-icon">address<wbr>Checksum</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexaccount_.convexaccount.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexaccount_.convexaccount.html#publickey" class="tsd-kind-icon">public<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexaccount_.convexaccount.html#publickeyapi" class="tsd-kind-icon">public<wbr>KeyAPI</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexaccount_.convexaccount.html#publickeychecksum" class="tsd-kind-icon">public<wbr>Key<wbr>Checksum</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -117,13 +117,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Convex<wbr>Account<span class="tsd-signature-symbol">(</span>publicKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">KeyObject</span>, privateKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">KeyObject</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Convex<wbr>Account<span class="tsd-signature-symbol">(</span>publicKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">KeyObject</span>, privateKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">KeyObject</span>, address<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L88">src/ConvexAccount.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L90">src/ConvexAccount.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -133,6 +133,9 @@
 								</li>
 								<li>
 									<h5>privateKey: <span class="tsd-signature-type">KeyObject</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> address: <span class="tsd-signature-type">BigInt</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h4>
@@ -145,30 +148,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="address" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> address</h3>
-					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BigInt</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L17">src/ConvexAccount.ts:17</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="addressapi" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> addressAPI</h3>
-					<div class="tsd-signature tsd-kind-icon">addressAPI<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L18">src/ConvexAccount.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="addresschecksum" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> address<wbr>Checksum</h3>
-					<div class="tsd-signature tsd-kind-icon">address<wbr>Checksum<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L19">src/ConvexAccount.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L17">src/ConvexAccount.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -178,7 +161,7 @@
 					<div class="tsd-signature tsd-kind-icon">private<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyObject</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L15">src/ConvexAccount.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L15">src/ConvexAccount.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -188,7 +171,27 @@
 					<div class="tsd-signature tsd-kind-icon">public<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyObject</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L16">src/ConvexAccount.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L16">src/ConvexAccount.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="publickeyapi" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> public<wbr>KeyAPI</h3>
+					<div class="tsd-signature tsd-kind-icon">public<wbr>KeyAPI<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L18">src/ConvexAccount.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="publickeychecksum" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> public<wbr>Key<wbr>Checksum</h3>
+					<div class="tsd-signature tsd-kind-icon">public<wbr>Key<wbr>Checksum<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L19">src/ConvexAccount.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -205,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L127">src/ConvexAccount.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L129">src/ConvexAccount.ts:129</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -239,7 +242,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L110">src/ConvexAccount.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L112">src/ConvexAccount.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -271,7 +274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L143">src/ConvexAccount.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L145">src/ConvexAccount.ts:145</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -306,7 +309,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L26">src/ConvexAccount.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L26">src/ConvexAccount.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -323,13 +326,13 @@
 					<a name="importfromfile" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> import<wbr>From<wbr>File</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">import<wbr>From<wbr>File<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">import<wbr>From<wbr>File<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L82">src/ConvexAccount.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L84">src/ConvexAccount.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -351,6 +354,12 @@
 										<p>Password to decrypt the private key.</p>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> address: <span class="tsd-signature-type">BigInt</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional address used for this account.</p>
+									</div>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>An ConvexAccount object with the private and public keys.</p>
@@ -361,13 +370,13 @@
 					<a name="importfromstring" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> import<wbr>From<wbr>String</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">import<wbr>From<wbr>String<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, publicKeyText<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></li>
+						<li class="tsd-signature tsd-kind-icon">import<wbr>From<wbr>String<span class="tsd-signature-symbol">(</span>text<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">BigInt</span>, publicKeyText<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/7dba531/src/ConvexAccount.ts#L56">src/ConvexAccount.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/5e2fdd0/src/ConvexAccount.ts#L57">src/ConvexAccount.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -388,6 +397,12 @@
 									<h5>password: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Password to decrypt the private key.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> address: <span class="tsd-signature-type">BigInt</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional address used for this account.</p>
 									</div>
 								</li>
 								<li>
@@ -445,16 +460,16 @@
 								<a href="_convexaccount_.convexaccount.html#address" class="tsd-kind-icon">address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_convexaccount_.convexaccount.html#addressapi" class="tsd-kind-icon">addressAPI</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_convexaccount_.convexaccount.html#addresschecksum" class="tsd-kind-icon">address<wbr>Checksum</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_convexaccount_.convexaccount.html#privatekey" class="tsd-kind-icon">private<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_convexaccount_.convexaccount.html#publickey" class="tsd-kind-icon">public<wbr>Key</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_convexaccount_.convexaccount.html#publickeyapi" class="tsd-kind-icon">public<wbr>KeyAPI</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_convexaccount_.convexaccount.html#publickeychecksum" class="tsd-kind-icon">public<wbr>Key<wbr>Checksum</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_convexaccount_.convexaccount.html#exporttofile" class="tsd-kind-icon">export<wbr>ToFile</a>
