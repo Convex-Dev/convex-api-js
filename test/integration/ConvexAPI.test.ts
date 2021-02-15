@@ -236,7 +236,7 @@ describe('ConvexAPI Class', () => {
     })
 
 
-    describe('multi threaded test', async () => {
+    describe('multi threaded send test', async () => {
         let convex
         let account
         before( async () => {
@@ -246,18 +246,44 @@ describe('ConvexAPI Class', () => {
             await topupAccount(convex, account, MIN_BALANCE)
         })
         it('should run multiple transactions before waiting for the result on the convex network', async () => {
-            let results = Array(10)
+            const sendCount = 20
+            let results = Array(sendCount)
             // first send transactions all at once
-            for ( let counter = 0; counter < 8; counter ++ ) {
+            for ( let counter = 0; counter < sendCount; counter ++ ) {
                 const line = '(map inc [1 2 3 4 5])'
                 results[counter] = convex.send(line, account)
             }
             // now wait for the results
-            for ( let counter = 0; counter < 8; counter ++ ) {
+            for ( let counter = 0; counter < sendCount; counter ++ ) {
                 let result = await results[counter]
                 assert(result)
                 assert.deepEqual(result['value'], [ 2, 3, 4, 5, 6 ])
             }
         }).timeout(20 * 1000)
     })
+
+    describe('multi threaded createAccount test', async () => {
+        let convex
+        let importAccount
+        before( async () => {
+            convex = new ConvexAPI(CONVEX_URL)
+            importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+        })
+        it('should run multiple createAccount test', async () => {
+            const requestCount = 20
+            let results = Array(requestCount)
+            // first send transactions all at once
+            for ( let counter = 0; counter < requestCount; counter ++ ) {
+                results[counter] = convex.createAccount(importAccount)
+            }
+            // now wait for the results
+            for ( let counter = 0; counter < requestCount; counter ++ ) {
+                let result = await results[counter]
+                assert(result)
+                assert(result.address)
+            }
+        }).timeout(20 * 1000)
+    })
+
+
 })
