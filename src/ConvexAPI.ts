@@ -44,6 +44,16 @@ export class ConvexAPI {
         }
     }
 
+    /**
+     * Create a new account address with the convex network. You can provide an already
+     * existing account Public/Private keys or leave empty, and a new ConvexAccount will be created.
+     *
+     *
+     * @param account Optional ConvexAccount object to assign the new address too.
+     *
+     * @returns A ConvexAccount object with a new account address.
+     *
+     */
     public async createAccount(account?: ConvexAccount): Promise<ConvexAccount> {
         let newAccount: ConvexAccount = account
 
@@ -98,7 +108,7 @@ export class ConvexAPI {
     /**
      * Get the current balance of an account.
      *
-     * @param addressAccount ConvexAccount object or string address of the account to get the balance.
+     * @param addressAccount ConvexAccount object or BigInt address of the account to get the balance.
      *
      * @returns The balance of funds held by the account address.
      *
@@ -134,7 +144,7 @@ export class ConvexAPI {
      * for this method to work.
      *
      * @param functionName The deployed function go get the address off.
-     * @param addressAccount ConvexAccount or address string to use as the query address. This address
+     * @param addressAccount ConvexAccount or address BigInt to use as the query address. This address
      * is the address used by the owner of the deployed function
      *
      * @returns The address of the deployed function
@@ -158,7 +168,7 @@ export class ConvexAPI {
     /**
      * Request account information, from the convex network.
      *
-     * @param addressAccount ConvexAccount or address string to use as the query the account.
+     * @param addressAccount ConvexAccount or address BigInt to use as the query the account.
      *
      * @returns The account information of the type IConvexAccountInformation, for example:
      *
@@ -189,7 +199,7 @@ export class ConvexAPI {
     /**
      * Transfer funds from one account to another.
      *
-     * @param toAddressAccount To address string or account , that the funds need to be sent too.
+     * @param toAddressAccount To address BigInt or account , that the funds need to be sent too.
      * @param amount Amount to send for the transfer.
      * @param fromAccount ConvexAccount to send the funds from. This must be an account object so that the transfer transaction
      * can be sent from the account.
@@ -265,7 +275,7 @@ export class ConvexAPI {
      * query and calling read operations in contracts.
      *
      * @param transaction Read only transaction to perform.
-     * @prama addressAccount Address string or ConvexAccount object to use for the query transaction.
+     * @prama addressAccount Address BigInt or ConvexAccount object to use for the query transaction.
      *
      * @returns The query results.
      *

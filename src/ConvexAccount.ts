@@ -76,6 +76,7 @@ export class ConvexAccount {
      *
      * @param filename Filename containing the encrypted private key.
      * @param password Password to decrypt the private key.
+     * @param address Optional address used for this account.
      *
      * @returns An ConvexAccount object with the private and public keys.
      *
