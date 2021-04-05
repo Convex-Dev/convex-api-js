@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release 0.1.2
++   same as 0.1.1
+
 ### Release 0.1.1
 +   Add Registry class to register and resolve account names
 
