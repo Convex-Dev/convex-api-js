@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release 0.1.1
++   Add Registry class to register and resolve account names
+
 ### Release 0.1.0
 +   Create an account using ConvexAPI class
 
