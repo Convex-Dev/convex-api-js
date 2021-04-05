@@ -10,7 +10,8 @@ import { randomBytes } from 'crypto'
 import { ConvexAccount } from './ConvexAccount'
 import { remove0xPrefix } from './Utils'
 import { ConvexAPIRequestError, ConvexAPIError } from './Errors'
-import { IConvexAccountInformation } from './Interfaces'
+import { IConvexAccountInformation, IRegistryItem } from './Interfaces'
+import { Registry } from './Registry'
 
 import fetch from 'node-fetch'
 import urljoin from 'url-join'
@@ -19,6 +20,8 @@ const enum Language {
     Lisp = 'convex-lisp',
     Scrypt = 'convex-scrypt',
 }
+
+const TOPUP_ACCOUNT_MIN_BALANCE = BigInt(10000000)
 
 export class ConvexAPI {
     /**
@@ -32,6 +35,11 @@ export class ConvexAPI {
     language: Language
 
     /**
+     * Registry used to resolve account names
+     */
+    registry: Registry
+
+    /**
      * Initaliizes a new ConvexAPI object, you need to provide the URL of a Convex Network Node.
      *
      * @param url URL of the convex network node.
@@ -42,6 +50,7 @@ export class ConvexAPI {
         if (!language) {
             this.language = Language.Lisp
         }
+        this.registry = new Registry(this)
     }
 
     /**
@@ -103,6 +112,28 @@ export class ConvexAPI {
             return BigInt(result['value'])
         }
         return BigInt(0)
+    }
+
+    /**
+     * Topup account to a minimum balance
+     *
+     * @param account The convex account to topup
+     * @param minBalance The minimum balance the account should be topped too
+     * @param retryCount Number of times to try loop around and topup the account
+     *
+     * @returns the amount of funds transfered to the account
+     *
+     */
+    public async topupAccount(account: ConvexAccount, minBalance?: BigInt, retryCount?: number): Promise<BigInt> {
+        minBalance = minBalance ? minBalance : TOPUP_ACCOUNT_MIN_BALANCE
+        retryCount = retryCount ? retryCount : 8
+        const requestAmount: BigInt = TOPUP_ACCOUNT_MIN_BALANCE
+        let transferAmount: BigInt = BigInt(0)
+        while (minBalance > (await this.getBalance(account)) && retryCount > 0) {
+            transferAmount = transferAmount.valueOf() + (await this.requestFunds(requestAmount, account)).valueOf()
+            retryCount -= 1
+        }
+        return transferAmount
     }
 
     /**
@@ -194,6 +225,80 @@ export class ConvexAPI {
         }
         const queryURL = urljoin(this.url, `/api/v1/accounts/${address}`)
         return <IConvexAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
+    }
+
+    /**
+     * Loads an account using the account name. The name must be registered by using `registerAccountName` or the
+     * `accountSetup` method.
+     *
+     * @param name: Name of the registered account to load.
+     * @param account: ConvexAccount to use for the key to load.
+     *
+     * @returns A ConvexAccount with the account name and adderss set.
+     *
+     */
+
+    public async loadAccount(name: string, account: ConvexAccount): Promise<ConvexAccount> {
+        const address: BigInt = await this.resolveAccountName(name)
+        if (address) {
+            return ConvexAccount.importFromAccount(account, address, name)
+        }
+    }
+
+    /**
+     * Setup an account by registering the account name or by loading the account using a pre registered name.
+     *
+     * @param name: name of the account to register or has already been registered.
+     * @param account: ConvexAccount to use for the public/private keys
+     *
+     * @returns A ConvexAccount with the account name and adderss set.
+     *
+     */
+    public async setupAccount(name: string, account: ConvexAccount): Promise<ConvexAccount> {
+        let newAccount
+        const address: BigInt = await this.resolveAccountName(name)
+        if (address) {
+            newAccount = ConvexAccount.importFromAccount(account, address, name)
+        } else {
+            newAccount = await this.createAccount(account)
+            await this.topupAccount(newAccount)
+            newAccount = await this.registerAccountName(name, newAccount)
+        }
+        await this.topupAccount(newAccount)
+        return newAccount
+    }
+
+    /**
+     * Register an account name with the CNS ( Convex Named Service), this name can be used in the convex
+     * sandbox or used by the API libraries to resolve an account name to an account address.
+     *
+     * @param name: name of the account to register
+     * @param account: Account to spend the fee to register and use the address.
+     * @param address: Optional address to use to register this instead of using the accounts address.
+     *
+     * @returns an account object with the address set
+     *
+     */
+    public async registerAccountName(name: string, account: ConvexAccount, address?: BigInt): Promise<ConvexAccount> {
+        if (!address) {
+            address = account.address
+        }
+        if (address) {
+            const item: IRegistryItem = await this.registry.register(`account.${name}`, address, account)
+            return ConvexAccount.importFromAccount(account, item.address, name)
+        }
+    }
+
+    /**
+     * Resolve an account name, if found return the account address registered with this account name.
+     *
+     * @param name Name of the registered account
+     *
+     * @returns Address of the registered account or nil
+     *
+     */
+    public async resolveAccountName(name: string): Promise<BigInt> {
+        return this.registry.resolveAddress(`account.${name}`)
     }
 
     /**

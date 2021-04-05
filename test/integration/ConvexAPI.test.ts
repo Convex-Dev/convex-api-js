@@ -7,6 +7,7 @@
 
 import chai, { assert, expect } from 'chai'
 chai.use(require('chai-as-promised'))
+import { randomBytes } from 'crypto'
 
 import { ConvexAccount, ConvexAPI } from '../../src'
 import { isAddress, toAddress } from '../../src/Utils'
@@ -23,24 +24,7 @@ JAr4iFzPLkM18YEP2ZE=
 const PRIVATE_TEST_KEY_PASSWORD = 'secret'
 
 const CONVEX_URL = 'https://convex.world'
-
 const TOPUP_AMOUNT = 10000000
-const MIN_BALANCE = TOPUP_AMOUNT * 2
-
-
-async function topupAccount(convex: ConvexAPI, account: ConvexAccount, minBalance?: Number): Promise<BigInt> {
-    let balance = await convex.getBalance(account)
-//    console.log('topup start balance', balance)
-    const amount = TOPUP_AMOUNT
-    const toBalance = minBalance ? minBalance : TOPUP_AMOUNT
-    while ( balance < BigInt(toBalance)) {
-        const result = await convex.requestFunds(amount, account)
-        assert(result)
-        balance = await convex.getBalance(account)
-    }
-//    console.log('topup end balance', balance)
-    return balance
-}
 
 describe('ConvexAPI Class', () => {
     describe('requestFunds', async () => {
@@ -127,7 +111,7 @@ describe('ConvexAPI Class', () => {
             convex = new ConvexAPI(CONVEX_URL)
             const importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importAccount)
-            await topupAccount(convex, account, MIN_BALANCE)
+            await convex.topupAccount(account)
         })
 
         it('should send a single transaction to the convex network', async () => {
@@ -162,7 +146,7 @@ describe('ConvexAPI Class', () => {
             convex = new ConvexAPI(CONVEX_URL)
             const importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importAccount)
-            await topupAccount(convex, account, MIN_BALANCE)
+            await convex.topupAccount(account)
             functionName = 'test-storage'
             const testFunctionDeploy = `
 (def ${functionName}
@@ -193,6 +177,61 @@ describe('ConvexAPI Class', () => {
 //             assert(address)
 //         })
     })
+
+    describe('accountNames not resolved', async () => {
+        let convex
+        let importAccount
+        let accountName
+        before( async () => {
+            convex = new ConvexAPI(CONVEX_URL)
+            importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            accountName = 'test.convex-api.' + randomBytes(4).toString('hex')
+        })
+        it('should fail to reslove a new named account',  async() => {
+            const result = await convex.resolveAccountName(accountName, importAccount)
+            assert(!result)
+        })
+        it('should fail to load a new named account',  async() => {
+            const result = await convex.loadAccount(accountName, importAccount)
+            assert(!result)
+        })
+    })
+
+    describe('accountNames register and load', async () => {
+        let convex
+        let importAccount
+        let accountName
+        let newAccount
+        before( async () => {
+            convex = new ConvexAPI(CONVEX_URL)
+            importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            accountName = 'test.convex-api.' + randomBytes(4).toString('hex')
+        })
+        it('should setup and setup/create a new named account',  async() => {
+            newAccount = await convex.setupAccount(accountName, importAccount)
+            assert(newAccount)
+            assert(newAccount.address)
+            assert(newAccount.name)
+        })
+        it('should resolve the address of the new named account',  async() => {
+            const result = await convex.resolveAccountName(accountName, importAccount)
+            assert(result)
+            assert.equal(result, newAccount.address)
+        })
+        it('should load the new named account',  async() => {
+            const result = await convex.loadAccount(accountName, importAccount)
+            assert(result)
+            assert.equal(result.address, newAccount.address)
+            assert.equal(result.name, newAccount.name)
+        })
+        it('should resolve the address of the new named account after a clear cache',  async() => {
+            convex.registry.clearCache()
+            const result = await convex.resolveAccountName(accountName, importAccount)
+            assert(result)
+            assert.equal(result, newAccount.address)
+        })
+    })
+
     describe('getAccountInfo', async () => {
         let convex
         let account
@@ -222,7 +261,7 @@ describe('ConvexAPI Class', () => {
             convex = new ConvexAPI(CONVEX_URL)
             const importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             accountFrom = await convex.createAccount(importAccount)
-            await topupAccount(convex, accountFrom, MIN_BALANCE)
+            await convex.topupAccount(accountFrom)
         })
 
         it('should transfer a set amount of funds from the test account to a new account', async () => {
@@ -243,7 +282,7 @@ describe('ConvexAPI Class', () => {
             convex = new ConvexAPI(CONVEX_URL)
             const importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importAccount)
-            await topupAccount(convex, account, MIN_BALANCE)
+            await convex.topupAccount(account)
         })
         it('should run multiple transactions before waiting for the result on the convex network', async () => {
             const sendCount = 20

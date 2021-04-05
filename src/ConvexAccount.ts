@@ -15,6 +15,7 @@ export class ConvexAccount {
     readonly privateKey: KeyObject // private key object
     readonly publicKey: KeyObject // public key object
     readonly address: BigInt // address for this account
+    readonly name: string // name of the registered account
     readonly publicKeyAPI: string // address as hex string without leading '0x'
     readonly publicKeyChecksum: string // address as hex string with checksum upper an lower case hex letters
 
@@ -38,7 +39,7 @@ export class ConvexAccount {
                 passphrase: password,
             },
         })
-        return ConvexAccount.importFromString(privateKey, password, null, publicKey)
+        return ConvexAccount.importFromString(privateKey, password, null, null, publicKey)
     }
 
     /**
@@ -54,7 +55,13 @@ export class ConvexAccount {
      * @returns an account object with the private and public key pairs.
      *
      */
-    public static importFromString(text: string, password: string, address?: BigInt, publicKeyText?: string): ConvexAccount {
+    public static importFromString(
+        text: string,
+        password: string,
+        address?: BigInt,
+        name?: string,
+        publicKeyText?: string
+    ): ConvexAccount {
         const privateKey = createPrivateKey({
             key: text,
             type: 'pkcs8',
@@ -68,7 +75,7 @@ export class ConvexAccount {
             publicKey = createPublicKey(privateKey)
         }
 
-        return new ConvexAccount(publicKey, privateKey, address)
+        return new ConvexAccount(publicKey, privateKey, address, name)
     }
 
     /**
@@ -81,15 +88,26 @@ export class ConvexAccount {
      * @returns An ConvexAccount object with the private and public keys.
      *
      */
-    public static async importFromFile(filename: string, password: string, address?: BigInt): Promise<ConvexAccount> {
+    public static async importFromFile(
+        filename: string,
+        password: string,
+        address?: BigInt,
+        name?: string
+    ): Promise<ConvexAccount> {
         if (fs.existsSync(filename)) {
             const data = await fs.promises.readFile(filename)
-            return ConvexAccount.importFromString(data.toString(), password, address)
+            return ConvexAccount.importFromString(data.toString(), password, address, name)
         }
         return null
     }
 
-    constructor(publicKey: KeyObject, privateKey: KeyObject, address?: BigInt) {
+    public static async importFromAccount(account: ConvexAccount, address?: BigInt, name?: string): Promise<ConvexAccount> {
+        const password = randomBytes(64).toString('hex')
+        const keyText = account.exportToText(password)
+        return ConvexAccount.importFromString(keyText, password, address, name)
+    }
+
+    constructor(publicKey: KeyObject, privateKey: KeyObject, address?: BigInt, name?: string) {
         this.publicKey = publicKey
         this.privateKey = privateKey
         const exportPublicKey = publicKey.export({
@@ -99,6 +117,7 @@ export class ConvexAccount {
         this.publicKeyAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
         this.publicKeyChecksum = toPublicKeyChecksum(this.publicKeyAPI)
         this.address = address
+        this.name = name
     }
 
     /**

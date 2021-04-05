@@ -14,3 +14,8 @@ export interface IConvexAccountInformation {
     sequence: number
     environment: unknown
 }
+
+export interface IRegistryItem {
+    address: BigInt
+    owner: BigInt
+}
