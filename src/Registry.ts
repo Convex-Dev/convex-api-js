@@ -31,7 +31,7 @@ export class Registry {
         this.convex = convex
     }
 
-    public clearCache(): Nothing {
+    public clearCache(): void {
         this.items = {}
     }
 
