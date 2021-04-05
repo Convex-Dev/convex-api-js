@@ -232,6 +232,17 @@ describe('ConvexAPI Class', () => {
         })
     })
 
+    describe('registry', async () => {
+        let convex
+        before( async () => {
+            convex = new ConvexAPI(CONVEX_URL)
+        })
+        it('should resolve to a third party library or actor', async() => {
+            const address = await convex.resolveName('convex.nft-tokens')
+            assert(address)
+        })
+    })
+
     describe('getAccountInfo', async () => {
         let convex
         let account

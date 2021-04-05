@@ -44,6 +44,12 @@ export class ConvexAPI {
      *
      * @param url URL of the convex network node.
      *
+     * @example
+     *
+     * ```js
+     * const convex = new ConvexAPI('https://convex.world')
+     * ```
+     *
      */
     public constructor(url: string, language?: Language) {
         this.url = url
@@ -61,6 +67,18 @@ export class ConvexAPI {
      * @param account Optional ConvexAccount object to assign the new address too.
      *
      * @returns A ConvexAccount object with a new account address.
+     *
+     * @example
+     *
+     * ```js
+     * // create a new account with a random keys and new address
+     * const newAccount = await convex.createAccount()
+     *
+     * // Create an account with our own keys, but with a new address
+     * importAccount = ConvexAccount.importFromFile('my-account.pem', 'secret')
+     * const accountWithNewAddress = await convex.createAccount(importAccount)
+     * ```
+     *
      *
      */
     public async createAccount(account?: ConvexAccount): Promise<ConvexAccount> {
@@ -96,6 +114,13 @@ export class ConvexAPI {
      *
      * @returns The amount of funds provided for this request.
      *
+     * @example
+     *
+     * ```js
+     * const fundsRequested = await convex.requestFunds(100000, account)
+     * console.log(`requested ${fundsRequested} funds for account at address ${account.address}`)
+     * ```
+     *
      */
     public async requestFunds(amount: BigInt | number, account: ConvexAccount): Promise<BigInt> {
         const queryURL = urljoin(this.url, '/api/v1/faucet')
@@ -123,6 +148,13 @@ export class ConvexAPI {
      *
      * @returns the amount of funds transfered to the account
      *
+     * @example
+     *
+     * ```js
+     * const amount = await convex.topupAccount(account)
+     * console.log(`${amount} tokens was topped up to account at address ${account.address}`)
+     * ```
+     *
      */
     public async topupAccount(account: ConvexAccount, minBalance?: BigInt, retryCount?: number): Promise<BigInt> {
         minBalance = minBalance ? minBalance : TOPUP_ACCOUNT_MIN_BALANCE
@@ -142,6 +174,20 @@ export class ConvexAPI {
      * @param addressAccount ConvexAccount object or BigInt address of the account to get the balance.
      *
      * @returns The balance of funds held by the account address.
+     *
+     * @example
+     *
+     * ```js
+     *
+     * const balance = await convex.balance(account)
+     * console.log(`balance of ${balance} for account at address ${account.address}`)
+     *
+     * const sameBalance = await convex.balance(account.address)
+     * console.log(`balance of ${sameBalance} for account at address ${account.address}`)
+     *
+     * const mainFundBalance = await convex.balance(9)
+     * console.log(`main fund balance of ${mainFundBalance} for address #9`)
+     * ```
      *
      */
     public async getBalance(addressAccount: BigInt | ConvexAccount): Promise<BigInt> {
@@ -203,8 +249,13 @@ export class ConvexAPI {
      *
      * @returns The account information of the type IConvexAccountInformation, for example:
      *
+     * @example
+     *
+     * ```js
+     *  await convex.getAccountInfo(account)
+     *
      *  {
-     *      "address": "7E66429CA9c10e68eFae2dCBF1804f0F6B3369c7164a3187D6233683c258710f",
+     *      "address": "405",
      *      "is_library": false,
      *      "is_actor": false,
      *      "memory_size": 75,
@@ -236,6 +287,16 @@ export class ConvexAPI {
      *
      * @returns A ConvexAccount with the account name and adderss set.
      *
+     * @example
+     *
+     * ```js
+     * // get the current account keys we need to use
+     * const importAccount = await ConvexAccount.importFromFile('account_file.pem', 'secret')
+     *
+     * // load the account from an account name already registered.
+     * const account = await convex.loadAccount('my-account-name', importAccount)
+     *
+     * ```
      */
 
     public async loadAccount(name: string, account: ConvexAccount): Promise<ConvexAccount> {
@@ -252,6 +313,16 @@ export class ConvexAPI {
      * @param account: ConvexAccount to use for the public/private keys
      *
      * @returns A ConvexAccount with the account name and adderss set.
+     *
+     * @example
+     * ```js
+     * // get the current account keys we need to use
+     * const importAccount = await ConvexAccount.importFromFile('account_file.pem', 'secret')
+     *
+     * // creates a new account address or loads the account from an account name already registered.
+     * const account = await convex.setupAccount('my-account-name', importAccount)
+     *
+     * ```
      *
      */
     public async setupAccount(name: string, account: ConvexAccount): Promise<ConvexAccount> {
@@ -278,6 +349,20 @@ export class ConvexAPI {
      *
      * @returns an account object with the address set
      *
+     * @example
+     *
+     * ```js
+     * // load the account from an account name already registered.
+     * const registerAccount = await convex.loadAccount('my-registration-account', importAccount)
+     *
+     * // create a new account with a new address
+     * let newAccount = await convex.createAccount(importAccount)
+     *
+     * // now we can register the name for the new account, by paying for the fees from the registerAccount
+     * newAccount = await convex.registerAccountName('my-new-name', registerAccount, newAccount.address)
+     *
+     * ```
+     *
      */
     public async registerAccountName(name: string, account: ConvexAccount, address?: BigInt): Promise<ConvexAccount> {
         if (!address) {
@@ -296,10 +381,38 @@ export class ConvexAPI {
      *
      * @returns Address of the registered account or nil
      *
+     * @example
+     *
+     * ```js
+     * // resolve to find the address of an account
+     * const accountAddress = await convex.resolveAccountName('my-account')
+     *
+     * ```
      */
     public async resolveAccountName(name: string): Promise<BigInt> {
         return this.registry.resolveAddress(`account.${name}`)
     }
+
+
+    /**
+     * Resolve a name, if found return the address registered with this name in the Convex Name Services.
+     *
+     * @param name Name of the service
+     *
+     * @returns Address of the registered service
+     *
+     * @example
+     *
+     * ```js
+     * // resolve to find the address of a library or actor
+     * const nftTokenLibraryAddress = await convex.resolveName('covex.nft-token')
+     *
+     * ```
+     */
+    public async resolveName(name: string): Promise<BigInt> {
+        return this.registry.resolveAddress(name)
+    }
+
 
     /**
      * Transfer funds from one account to another.
@@ -310,6 +423,19 @@ export class ConvexAPI {
      * can be sent from the account.
      *
      * @results The amount of funds transfered.
+     *
+     * @example
+     *
+     * ```js
+     * // load the account from an account name already registered.
+     * const fundingAccount = await convex.loadAccount('my-funding-account', importAccount)
+     * const newAccount = await convex.createAccount(importAccount)
+     *
+     * // send 1000000 tokens from the fundingAccount to the newAccount
+     * const amount = await convex.transfer(newAccount, 1000000, fundingAccount)
+     *
+     *
+     * ```
      *
      */
     public async transfer(
@@ -339,6 +465,13 @@ export class ConvexAPI {
      * @param account ConvexAccount to sign the transaction.
      *
      * @returns The result from executing the transaction.
+     *
+     * @example
+     * ```js
+     * const resultSend = await convex.send('(map inc [1 2 3 4 5])', account)
+     * consol.log(`Result from calculation ${resultSend}`)
+     * ```
+     *
      *
      */
     public async send(transaction: string, account: ConvexAccount, language?: Language): Promise<unknown> {
@@ -383,6 +516,13 @@ export class ConvexAPI {
      * @prama addressAccount Address BigInt or ConvexAccount object to use for the query transaction.
      *
      * @returns The query results.
+     *
+     * @example
+     *
+     * ```js
+     * const resultQuery = await convex.query('(balance *address*)', account.address)
+     * consol.log(`Result from a query ${resultQuery}`)
+     * ```
      *
      */
     public async query(transaction: string, addressAccount: BigInt | ConvexAccount, language?: Language): Promise<unknown> {
