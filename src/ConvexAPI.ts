@@ -393,7 +393,6 @@ export class ConvexAPI {
         return this.registry.resolveAddress(`account.${name}`)
     }
 
-
     /**
      * Resolve a name, if found return the address registered with this name in the Convex Name Services.
      *
@@ -412,7 +411,6 @@ export class ConvexAPI {
     public async resolveName(name: string): Promise<BigInt> {
         return this.registry.resolveAddress(name)
     }
-
 
     /**
      * Transfer funds from one account to another.
