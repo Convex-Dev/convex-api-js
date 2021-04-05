@@ -1,6 +1,6 @@
 {
   "name": "@convex-dev/convex-api-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JavaScript client library to access Convex Network",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
