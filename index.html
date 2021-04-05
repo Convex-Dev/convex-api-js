@@ -72,16 +72,46 @@
 				<a href="#example-of-using-the-library" id="example-of-using-the-library" style="color: inherit; text-decoration: none;">
 					<h2>Example of using the library</h2>
 				</a>
-				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { ConvexAPI } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@convex-dev/convex-api-js&#x27;</span>
+				<p>First import the library and setup the convex API connection</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">import</span> { ConvexAPI, ConvexAccount } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@convex-dev/convex-api-js&#x27;</span>
 
     <span class="hljs-keyword">const</span> convex = <span class="hljs-keyword">new</span> ConvexAPI(<span class="hljs-string">&#x27;https://convex.world&#x27;</span>)
-    <span class="hljs-keyword">const</span> account = convex.createAccount()
-    <span class="hljs-keyword">const</span> amount = <span class="hljs-keyword">await</span> convex.requestFunds(<span class="hljs-number">10000000</span>, account)
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`requested <span class="hljs-subst">${amount}</span> funds.`</span>)
-    <span class="hljs-keyword">const</span> balance = <span class="hljs-keyword">await</span> convex.getBalance(account)
+</code></pre>
+				<p>Create a new account with random keys.</p>
+				<pre><code class="language-js">
+    <span class="hljs-keyword">const</span> account = convex.createAccount()</code></pre>
+				<p>Topup account to have sufficient funds.</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> amount = <span class="hljs-keyword">await</span> convex.topupAccount(account)
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`topup account with <span class="hljs-subst">${amount}</span> funds.`</span>)</code></pre>
+				<p>Check the balance on the new account.</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> balance = <span class="hljs-keyword">await</span> convex.getBalance(account)
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`The account <span class="hljs-subst">${account.address}</span> has a balance of <span class="hljs-subst">${balance}</span>`</span>)
-    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> convex.send(<span class="hljs-string">&#x27;(map inc [1 2 3 4 5])&#x27;</span>, account)
-    consol.log(<span class="hljs-string">`Result from calculation <span class="hljs-subst">${result}</span>`</span>)
+</code></pre>
+				<p>Do a send, this will cost the account a small fee so we need the account object to sign the transaction.</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> resultSend = <span class="hljs-keyword">await</span> convex.send(<span class="hljs-string">&#x27;(map inc [1 2 3 4 5])&#x27;</span>, account)
+    consol.log(<span class="hljs-string">`Result from calculation <span class="hljs-subst">${resultSend}</span>`</span>)</code></pre>
+				<p>All queries are free so we can provide the account object or just an account address, to make the query from.</p>
+				<p>This can be usefull if you whish to query an actors state by using the actors address as the query address.</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> resultQuery = <span class="hljs-keyword">await</span> convex.query(<span class="hljs-string">&#x27;(balance *address*)&#x27;</span>, account.address)
+    consol.log(<span class="hljs-string">`Result from a query <span class="hljs-subst">${resultQuery}</span>`</span>)</code></pre>
+				<a href="#example-using-an-account-with-a-name" id="example-using-an-account-with-a-name" style="color: inherit; text-decoration: none;">
+					<h2>Example using an account with a name</h2>
+				</a>
+				<p>We have already saved an existing account keys in a .pem file
+				So first we need to import the account details public/private keys using it&#39;s encrypted data on file</p>
+				<pre><code class="language-js">    importAccount = ConvexAccount.importFromFile(<span class="hljs-string">&#x27;my-account.pem&#x27;</span>, <span class="hljs-string">&#x27;secret&#x27;</span>)
+</code></pre>
+				<p>Create a new account address for the first time, or if the account name has already been regisetered
+				then load in the account address.</p>
+				<p>The returned account object will have the account address assigned to the account name <code>my-account</code>.</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> account = <span class="hljs-keyword">await</span> convex.setupAccount(<span class="hljs-string">&#x27;my-account&#x27;</span>, importAccount)</code></pre>
+				<p>Later on you may need to re-load the same account address using only the registered name.</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> sameAccount = <span class="hljs-keyword">await</span> convex.loadAccount(<span class="hljs-string">&#x27;my-account&#x27;</span>, importAccount)</code></pre>
+				<p>You can still use <code>setupAccount</code> this will just call <code>loadAccount</code> if the account name is registered with the registry.</p>
+				<pre><code class="language-js">    <span class="hljs-comment">// or the same as</span>
+    <span class="hljs-keyword">const</span> sameAccount = <span class="hljs-keyword">await</span> convex.setupAccount(<span class="hljs-string">&#x27;my-account&#x27;</span>, importAccount)</code></pre>
+				<p>If you just want to find out a name from the registry you can just do this:</p>
+				<pre><code class="language-js">    <span class="hljs-keyword">const</span> accountAddress = <span class="hljs-keyword">await</span> convex.resolveAccountName(<span class="hljs-string">&#x27;my-account&#x27;</span>)
 </code></pre>
 			</div>
 		</div>
@@ -104,6 +134,9 @@
 						<a href="modules/_interfaces_.html">&quot;<wbr>Interfaces&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="modules/_registry_.html">&quot;<wbr>Registry&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="modules/_utils_.html">&quot;<wbr>Utils&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -123,6 +156,7 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">

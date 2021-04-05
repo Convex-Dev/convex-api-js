@@ -91,6 +91,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#language" class="tsd-kind-icon">language</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#registry" class="tsd-kind-icon">registry</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
@@ -103,9 +104,15 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#getaccountinfo" class="tsd-kind-icon">get<wbr>Account<wbr>Info</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#getaddress" class="tsd-kind-icon">get<wbr>Address</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#loadaccount" class="tsd-kind-icon">load<wbr>Account</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#query" class="tsd-kind-icon">query</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#registeraccountname" class="tsd-kind-icon">register<wbr>Account<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#requestfunds" class="tsd-kind-icon">request<wbr>Funds</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#resolveaccountname" class="tsd-kind-icon">resolve<wbr>Account<wbr>Name</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#resolvename" class="tsd-kind-icon">resolve<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#send" class="tsd-kind-icon">send</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#setupaccount" class="tsd-kind-icon">setup<wbr>Account</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_convexapi_.convexapi.html#topupaccount" class="tsd-kind-icon">topup<wbr>Account</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_convexapi_.convexapi.html#transaction_prepare" class="tsd-kind-icon">transaction_<wbr>prepare</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_convexapi_.convexapi.html#transaction_query" class="tsd-kind-icon">transaction_<wbr>query</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_convexapi_.convexapi.html#transaction_submit" class="tsd-kind-icon">transaction_<wbr>submit</a></li>
@@ -127,13 +134,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L32">src/ConvexAPI.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L40">src/ConvexAPI.ts:40</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Initaliizes a new ConvexAPI object, you need to provide the URL of a Convex Network Node.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-keyword">const</span> convex = <span class="hljs-keyword">new</span> ConvexAPI(<span class="hljs-string">&#x27;https://convex.world&#x27;</span>)</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -162,7 +174,7 @@
 					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <a href="../enums/_convexapi_.language.html" class="tsd-signature-type">Language</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L32">src/ConvexAPI.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L35">src/ConvexAPI.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -172,12 +184,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="registry" class="tsd-anchor"></a>
+					<h3>registry</h3>
+					<div class="tsd-signature tsd-kind-icon">registry<span class="tsd-signature-symbol">:</span> <a href="_registry_.registry.html" class="tsd-signature-type">Registry</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L40">src/ConvexAPI.ts:40</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Registry used to resolve account names</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="url" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> url</h3>
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L27">src/ConvexAPI.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L30">src/ConvexAPI.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +226,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L57">src/ConvexAPI.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L84">src/ConvexAPI.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -207,6 +234,16 @@
 									<p>Create a new account address with the convex network. You can provide an already
 									existing account Public/Private keys or leave empty, and a new ConvexAccount will be created.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-comment">// create a new account with a random keys and new address</span>
+<span class="hljs-keyword">const</span> newAccount = <span class="hljs-keyword">await</span> convex.createAccount()
+
+<span class="hljs-comment">// Create an account with our own keys, but with a new address</span>
+importAccount = ConvexAccount.importFromFile(<span class="hljs-string">&#x27;my-account.pem&#x27;</span>, <span class="hljs-string">&#x27;secret&#x27;</span>)
+<span class="hljs-keyword">const</span> accountWithNewAddress = <span class="hljs-keyword">await</span> convex.createAccount(importAccount)</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -232,7 +269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L348">src/ConvexAPI.ts:348</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L591">src/ConvexAPI.ts:591</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -258,7 +295,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L333">src/ConvexAPI.ts:333</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L576">src/ConvexAPI.ts:576</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -287,13 +324,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L188">src/ConvexAPI.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L270">src/ConvexAPI.ts:270</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Request account information, from the convex network.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"> <span class="hljs-keyword">await</span> convex.getAccountInfo(account)
+
+ {
+     <span class="hljs-string">&quot;address&quot;</span>: <span class="hljs-string">&quot;405&quot;</span>,
+     <span class="hljs-string">&quot;is_library&quot;</span>: <span class="hljs-literal">false</span>,
+     <span class="hljs-string">&quot;is_actor&quot;</span>: <span class="hljs-literal">false</span>,
+     <span class="hljs-string">&quot;memory_size&quot;</span>: <span class="hljs-number">75</span>,
+     <span class="hljs-string">&quot;allowance&quot;</span>: <span class="hljs-number">10000000</span>,
+     <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;user&quot;</span>,
+     <span class="hljs-string">&quot;balance&quot;</span>: <span class="hljs-number">10000000000</span>,
+     <span class="hljs-string">&quot;sequence&quot;</span>: <span class="hljs-number">0</span>,
+     <span class="hljs-string">&quot;environment&quot;</span>: {}
+}
+</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -306,17 +361,6 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_interfaces_.iconvexaccountinformation.html" class="tsd-signature-type">IConvexAccountInformation</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>The account information of the type IConvexAccountInformation, for example:</p>
-							<p> {
-								&quot;address&quot;: &quot;7E66429CA9c10e68eFae2dCBF1804f0F6B3369c7164a3187D6233683c258710f&quot;,
-								&quot;is_library&quot;: false,
-								&quot;is_actor&quot;: false,
-								&quot;memory_size&quot;: 75,
-								&quot;allowance&quot;: 10000000,
-								&quot;type&quot;: &quot;user&quot;,
-								&quot;balance&quot;: 10000000000,
-								&quot;sequence&quot;: 0,
-								&quot;environment&quot;: {}
-							}</p>
 						</li>
 					</ul>
 				</section>
@@ -330,7 +374,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L153">src/ConvexAPI.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L230">src/ConvexAPI.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -370,13 +414,26 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L116">src/ConvexAPI.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L193">src/ConvexAPI.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Get the current balance of an account.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js">
+<span class="hljs-keyword">const</span> balance = <span class="hljs-keyword">await</span> convex.balance(account)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`balance of <span class="hljs-subst">${balance}</span> for account at address <span class="hljs-subst">${account.address}</span>`</span>)
+
+<span class="hljs-keyword">const</span> sameBalance = <span class="hljs-keyword">await</span> convex.balance(account.address)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`balance of <span class="hljs-subst">${sameBalance}</span> for account at address <span class="hljs-subst">${account.address}</span>`</span>)
+
+<span class="hljs-keyword">const</span> mainFundBalance = <span class="hljs-keyword">await</span> convex.balance(<span class="hljs-number">9</span>)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`main fund balance of <span class="hljs-subst">${mainFundBalance}</span> for address #9`</span>)</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -393,6 +450,49 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="loadaccount" class="tsd-anchor"></a>
+					<h3>load<wbr>Account</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">load<wbr>Account<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, account<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L302">src/ConvexAPI.ts:302</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads an account using the account name. The name must be registered by using <code>registerAccountName</code> or the
+									<code>accountSetup</code> method.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-comment">// get the current account keys we need to use</span>
+<span class="hljs-keyword">const</span> importAccount = <span class="hljs-keyword">await</span> ConvexAccount.importFromFile(<span class="hljs-string">&#x27;account_file.pem&#x27;</span>, <span class="hljs-string">&#x27;secret&#x27;</span>)
+
+<span class="hljs-comment">// load the account from an account name already registered.</span>
+<span class="hljs-keyword">const</span> account = <span class="hljs-keyword">await</span> convex.loadAccount(<span class="hljs-string">&#x27;my-account-name&#x27;</span>, importAccount)
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>account: <a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A ConvexAccount with the account name and adderss set.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="query" class="tsd-anchor"></a>
 					<h3>query</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -402,7 +502,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L283">src/ConvexAPI.ts:283</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L526">src/ConvexAPI.ts:526</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,6 +514,10 @@
 								<dl class="tsd-comment-tags">
 									<dt>prama</dt>
 									<dd><p>addressAccount Address BigInt or ConvexAccount object to use for the query transaction.</p>
+									</dd>
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-keyword">const</span> resultQuery = <span class="hljs-keyword">await</span> convex.query(<span class="hljs-string">&#x27;(balance *address*)&#x27;</span>, account.address)
+consol.log(<span class="hljs-string">`Result from a query <span class="hljs-subst">${resultQuery}</span>`</span>)</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -438,6 +542,55 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="registeraccountname" class="tsd-anchor"></a>
+					<h3>register<wbr>Account<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Account<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, account<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a>, address<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L367">src/ConvexAPI.ts:367</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Register an account name with the CNS ( Convex Named Service), this name can be used in the convex
+									sandbox or used by the API libraries to resolve an account name to an account address.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-comment">// load the account from an account name already registered.</span>
+<span class="hljs-keyword">const</span> registerAccount = <span class="hljs-keyword">await</span> convex.loadAccount(<span class="hljs-string">&#x27;my-registration-account&#x27;</span>, importAccount)
+
+<span class="hljs-comment">// create a new account with a new address</span>
+<span class="hljs-keyword">let</span> newAccount = <span class="hljs-keyword">await</span> convex.createAccount(importAccount)
+
+<span class="hljs-comment">// now we can register the name for the new account, by paying for the fees from the registerAccount</span>
+newAccount = <span class="hljs-keyword">await</span> convex.registerAccountName(<span class="hljs-string">&#x27;my-new-name&#x27;</span>, registerAccount, newAccount.address)
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>account: <a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> address: <span class="tsd-signature-type">BigInt</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>an account object with the address set</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="requestfunds" class="tsd-anchor"></a>
 					<h3>request<wbr>Funds</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -447,7 +600,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L91">src/ConvexAPI.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L125">src/ConvexAPI.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -455,6 +608,12 @@
 									<p>Request funds from the development account. This method only works on development and test
 									networks that provide free funds.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-keyword">const</span> fundsRequested = <span class="hljs-keyword">await</span> convex.requestFunds(<span class="hljs-number">100000</span>, account)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`requested <span class="hljs-subst">${fundsRequested}</span> funds for account at address <span class="hljs-subst">${account.address}</span>`</span>)</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -477,6 +636,84 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="resolveaccountname" class="tsd-anchor"></a>
+					<h3>resolve<wbr>Account<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">resolve<wbr>Account<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L392">src/ConvexAPI.ts:392</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resolve an account name, if found return the account address registered with this account name.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-comment">// resolve to find the address of an account</span>
+<span class="hljs-keyword">const</span> accountAddress = <span class="hljs-keyword">await</span> convex.resolveAccountName(<span class="hljs-string">&#x27;my-account&#x27;</span>)
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the registered account</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Address of the registered account or nil</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="resolvename" class="tsd-anchor"></a>
+					<h3>resolve<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">resolve<wbr>Name<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L411">src/ConvexAPI.ts:411</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Resolve a name, if found return the address registered with this name in the Convex Name Services.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-comment">// resolve to find the address of a library or actor</span>
+<span class="hljs-keyword">const</span> nftTokenLibraryAddress = <span class="hljs-keyword">await</span> convex.resolveName(<span class="hljs-string">&#x27;covex.nft-token&#x27;</span>)
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the service</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Address of the registered service</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="send" class="tsd-anchor"></a>
 					<h3>send</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -486,7 +723,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L239">src/ConvexAPI.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L475">src/ConvexAPI.ts:475</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -494,6 +731,12 @@
 									<p>Send a transaction to the network. This assumes that the network state will change, and as a result
 									a transaction fee will be deducted from the  account.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-keyword">const</span> resultSend = <span class="hljs-keyword">await</span> convex.send(<span class="hljs-string">&#x27;(map inc [1 2 3 4 5])&#x27;</span>, account)
+consol.log(<span class="hljs-string">`Result from calculation <span class="hljs-subst">${resultSend}</span>`</span>)</code></pre>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -518,6 +761,98 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setupaccount" class="tsd-anchor"></a>
+					<h3>setup<wbr>Account</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">setup<wbr>Account<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, account<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L328">src/ConvexAPI.ts:328</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Setup an account by registering the account name or by loading the account using a pre registered name.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-comment">// get the current account keys we need to use</span>
+<span class="hljs-keyword">const</span> importAccount = <span class="hljs-keyword">await</span> ConvexAccount.importFromFile(<span class="hljs-string">&#x27;account_file.pem&#x27;</span>, <span class="hljs-string">&#x27;secret&#x27;</span>)
+
+<span class="hljs-comment">// creates a new account address or loads the account from an account name already registered.</span>
+<span class="hljs-keyword">const</span> account = <span class="hljs-keyword">await</span> convex.setupAccount(<span class="hljs-string">&#x27;my-account-name&#x27;</span>, importAccount)
+</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>account: <a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>A ConvexAccount with the account name and adderss set.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="topupaccount" class="tsd-anchor"></a>
+					<h3>topup<wbr>Account</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">topup<wbr>Account<span class="tsd-signature-symbol">(</span>account<span class="tsd-signature-symbol">: </span><a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a>, minBalance<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">BigInt</span>, retryCount<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L159">src/ConvexAPI.ts:159</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Topup account to a minimum balance</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-keyword">const</span> amount = <span class="hljs-keyword">await</span> convex.topupAccount(account)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${amount}</span> tokens was topped up to account at address <span class="hljs-subst">${account.address}</span>`</span>)</code></pre>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>account: <a href="_convexaccount_.convexaccount.html" class="tsd-signature-type">ConvexAccount</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The convex account to topup</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> minBalance: <span class="tsd-signature-type">BigInt</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The minimum balance the account should be topped too</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> retryCount: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Number of times to try loop around and topup the account</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>the amount of funds transfered to the account</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="transaction_prepare" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> transaction_<wbr>prepare</h3>
@@ -528,7 +863,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L297">src/ConvexAPI.ts:297</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L540">src/ConvexAPI.ts:540</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -560,7 +895,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L324">src/ConvexAPI.ts:324</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L567">src/ConvexAPI.ts:567</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -589,7 +924,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L313">src/ConvexAPI.ts:313</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L556">src/ConvexAPI.ts:556</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -621,7 +956,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/ceb7614/src/ConvexAPI.ts#L210">src/ConvexAPI.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/df1126a/src/ConvexAPI.ts#L439">src/ConvexAPI.ts:439</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -631,6 +966,16 @@
 								<dl class="tsd-comment-tags">
 									<dt>results</dt>
 									<dd><p>The amount of funds transfered.</p>
+									</dd>
+									<dt>example</dt>
+									<dd><pre><code class="language-js"><span class="hljs-comment">// load the account from an account name already registered.</span>
+<span class="hljs-keyword">const</span> fundingAccount = <span class="hljs-keyword">await</span> convex.loadAccount(<span class="hljs-string">&#x27;my-funding-account&#x27;</span>, importAccount)
+<span class="hljs-keyword">const</span> newAccount = <span class="hljs-keyword">await</span> convex.createAccount(importAccount)
+
+<span class="hljs-comment">// send 1000000 tokens from the fundingAccount to the newAccount</span>
+<span class="hljs-keyword">const</span> amount = <span class="hljs-keyword">await</span> convex.transfer(newAccount, <span class="hljs-number">1000000</span>, fundingAccount)
+
+</code></pre>
 									</dd>
 								</dl>
 							</div>
@@ -681,6 +1026,9 @@
 						<a href="../modules/_interfaces_.html">&quot;<wbr>Interfaces&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/_registry_.html">&quot;<wbr>Registry&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/_utils_.html">&quot;<wbr>Utils&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -705,6 +1053,9 @@
 								<a href="_convexapi_.convexapi.html#language" class="tsd-kind-icon">language</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#registry" class="tsd-kind-icon">registry</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_convexapi_.convexapi.html#url" class="tsd-kind-icon">url</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -726,13 +1077,31 @@
 								<a href="_convexapi_.convexapi.html#getbalance" class="tsd-kind-icon">get<wbr>Balance</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#loadaccount" class="tsd-kind-icon">load<wbr>Account</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_convexapi_.convexapi.html#query" class="tsd-kind-icon">query</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#registeraccountname" class="tsd-kind-icon">register<wbr>Account<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_convexapi_.convexapi.html#requestfunds" class="tsd-kind-icon">request<wbr>Funds</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#resolveaccountname" class="tsd-kind-icon">resolve<wbr>Account<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#resolvename" class="tsd-kind-icon">resolve<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_convexapi_.convexapi.html#send" class="tsd-kind-icon">send</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#setupaccount" class="tsd-kind-icon">setup<wbr>Account</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_convexapi_.convexapi.html#topupaccount" class="tsd-kind-icon">topup<wbr>Account</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="_convexapi_.convexapi.html#transaction_prepare" class="tsd-kind-icon">transaction_<wbr>prepare</a>
@@ -750,6 +1119,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../modules/_convexapi_.html#topup_account_min_balance" class="tsd-kind-icon">TOPUP_<wbr>ACCOUNT_<wbr>MIN_<wbr>BALANCE</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -766,6 +1138,7 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 			<ul class="tsd-legend">
