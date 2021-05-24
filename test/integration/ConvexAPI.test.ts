@@ -61,7 +61,7 @@ describe('ConvexAPI Class', () => {
         it('should throw a ConvexAPIError on a new account balance', async () => {
             const convex = new ConvexAPI(CONVEX_URL)
             const address = Number.MAX_SAFE_INTEGER
-            const result = await convex.query(`(balance ${address})`, BigInt(9))
+            const result = await convex.query(`(balance #${address})`, BigInt(9))
             assert.isNull(result['value'])
         })
 
@@ -70,7 +70,7 @@ describe('ConvexAPI Class', () => {
             const importAccount = ConvexAccount.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             const account = await convex.createAccount(importAccount)
             const address = account.address
-            const result = await convex.query(`(address ${address})`, account)
+            const result = await convex.query(`(address #${address})`, account)
             assert.equal(result['value'], account.address)
         })
     })

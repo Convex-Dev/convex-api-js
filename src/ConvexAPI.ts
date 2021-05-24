@@ -199,9 +199,9 @@ export class ConvexAPI {
             address = (<ConvexAccount>addressAccount).address
         }
         try {
-            let transaction = `(balance ${address})`
+            let transaction = `(balance #${address})`
             if (this.language == Language.Scrypt) {
-                transaction = `balance (${address})`
+                transaction = `balance (#${address})`
             }
             const result = await this.transaction_query(address, transaction, this.language)
             if (result['value']) {
@@ -447,9 +447,9 @@ export class ConvexAPI {
         } else {
             toAddress = (<ConvexAccount>toAddressAccount).address
         }
-        let transaction = `(transfer ${toAddress} ${amount})`
+        let transaction = `(transfer #${toAddress} ${amount})`
         if (this.language == Language.Scrypt) {
-            transaction = `transfer (${toAddress} ${amount})`
+            transaction = `transfer (#${toAddress} ${amount})`
         }
         const result = await this.send(transaction, fromAccount)
         return result['value']
@@ -545,7 +545,7 @@ export class ConvexAPI {
     ): Promise<unknown> {
         const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
         const data = {
-            address: parseInt(address.toString()),
+            address: `#${address.toString()}`,
             lang: language,
             source: transaction,
             sequence: sequenceNumber,
@@ -556,7 +556,7 @@ export class ConvexAPI {
     protected async transaction_submit(address: BigInt, publicKey: string, hashData: string, signedData: string): Promise<unknown> {
         const submitURL = urljoin(this.url, '/api/v1/transaction/submit')
         const data = {
-            address: parseInt(address.toString()),
+            address: `#${address.toString()}`,
             accountKey: remove0xPrefix(publicKey),
             hash: hashData,
             sig: remove0xPrefix(signedData),
@@ -567,7 +567,7 @@ export class ConvexAPI {
     protected async transaction_query(address: BigInt, transaction: string, language: Language): Promise<unknown> {
         const queryURL = urljoin(this.url, '/api/v1/query')
         const data = {
-            address: parseInt(address.toString()),
+            address: `#${address.toString()}`,
             lang: language,
             source: transaction,
         }
