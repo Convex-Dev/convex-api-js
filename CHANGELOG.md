@@ -3,7 +3,7 @@
 ## Beta Testing
 
 ### Relase 0.1.3
-+	Add address '#' identifier before each address number.
++   Add address '#' identifier before each address number.
 
 ### Release 0.1.2
 +   same as 0.1.1
