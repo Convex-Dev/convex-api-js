@@ -2,6 +2,11 @@
 
 ## Beta Testing
 
+### Release v0.1.4
++   Rename ConvexAccount to Account
++   Rename ConvexAPI to API
++   Split ConvexAccount to KeyPair
+
 ### Relase 0.1.3
 +   Add address '#' identifier before each address number.
 

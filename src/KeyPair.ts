@@ -1,6 +1,6 @@
 /*
 
-    ConvexAccount.ts class to manage private/public key for signing hashed text on the Convex Network.
+    KeyPair.ts class to manage private/public key for signing hashed text on the Convex Network.
 
 
 */
@@ -11,20 +11,29 @@ import pem from 'pem-file'
 
 import { toPublicKeyChecksum } from './Utils'
 
-export class ConvexAccount {
+export class KeyPair {
     readonly privateKey: KeyObject // private key object
     readonly publicKey: KeyObject // public key object
-    readonly address: BigInt // address for this account
-    readonly name: string // name of the registered account
     readonly publicKeyAPI: string // address as hex string without leading '0x'
     readonly publicKeyChecksum: string // address as hex string with checksum upper an lower case hex letters
 
+    constructor(publicKey: KeyObject, privateKey: KeyObject) {
+        this.publicKey = publicKey
+        this.privateKey = privateKey
+        const exportPublicKey = publicKey.export({
+            type: 'spki',
+            format: 'pem',
+        })
+        this.publicKeyAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
+        this.publicKeyChecksum = toPublicKeyChecksum(this.publicKeyAPI)
+    }
+
     /**
-     * Creates a new account
+     * Creates a new keypair
      *
-     * @returns a new ConvexAccount Object
+     * @returns a new KeyPair Object
      */
-    public static create(): ConvexAccount {
+    public static create(): KeyPair {
         // create a temporary password for generating a random private/public keys
         const password = randomBytes(64).toString('hex')
         const { publicKey, privateKey } = generateKeyPairSync('ed25519', {
@@ -39,29 +48,26 @@ export class ConvexAccount {
                 passphrase: password,
             },
         })
-        return ConvexAccount.importFromString(privateKey, password, null, null, publicKey)
+        return KeyPair.importFromString(privateKey, password, publicKey)
     }
 
     /**
-     * Imports an account from a PKCS8 fromated text string. You need to pass the correct password, to decrypt
+     * Imports a keypair from a PKCS8 fromated text string. You need to pass the correct password, to decrypt
      * the private key stored in the text string.
      *
      * @param text PKCS8 fromated text with the private key encrypted.
      * @param password Password to decrypt the private key.
-     * @param address Optional address used for this account.
      * @param publicKeyText Optional public key encoded in PEM format, if non provided, the public key
      * can be obtained from the private key.
      *
-     * @returns an account object with the private and public key pairs.
+     * @returns an KeyPair object with the private and public key pairs.
      *
      */
     public static importFromString(
         text: string,
         password: string,
-        address?: BigInt,
-        name?: string,
         publicKeyText?: string
-    ): ConvexAccount {
+    ): KeyPair {
         const privateKey = createPrivateKey({
             key: text,
             type: 'pkcs8',
@@ -75,7 +81,7 @@ export class ConvexAccount {
             publicKey = createPublicKey(privateKey)
         }
 
-        return new ConvexAccount(publicKey, privateKey, address, name)
+        return new KeyPair(publicKey, privateKey)
     }
 
     /**
@@ -83,52 +89,30 @@ export class ConvexAccount {
      *
      * @param filename Filename containing the encrypted private key.
      * @param password Password to decrypt the private key.
-     * @param address Optional address used for this account.
      *
-     * @returns An ConvexAccount object with the private and public keys.
+     * @returns An KeyPair object with the private and public keys.
      *
      */
     public static async importFromFile(
         filename: string,
         password: string,
-        address?: BigInt,
-        name?: string
-    ): Promise<ConvexAccount> {
+    ): Promise<KeyPair> {
         if (fs.existsSync(filename)) {
             const data = await fs.promises.readFile(filename)
-            return ConvexAccount.importFromString(data.toString(), password, address, name)
+            return KeyPair.importFromString(data.toString(), password)
         }
         return null
     }
 
-    public static async importFromAccount(account: ConvexAccount, address?: BigInt, name?: string): Promise<ConvexAccount> {
-        const password = randomBytes(64).toString('hex')
-        const keyText = account.exportToText(password)
-        return ConvexAccount.importFromString(keyText, password, address, name)
-    }
-
-    constructor(publicKey: KeyObject, privateKey: KeyObject, address?: BigInt, name?: string) {
-        this.publicKey = publicKey
-        this.privateKey = privateKey
-        const exportPublicKey = publicKey.export({
-            type: 'spki',
-            format: 'pem',
-        })
-        this.publicKeyAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
-        this.publicKeyChecksum = toPublicKeyChecksum(this.publicKeyAPI)
-        this.address = address
-        this.name = name
-    }
-
     /**
-     * Export the account to a PKCS8 fromatted text string. The private key is encrypted using the provided password.
+     * Export the keypair to a PKCS8 fromatted text string. The private key is encrypted using the provided password.
      *
      * @param password Password to encrypt the private key.
      *
      * @returns The encrpted private key as a PKCS8 formatted string.
      *
      */
-    public exportToText(password: string): string {
+    public exportToString(password: string): string {
         return this.privateKey
             .export({
                 type: 'pkcs8',
@@ -146,12 +130,12 @@ export class ConvexAccount {
      *
      */
     public async exportToFile(filename: string, password: string): Promise<unknown> {
-        return await fs.promises.writeFile(filename, this.exportToText(password))
+        return await fs.promises.writeFile(filename, this.exportToString(password))
     }
 
     /**
      * Sign a hash message. This is called by the convex API class to sign a hash returned from the `prepare` api.
-     * This signed message cryptographically proves that the account owner has access to the private key.
+     * This signed message cryptographically proves that the keypair owner has access to the private key.
      *
      * The API calls this with a hex string, that is converted to bytes, and then sigend.
      * The resultant signed data is sent back as a hex string.

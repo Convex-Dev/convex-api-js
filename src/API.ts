@@ -1,16 +1,16 @@
 /*
 
 
-    ConvexAPI
+    API Class
 
 
 */
-import { randomBytes } from 'crypto'
 
-import { ConvexAccount } from './ConvexAccount'
+import { Account } from './Account'
+import { KeyPair } from './KeyPair'
 import { remove0xPrefix } from './Utils'
-import { ConvexAPIRequestError, ConvexAPIError } from './Errors'
-import { IConvexAccountInformation, IRegistryItem } from './Interfaces'
+import { APIRequestError, APIError } from './Errors'
+import { IAccountInformation, IRegistryItem } from './Interfaces'
 import { Registry } from './Registry'
 
 import fetch from 'node-fetch'
@@ -23,7 +23,7 @@ const enum Language {
 
 const TOPUP_ACCOUNT_MIN_BALANCE = BigInt(10000000)
 
-export class ConvexAPI {
+export class API {
     /**
      * URL of the network
      */
@@ -40,14 +40,14 @@ export class ConvexAPI {
     registry: Registry
 
     /**
-     * Initaliizes a new ConvexAPI object, you need to provide the URL of a Convex Network Node.
+     * Initaliizes a new API object, you need to provide the URL of a Convex Network Node.
      *
      * @param url URL of the convex network node.
      *
      * @example
      *
      * ```js
-     * const convex = new ConvexAPI('https://convex.world')
+     * const convex = API.create('https://convex.world')
      * ```
      *
      */
@@ -59,14 +59,18 @@ export class ConvexAPI {
         this.registry = new Registry(this)
     }
 
+    public static create(url: string, language?: Language): API {
+        return new API(url, language);
+    }
+
     /**
      * Create a new account address with the convex network. You can provide an already
-     * existing account Public/Private keys or leave empty, and a new ConvexAccount will be created.
+     * existing account Public/Private keys or leave empty, and a new Account will be created.
      *
      *
-     * @param account Optional ConvexAccount object to assign the new address too.
+     * @param account Optional Account object to assign the new address too.
      *
-     * @returns A ConvexAccount object with a new account address.
+     * @returns An Account object with a new account address.
      *
      * @example
      *
@@ -75,22 +79,17 @@ export class ConvexAPI {
      * const newAccount = await convex.createAccount()
      *
      * // Create an account with our own keys, but with a new address
-     * importAccount = ConvexAccount.importFromFile('my-account.pem', 'secret')
-     * const accountWithNewAddress = await convex.createAccount(importAccount)
+     * keyPair = KeyPair.importFromFile('my-account.pem', 'secret')
+     * const accountWithNewAddress = await convex.createAccount(keyPair)
      * ```
      *
      *
      */
-    public async createAccount(account?: ConvexAccount): Promise<ConvexAccount> {
-        let newAccount: ConvexAccount = account
-
-        if (!account) {
-            newAccount = ConvexAccount.create()
-        }
+    public async createAccount(keyPair: KeyPair): Promise<Account> {
 
         const queryURL = urljoin(this.url, '/api/v1/createAccount')
         const data = {
-            accountKey: newAccount.publicKeyAPI,
+            accountKey: keyPair.publicKeyAPI,
         }
         const response = await fetch(queryURL, {
             method: 'POST',
@@ -98,9 +97,7 @@ export class ConvexAPI {
         })
         if (response.ok) {
             const result = await response.json()
-            const password = randomBytes(64).toString('hex')
-            const accounText = newAccount.exportToText(password)
-            return ConvexAccount.importFromString(accounText, password, BigInt(result['address']))
+            return Account.create(keyPair, BigInt(result['address']))
         }
         return null
     }
@@ -110,7 +107,7 @@ export class ConvexAPI {
      * networks that provide free funds.
      *
      * @param amount The amount to request.
-     * @param account The ConvexAccount object to request funds for.
+     * @param account The Account object to request funds for.
      *
      * @returns The amount of funds provided for this request.
      *
@@ -122,7 +119,7 @@ export class ConvexAPI {
      * ```
      *
      */
-    public async requestFunds(amount: BigInt | number, account: ConvexAccount): Promise<BigInt> {
+    public async requestFunds(amount: BigInt | number, account: Account): Promise<BigInt> {
         const queryURL = urljoin(this.url, '/api/v1/faucet')
         const data = {
             address: parseInt(account.address.toString()),
@@ -156,7 +153,7 @@ export class ConvexAPI {
      * ```
      *
      */
-    public async topupAccount(account: ConvexAccount, minBalance?: BigInt, retryCount?: number): Promise<BigInt> {
+    public async topupAccount(account: Account, minBalance?: BigInt, retryCount?: number): Promise<BigInt> {
         minBalance = minBalance ? minBalance : TOPUP_ACCOUNT_MIN_BALANCE
         retryCount = retryCount ? retryCount : 8
         const requestAmount: BigInt = TOPUP_ACCOUNT_MIN_BALANCE
@@ -171,7 +168,7 @@ export class ConvexAPI {
     /**
      * Get the current balance of an account.
      *
-     * @param addressAccount ConvexAccount object or BigInt address of the account to get the balance.
+     * @param addressAccount Account object or BigInt address of the account to get the balance.
      *
      * @returns The balance of funds held by the account address.
      *
@@ -190,13 +187,13 @@ export class ConvexAPI {
      * ```
      *
      */
-    public async getBalance(addressAccount: BigInt | ConvexAccount): Promise<BigInt> {
+    public async getBalance(addressAccount: BigInt | Account): Promise<BigInt> {
         let address: BigInt
         let balance: BigInt = BigInt(0)
         if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
             address = BigInt(addressAccount)
         } else {
-            address = (<ConvexAccount>addressAccount).address
+            address = (<Account>addressAccount).address
         }
         try {
             let transaction = `(balance #${address})`
@@ -208,7 +205,7 @@ export class ConvexAPI {
                 balance = BigInt(result['value'])
             }
         } catch (error) {
-            if (error.name == 'ConvexAPIError' && error.code === 'NOBODY') {
+            if (error.name == 'APIError' && error.code === 'NOBODY') {
                 return balance
             }
             throw error
@@ -221,18 +218,18 @@ export class ConvexAPI {
      * for this method to work.
      *
      * @param functionName The deployed function go get the address off.
-     * @param addressAccount ConvexAccount or address BigInt to use as the query address. This address
+     * @param addressAccount Account or address BigInt to use as the query address. This address
      * is the address used by the owner of the deployed function
      *
      * @returns The address of the deployed function
      *
      */
-    public async getAddress(functionName: string, addressAccount: BigInt | ConvexAccount): Promise<string> {
+    public async getAddress(functionName: string, addressAccount: BigInt | Account): Promise<string> {
         let address
         if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
             address = addressAccount
         } else {
-            address = (<ConvexAccount>addressAccount).address
+            address = (<Account>addressAccount).address
         }
         let transaction = `(address ${functionName})`
         if (this.language == Language.Scrypt) {
@@ -245,9 +242,9 @@ export class ConvexAPI {
     /**
      * Request account information, from the convex network.
      *
-     * @param addressAccount ConvexAccount or address BigInt to use as the query the account.
+     * @param addressAccount Account or address BigInt to use as the query the account.
      *
-     * @returns The account information of the type IConvexAccountInformation, for example:
+     * @returns The account information of the type IAccountInformation, for example:
      *
      * @example
      *
@@ -267,15 +264,15 @@ export class ConvexAPI {
      * }
      *
      */
-    public async getAccountInfo(addressAccount: BigInt | ConvexAccount): Promise<IConvexAccountInformation> {
+    public async getAccountInfo(addressAccount: BigInt | Account): Promise<IAccountInformation> {
         let address
         if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
             address = addressAccount
         } else {
-            address = (<ConvexAccount>addressAccount).address
+            address = (<Account>addressAccount).address
         }
         const queryURL = urljoin(this.url, `/api/v1/accounts/${address}`)
-        return <IConvexAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
+        return <IAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
     }
 
     /**
@@ -283,26 +280,26 @@ export class ConvexAPI {
      * `accountSetup` method.
      *
      * @param name: Name of the registered account to load.
-     * @param account: ConvexAccount to use for the key to load.
+     * @param keyPair: KeyPair object to use to load the account with.
      *
-     * @returns A ConvexAccount with the account name and adderss set.
+     * @returns An Account object with the account name and adderss set.
      *
      * @example
      *
      * ```js
      * // get the current account keys we need to use
-     * const importAccount = await ConvexAccount.importFromFile('account_file.pem', 'secret')
+     * const keyPair = await KeyPair.importFromFile('account_file.pem', 'secret')
      *
      * // load the account from an account name already registered.
-     * const account = await convex.loadAccount('my-account-name', importAccount)
+     * const account = await convex.loadAccount('my-account-name', keyPair)
      *
      * ```
      */
 
-    public async loadAccount(name: string, account: ConvexAccount): Promise<ConvexAccount> {
+    public async loadAccount(name: string, keyPair: KeyPair): Promise<Account> {
         const address: BigInt = await this.resolveAccountName(name)
         if (address) {
-            return ConvexAccount.importFromAccount(account, address, name)
+            return Account.create(keyPair, address, name)
         }
     }
 
@@ -310,28 +307,28 @@ export class ConvexAPI {
      * Setup an account by registering the account name or by loading the account using a pre registered name.
      *
      * @param name: name of the account to register or has already been registered.
-     * @param account: ConvexAccount to use for the public/private keys
+     * @param keyPair: KeyPair to use for the public/private keys
      *
-     * @returns A ConvexAccount with the account name and adderss set.
+     * @returns An Account object with the account name and adderss set.
      *
      * @example
      * ```js
      * // get the current account keys we need to use
-     * const importAccount = await ConvexAccount.importFromFile('account_file.pem', 'secret')
+     * const keyPair = await KeyPair.importFromFile('account_file.pem', 'secret')
      *
      * // creates a new account address or loads the account from an account name already registered.
-     * const account = await convex.setupAccount('my-account-name', importAccount)
+     * const account = await convex.setupAccount('my-account-name', keyPair)
      *
      * ```
      *
      */
-    public async setupAccount(name: string, account: ConvexAccount): Promise<ConvexAccount> {
+    public async setupAccount(name: string, keyPair: KeyPair): Promise<Account> {
         let newAccount
         const address: BigInt = await this.resolveAccountName(name)
         if (address) {
-            newAccount = ConvexAccount.importFromAccount(account, address, name)
+            newAccount = Account.create(keyPair, address, name)
         } else {
-            newAccount = await this.createAccount(account)
+            newAccount = await this.createAccount(keyPair)
             await this.topupAccount(newAccount)
             newAccount = await this.registerAccountName(name, newAccount)
         }
@@ -353,10 +350,10 @@ export class ConvexAPI {
      *
      * ```js
      * // load the account from an account name already registered.
-     * const registerAccount = await convex.loadAccount('my-registration-account', importAccount)
+     * const registerAccount = await convex.loadAccount('my-registration-account', keyPair)
      *
      * // create a new account with a new address
-     * let newAccount = await convex.createAccount(importAccount)
+     * let newAccount = await convex.createAccount(keyPair)
      *
      * // now we can register the name for the new account, by paying for the fees from the registerAccount
      * newAccount = await convex.registerAccountName('my-new-name', registerAccount, newAccount.address)
@@ -364,13 +361,13 @@ export class ConvexAPI {
      * ```
      *
      */
-    public async registerAccountName(name: string, account: ConvexAccount, address?: BigInt): Promise<ConvexAccount> {
+    public async registerAccountName(name: string, account: Account, address?: BigInt): Promise<Account> {
         if (!address) {
             address = account.address
         }
         if (address) {
             const item: IRegistryItem = await this.registry.register(`account.${name}`, address, account)
-            return ConvexAccount.importFromAccount(account, item.address, name)
+            return Account.create(account.keyPair, item.address, name)
         }
     }
 
@@ -417,7 +414,7 @@ export class ConvexAPI {
      *
      * @param toAddressAccount To address BigInt or account , that the funds need to be sent too.
      * @param amount Amount to send for the transfer.
-     * @param fromAccount ConvexAccount to send the funds from. This must be an account object so that the transfer transaction
+     * @param fromAccount Account to send the funds from. This must be an account object so that the transfer transaction
      * can be sent from the account.
      *
      * @results The amount of funds transfered.
@@ -426,8 +423,8 @@ export class ConvexAPI {
      *
      * ```js
      * // load the account from an account name already registered.
-     * const fundingAccount = await convex.loadAccount('my-funding-account', importAccount)
-     * const newAccount = await convex.createAccount(importAccount)
+     * const fundingAccount = await convex.loadAccount('my-funding-account', keyPair)
+     * const newAccount = await convex.createAccount(keyPair)
      *
      * // send 1000000 tokens from the fundingAccount to the newAccount
      * const amount = await convex.transfer(newAccount, 1000000, fundingAccount)
@@ -437,15 +434,15 @@ export class ConvexAPI {
      *
      */
     public async transfer(
-        toAddressAccount: BigInt | ConvexAccount,
+        toAddressAccount: BigInt | Account,
         amount: BigInt | number,
-        fromAccount: ConvexAccount
+        fromAccount: Account
     ): Promise<BigInt> {
         let toAddress
         if (Object.prototype.toString.call(toAddressAccount) === '[object BigInt]') {
             toAddress = toAddressAccount
         } else {
-            toAddress = (<ConvexAccount>toAddressAccount).address
+            toAddress = (<Account>toAddressAccount).address
         }
         let transaction = `(transfer #${toAddress} ${amount})`
         if (this.language == Language.Scrypt) {
@@ -460,7 +457,7 @@ export class ConvexAPI {
      * a transaction fee will be deducted from the  account.
      *
      * @param transaction State changing transaction to execute.
-     * @param account ConvexAccount to sign the transaction.
+     * @param account Account to sign the transaction.
      *
      * @returns The result from executing the transaction.
      *
@@ -472,7 +469,7 @@ export class ConvexAPI {
      *
      *
      */
-    public async send(transaction: string, account: ConvexAccount, language?: Language): Promise<unknown> {
+    public async send(transaction: string, account: Account, language?: Language): Promise<unknown> {
         let transaction_language = this.language
         let retry_counter = 20
         let result = null
@@ -486,7 +483,7 @@ export class ConvexAPI {
                 const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
                 const hashData = hashResult['hash']
                 const signedData = account.sign(hashData)
-                result = await this.transaction_submit(account.address, account.publicKeyAPI, hashData, signedData)
+                result = await this.transaction_submit(account.address, account.keyPair.publicKeyAPI, hashData, signedData)
             } catch (error) {
                 // console.log(error)
                 if (error.code === 'SEQUENCE') {
@@ -511,7 +508,7 @@ export class ConvexAPI {
      * query and calling read operations in contracts.
      *
      * @param transaction Read only transaction to perform.
-     * @prama addressAccount Address BigInt or ConvexAccount object to use for the query transaction.
+     * @prama addressAccount Address BigInt or Account object to use for the query transaction.
      *
      * @returns The query results.
      *
@@ -523,7 +520,7 @@ export class ConvexAPI {
      * ```
      *
      */
-    public async query(transaction: string, addressAccount: BigInt | ConvexAccount, language?: Language): Promise<unknown> {
+    public async query(transaction: string, addressAccount: BigInt | Account, language?: Language): Promise<unknown> {
         let transaction_language = this.language
         if (language) {
             transaction_language = language
@@ -532,7 +529,7 @@ export class ConvexAPI {
         if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
             address = addressAccount
         } else {
-            address = (<ConvexAccount>addressAccount).address
+            address = (<Account>addressAccount).address
         }
         return this.transaction_query(address, transaction, transaction_language)
     }
@@ -579,12 +576,12 @@ export class ConvexAPI {
             body: JSON.stringify(data),
         })
         if (await !response.ok) {
-            throw new ConvexAPIRequestError(name, await response.status, await response.statusText)
+            throw new APIRequestError(name, await response.status, await response.statusText)
         }
 
         const result = await response.json()
         if (result['errorCode']) {
-            throw new ConvexAPIError(name, result['errorCode'], result['value'])
+            throw new APIError(name, result['errorCode'], result['value'])
         }
         return result
     }
@@ -593,12 +590,12 @@ export class ConvexAPI {
             method: 'GET',
         })
         if (await !response.ok) {
-            throw new ConvexAPIRequestError(name, await response.status, await response.statusText)
+            throw new APIRequestError(name, await response.status, await response.statusText)
         }
 
         const result = await response.json()
         if (result['errorCode']) {
-            throw new ConvexAPIError(name, result['errorCode'], result['value'])
+            throw new APIError(name, result['errorCode'], result['value'])
         }
         return result
     }

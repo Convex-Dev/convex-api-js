@@ -6,8 +6,8 @@
 
 */
 
-import { ConvexAccount } from './ConvexAccount'
-import { ConvexAPI } from './ConvexAPI'
+import { Account } from './Account'
+import { API } from './API'
 import { toAddress } from './Utils'
 import { IRegistryItem } from './Interfaces'
 
@@ -15,19 +15,19 @@ const QUERY_ACCOUNT_ADDRESS = BigInt(9)
 
 export class Registry {
     /**
-     * Convex API object to call registry commands
+     * Registry object to call registry commands
      */
-    readonly convex: ConvexAPI
+    readonly convex: API
     address: BigInt
     protected items: { [name: string]: IRegistryItem } = {}
 
     /**
      * Initaliizes a new Registry object, you need to provide a ConvexAPI Object.
      *
-     * @param convex ConvexAPI object to access the convex network.
+     * @param convex API object to access the convex network.
      *
      */
-    public constructor(convex: ConvexAPI) {
+    public constructor(convex: API) {
         this.convex = convex
     }
 
@@ -85,7 +85,7 @@ export class Registry {
      * @returns an IRegistryItem object with the new address and owner address of the registered item.
      *
      */
-    public async register(name: string, registerAddress: BigInt, account: ConvexAccount): Promise<IRegistryItem> {
+    public async register(name: string, registerAddress: BigInt, account: Account): Promise<IRegistryItem> {
         const address = await this.getAddress()
         const registerLine = `(call #${address} (register {:name "${name}"}))`
         const registerResult = await this.convex.send(registerLine, account)

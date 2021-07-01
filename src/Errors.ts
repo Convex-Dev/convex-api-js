@@ -2,11 +2,11 @@
 
 
 
-    ConvexAPI Errors
+    Convex Errors
 
 */
 
-class ConvexAPIBaseError extends Error {
+class APIBaseError extends Error {
     readonly source: string
     readonly code: string
     readonly text: string
@@ -20,13 +20,13 @@ class ConvexAPIBaseError extends Error {
     }
 }
 
-export class ConvexAPIError extends ConvexAPIBaseError {
+export class APIError extends APIBaseError {
     constructor(source: string, code: string, text: string) {
         super(source, code, text, 'ConvexAPIError')
     }
 }
 
-export class ConvexAPIRequestError extends ConvexAPIBaseError {
+export class APIRequestError extends APIBaseError {
     constructor(source: string, code: string, text: string) {
         super(source, code, text, 'ConvexAPIRequestError')
     }
