@@ -90,3 +90,29 @@ If you just want to find out a name from the registry you can just do this:
 ```js
     const accountAddress = await convex.resolveAccountName('my-account')
 ```
+
+## Building and testing this library
+
+To build and test this library. First you need to clone the repositry
+
+```
+    git clone https://github.com/Convex-Dev/convex-api-js.git
+```
+
+Then you need to install the node.js dependent packages to run with this library:
+
+```
+    npm install
+```
+
+Now you can run the test suite, by typing the following command:
+
+```
+    npm run test
+```
+
+After editing any of the source code, you run the lint analyzer to make sure your code is complient:
+
+```
+    npm run lint
+```

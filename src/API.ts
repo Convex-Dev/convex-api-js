@@ -60,7 +60,7 @@ export class API {
     }
 
     public static create(url: string, language?: Language): API {
-        return new API(url, language);
+        return new API(url, language)
     }
 
     /**
@@ -86,7 +86,6 @@ export class API {
      *
      */
     public async createAccount(keyPair: KeyPair): Promise<Account> {
-
         const queryURL = urljoin(this.url, '/api/v1/createAccount')
         const data = {
             accountKey: keyPair.publicKeyAPI,
@@ -433,11 +432,7 @@ export class API {
      * ```
      *
      */
-    public async transfer(
-        toAddressAccount: BigInt | Account,
-        amount: BigInt | number,
-        fromAccount: Account
-    ): Promise<BigInt> {
+    public async transfer(toAddressAccount: BigInt | Account, amount: BigInt | number, fromAccount: Account): Promise<BigInt> {
         let toAddress
         if (Object.prototype.toString.call(toAddressAccount) === '[object BigInt]') {
             toAddress = toAddressAccount

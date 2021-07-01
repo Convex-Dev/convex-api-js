@@ -23,7 +23,7 @@ export class Account {
      * @returns a new Account Object
      */
     public static create(keyPair: KeyPair, address?: BigInt, name?: string): Account {
-        return new Account(keyPair, address, name);
+        return new Account(keyPair, address, name)
     }
 
     /**
@@ -35,6 +35,6 @@ export class Account {
      *
      */
     public sign(text: string): string {
-        return this.keyPair.sign(text);
+        return this.keyPair.sign(text)
     }
 }

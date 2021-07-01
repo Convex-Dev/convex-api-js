@@ -63,11 +63,7 @@ export class KeyPair {
      * @returns an KeyPair object with the private and public key pairs.
      *
      */
-    public static importFromString(
-        text: string,
-        password: string,
-        publicKeyText?: string
-    ): KeyPair {
+    public static importFromString(text: string, password: string, publicKeyText?: string): KeyPair {
         const privateKey = createPrivateKey({
             key: text,
             type: 'pkcs8',
@@ -93,10 +89,7 @@ export class KeyPair {
      * @returns An KeyPair object with the private and public keys.
      *
      */
-    public static async importFromFile(
-        filename: string,
-        password: string,
-    ): Promise<KeyPair> {
+    public static async importFromFile(filename: string, password: string): Promise<KeyPair> {
         if (fs.existsSync(filename)) {
             const data = await fs.promises.readFile(filename)
             return KeyPair.importFromString(data.toString(), password)
