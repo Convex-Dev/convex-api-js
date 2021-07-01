@@ -10,16 +10,16 @@ API toolkit to access convex network.
 First import the library and setup the convex API connection
 
 ```js
-    import { ConvexAPI, ConvexAccount } from '@convex-dev/convex-api-js'
+    import { API, Account, KeyPair } from '@convex-dev/convex-api-js'
 
-    const convex = new ConvexAPI('https://convex.world')
-
+    const convex = API.create('https://convex.world')
 ```
 
-Create a new account with random keys.
-```js
+Create a new account with some a random key pair.
 
-    const account = convex.createAccount()
+```js
+    const keyPair = KeyPair.create()
+    const account = convex.createAccount(keyPair)
 ```
 
 Topup account to have sufficient funds.
@@ -30,6 +30,7 @@ Topup account to have sufficient funds.
 ```
 
 Check the balance on the new account.
+
 ```js
     const balance = await convex.getBalance(account)
     console.log(`The account ${account.address} has a balance of ${balance}`)
@@ -37,6 +38,7 @@ Check the balance on the new account.
 ```
 
 Do a send, this will cost the account a small fee so we need the account object to sign the transaction.
+
 ```js
     const resultSend = await convex.send('(map inc [1 2 3 4 5])', account)
     consol.log(`Result from calculation ${resultSend}`)
@@ -51,38 +53,40 @@ This can be usefull if you whish to query an actors state by using the actors ad
     consol.log(`Result from a query ${resultQuery}`)
 ```
 
-## Example using an account with a name
+## Example using an key pairs with an account name
 
 We have already saved an existing account keys in a .pem file
 So first we need to import the account details public/private keys using it's encrypted data on file
 
 ```js
-    importAccount = ConvexAccount.importFromFile('my-account.pem', 'secret')
-
+    importKeyPair = keyPair.importFromFile('my-account.pem', 'secret')
 ```
 
 Create a new account address for the first time, or if the account name has already been regisetered
 then load in the account address.
 
 The returned account object will have the account address assigned to the account name `my-account`.
+
 ```js
-    const account = await convex.setupAccount('my-account', importAccount)
+    const account = await convex.setupAccount('my-account', importKeyPair)
 ```
 
 Later on you may need to re-load the same account address using only the registered name.
+
 ```js
-    const sameAccount = await convex.loadAccount('my-account', importAccount)
+    const sameAccount = await convex.loadAccount('my-account', importKeyPair)
 ```
 
 You can still use `setupAccount` this will just call `loadAccount` if the account name is registered with the registry.
+
 ```js
     // or the same as
-    const sameAccount = await convex.setupAccount('my-account', importAccount)
+    const sameAccount = await convex.setupAccount('my-account', importKeyPair)
 ```
 
 
 If you just want to find out a name from the registry you can just do this:
+
 ```js
     const accountAddress = await convex.resolveAccountName('my-account')
-
 ```

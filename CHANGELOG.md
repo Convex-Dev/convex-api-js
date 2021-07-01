@@ -2,10 +2,12 @@
 
 ## Beta Testing
 
-### Release v0.1.4
+### Release v0.2.0
++   ******** Breaking changes ********
 +   Rename ConvexAccount to Account
 +   Rename ConvexAPI to API
 +   Split ConvexAccount to KeyPair
++   API class has to use the `create` method to create a new object
 
 ### Relase 0.1.3
 +   Add address '#' identifier before each address number.
