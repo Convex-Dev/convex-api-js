@@ -9,7 +9,8 @@ import fs from 'fs'
 import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey, randomBytes, sign } from 'crypto'
 import pem from 'pem-file'
 
-import { toPublicKeyChecksum } from './Utils'
+
+import { toPublicKeyChecksum, remove0xPrefix } from './Utils'
 
 export class KeyPair {
     readonly privateKey: KeyObject // private key object
@@ -24,8 +25,9 @@ export class KeyPair {
             type: 'spki',
             format: 'pem',
         })
-        this.publicKeyAPI = pem.decode(exportPublicKey).toString('hex').substring(24)
-        this.publicKeyChecksum = toPublicKeyChecksum(this.publicKeyAPI)
+        const publicKeyText = pem.decode(exportPublicKey).toString('hex').substring(24)
+        this.publicKeyAPI = remove0xPrefix(toPublicKeyChecksum(publicKeyText))
+        this.publicKeyChecksum = toPublicKeyChecksum(publicKeyText)
     }
 
     /**

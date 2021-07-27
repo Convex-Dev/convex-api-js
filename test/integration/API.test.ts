@@ -5,7 +5,7 @@
 
 */
 
-import chai, { assert, expect } from 'chai'
+import chai, { assert } from 'chai'
 chai.use(require('chai-as-promised'))
 import { randomBytes } from 'crypto'
 
@@ -48,16 +48,6 @@ describe('API Class', () => {
     })
 
     describe('query', async () => {
-        it('should throw a ConvexAPIRequestError on a syntax error', async () => {
-            const convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
-            const account = await convex.createAccount(importKeyPair)
-            const badLine = "(concat [*address*] 'test')"
-            expect(
-                convex.query(badLine, account)
-            ).to.be.rejectedWith(/400/)
-
-        })
 
         it('should throw a ConvexAPIError on a new account balance', async () => {
             const convex = API.create(CONVEX_URL)

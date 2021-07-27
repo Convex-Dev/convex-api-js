@@ -18,7 +18,9 @@ import urljoin from 'url-join'
 
 const enum Language {
     Lisp = 'convex-lisp',
-    Scrypt = 'convex-scrypt',
+
+// not using scrypt at the moment
+//    Scrypt = 'convex-scrypt',
 }
 
 const TOPUP_ACCOUNT_MIN_BALANCE = BigInt(10000000)
@@ -195,10 +197,12 @@ export class API {
             address = (<Account>addressAccount).address
         }
         try {
-            let transaction = `(balance #${address})`
+            const transaction = `(balance #${address})`
+            /*
             if (this.language == Language.Scrypt) {
                 transaction = `balance (#${address})`
             }
+            */
             const result = await this.transaction_query(address, transaction, this.language)
             if (result['value']) {
                 balance = BigInt(result['value'])
@@ -230,10 +234,12 @@ export class API {
         } else {
             address = (<Account>addressAccount).address
         }
-        let transaction = `(address ${functionName})`
+        const transaction = `(address ${functionName})`
+        /*
         if (this.language == Language.Scrypt) {
             transaction = `address (${functionName})`
         }
+        */
         const result = await this.transaction_query(address, transaction, this.language)
         return result['value']
     }
@@ -439,10 +445,12 @@ export class API {
         } else {
             toAddress = (<Account>toAddressAccount).address
         }
-        let transaction = `(transfer #${toAddress} ${amount})`
+        const transaction = `(transfer #${toAddress} ${amount})`
+        /*
         if (this.language == Language.Scrypt) {
             transaction = `transfer (#${toAddress} ${amount})`
         }
+        */
         const result = await this.send(transaction, fromAccount)
         return result['value']
     }
