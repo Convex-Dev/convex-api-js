@@ -9,7 +9,6 @@ import fs from 'fs'
 import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey, randomBytes, sign } from 'crypto'
 import pem from 'pem-file'
 
-
 import { toPublicKeyChecksum, remove0xPrefix } from './Utils'
 
 export class KeyPair {

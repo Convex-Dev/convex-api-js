@@ -18,9 +18,8 @@ import urljoin from 'url-join'
 
 const enum Language {
     Lisp = 'convex-lisp',
-
-// not using scrypt at the moment
-//    Scrypt = 'convex-scrypt',
+    // not using scrypt at the moment
+    //    Scrypt = 'convex-scrypt',
 }
 
 const TOPUP_ACCOUNT_MIN_BALANCE = BigInt(10000000)
