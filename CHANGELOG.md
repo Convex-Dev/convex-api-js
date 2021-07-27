@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release v0.2.1
++   Remove Scrypt language
+
 ### Release v0.2.0
 +   ******** Breaking changes ********
 +   Rename ConvexAccount to Account
