@@ -87,10 +87,10 @@ export class Registry {
      */
     public async register(name: string, registerAddress: BigInt, account: Account): Promise<IRegistryItem> {
         const address = await this.getAddress()
-        const registerLine = `(call #${address} (register {:name "${name}"}))`
+        const registerLine = `(call #${address} (register {:name (symbol "${name}")}))`
         const registerResult = await this.convex.send(registerLine, account)
         if (registerResult && registerResult['value']) {
-            const updateLine = `(call #${address} (cns-update "${name}" ${registerAddress}))`
+            const updateLine = `(call #${address} (cns-update (symbol "${name}") #${registerAddress}))`
             const updateResult = await this.convex.send(updateLine, account)
             if (updateResult && updateResult['value']) {
                 const items = updateResult['value']

@@ -544,7 +544,7 @@ export class API {
     ): Promise<unknown> {
         const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
         const data = {
-            address: `#${address.toString()}`,
+            address: address.toString(),
             lang: language,
             source: transaction,
             sequence: sequenceNumber,
@@ -555,7 +555,7 @@ export class API {
     protected async transaction_submit(address: BigInt, publicKey: string, hashData: string, signedData: string): Promise<unknown> {
         const submitURL = urljoin(this.url, '/api/v1/transaction/submit')
         const data = {
-            address: `#${address.toString()}`,
+            address: address.toString(),
             accountKey: remove0xPrefix(publicKey),
             hash: hashData,
             sig: remove0xPrefix(signedData),

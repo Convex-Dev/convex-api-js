@@ -120,10 +120,23 @@ describe('API Class', () => {
 (def storage-example-address
   (deploy
    '(do
-     (def stored-data nil)
-     (defn get [] stored-data)
-     (defn set [x] (def stored-data x))
-     (export get set))))
+     (def stored-data
+        ^{:private? true}
+        nil
+     )
+     (defn get
+        ^{:callable? true}
+        []
+        stored-data
+     )
+     (defn set
+        ^{:callable? true}
+        [x]
+        (def stored-data x)
+     )
+   )
+  )
+)
 `
             const result = await convex.send(testFunctionDeploy, account)
             assert(result)
@@ -146,10 +159,23 @@ describe('API Class', () => {
 (def ${functionName}
   (deploy
    '(do
-     (def stored-data nil)
-     (defn get [] stored-data)
-     (defn set [x] (def stored-data x))
-     (export get set))))
+     (def stored-data
+        ^{:private? true}
+        nil
+     )
+     (defn get
+        ^{:callable? true}
+        []
+        stored-data
+     )
+     (defn set
+        ^{:callable? true}
+        [x]
+        (def stored-data x)
+     )
+   )
+ )
+)
 `
             const result = await convex.send(testFunctionDeploy, account)
             functionAddress = toAddress(result['value'])
@@ -232,7 +258,7 @@ describe('API Class', () => {
             convex = API.create(CONVEX_URL)
         })
         it('should resolve to a third party library or actor', async() => {
-            const address = await convex.resolveName('convex.nft-tokens')
+            const address = await convex.resolveName('convex.asset')
             assert(address)
         })
     })
