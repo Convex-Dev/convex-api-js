@@ -2,6 +2,12 @@
 
 ## Beta Testing
 
+### Release v0.2.2
++   Upgrade to use Convex Apha 0.7.0 RC4
++   Remove export statement from contracts
++   Added address prefix char #
++   Converted registry names to symbols
+
 ### Release v0.2.1
 +   Remove Scrypt language
 
