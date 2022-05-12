@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+### Release v0.2.3
++   Package maintenance
+
 ### Release v0.2.2
 +   Upgrade to use Convex Apha 0.7.0 RC4
 +   Remove export statement from contracts
