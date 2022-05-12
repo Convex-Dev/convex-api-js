@@ -4,7 +4,7 @@
 
 */
 
-import { KeyPair } from 'KeyPair'
+import { KeyPair } from './KeyPair'
 
 export class Account {
     readonly keyPair: KeyPair // KeyPair object
