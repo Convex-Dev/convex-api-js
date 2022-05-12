@@ -2,7 +2,7 @@
 
 ## Beta Testing
 
-### Release v0.2.3
+### Release v0.2.4
 +   Package maintenance
 
 ### Release v0.2.2
