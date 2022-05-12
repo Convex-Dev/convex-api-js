@@ -46,7 +46,7 @@ describe('Utils module', () => {
         it('should convert an account to address', () => {
             const addressNumber = randomInt(0, 2048)
             const keyPair = KeyPair.create()
-            const account = Account.create(keyPair, addressNumber)
+            const account = Account.create(keyPair, toAddress(addressNumber))
             const result = toAddress(account)
             assert.equal(result, BigInt(addressNumber))
         })
