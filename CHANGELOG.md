@@ -2,6 +2,10 @@
 
 ## Beta Testing
 
+## Release v0.2.5
++   Export utils module
++   process Account object for toAddress utility
+
 ### Release v0.2.4
 +   Package maintenance
 
