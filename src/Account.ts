@@ -22,8 +22,8 @@ export class Account {
      *
      * @returns a new Account Object
      */
-    public static create(keyPair: KeyPair, address?: BigInt, name?: string): Account {
-        return new Account(keyPair, address, name)
+    public static create(keyPair: KeyPair, address?: BigInt | Number, name?: string): Account {
+        return new Account(keyPair, BigInt(address), name)
     }
 
     /**

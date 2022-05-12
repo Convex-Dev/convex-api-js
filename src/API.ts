@@ -8,7 +8,7 @@
 
 import { Account } from './Account'
 import { KeyPair } from './KeyPair'
-import { remove0xPrefix } from './Utils'
+import { remove0xPrefix, toAddress } from './Utils'
 import { APIRequestError, APIError } from './Errors'
 import { IAccountInformation, IRegistryItem } from './Interfaces'
 import { Registry } from './Registry'
@@ -187,14 +187,9 @@ export class API {
      * ```
      *
      */
-    public async getBalance(addressAccount: BigInt | Account): Promise<BigInt> {
-        let address: BigInt
+    public async getBalance(addressAccount: Account | BigInt | string): Promise<BigInt> {
+        const address: BigInt = toAddress(addressAccount)
         let balance: BigInt = BigInt(0)
-        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
-            address = BigInt(addressAccount)
-        } else {
-            address = (<Account>addressAccount).address
-        }
         try {
             const transaction = `(balance #${address})`
             /*

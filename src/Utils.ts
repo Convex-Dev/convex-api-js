@@ -6,6 +6,7 @@
 */
 
 import { createHash } from 'crypto'
+import { Account } from './Account'
 
 export function remove0xPrefix(publicKey: string): string {
     if (publicKey) {
@@ -39,12 +40,19 @@ export function isAddress(address: string | number | BigInt): boolean {
     return false
 }
 
-export function toAddress(address: string | number | BigInt): BigInt {
+export function toAddress(address: Account | string | number | BigInt): BigInt {
     let result = address
-    if (typeof address === 'string') {
-        result = address.replace(/^#/, '')
+    if (Object.prototype.toString.call(address) === '[object BigInt]') {
+        result = BigInt(address)
+    } else if (typeof address === 'string') {
+        result = BigInt(address.replace(/^#/, ''))
+    } else if (typeof address === 'object' && address.constructor.name === 'Account') {
+        result = (<Account>address).address
+    } else {
+        result = BigInt(address)
     }
-    return BigInt(result)
+
+    return result
 }
 
 export function isPublicKeyChecksum(publicKey: string): boolean {

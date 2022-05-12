@@ -8,6 +8,8 @@ import { assert } from 'chai'
 import { randomInt } from 'crypto'
 import { randomHex } from '../Helpers'
 
+import { Account } from '../../src/Account'
+import { KeyPair } from '../../src/KeyPair'
 import { isAddress, isPublicKeyChecksum, toAddress, toPublicKeyChecksum } from '../../src/Utils'
 
 const PUBLIC_ADDRESS = '0x5288fec4153b702430771dfac8aed0b21cafca4344dae0d47b97f0bf532b3306'
@@ -41,6 +43,15 @@ describe('Utils module', () => {
             const result = toAddress(address)
             assert.equal(result, BigInt(addressNumber))
         })
+        it('should convert an account to address', () => {
+            const addressNumber = randomInt(0, 2048)
+            const keyPair = KeyPair.create()
+            const account = Account.create(keyPair, addressNumber)
+            const result = toAddress(account)
+            assert.equal(result, BigInt(addressNumber))
+        })
+
+
     })
 
     describe('toPublicKeyChecksum', () => {
