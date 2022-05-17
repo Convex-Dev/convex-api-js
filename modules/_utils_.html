@@ -74,7 +74,9 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#isaddress" class="tsd-kind-icon">is<wbr>Address</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#ispublickey" class="tsd-kind-icon">is<wbr>Public<wbr>Key</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#ispublickeychecksum" class="tsd-kind-icon">is<wbr>Public<wbr>Key<wbr>Checksum</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#prefix0x" class="tsd-kind-icon">prefix0x</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#remove0xprefix" class="tsd-kind-icon">remove0x<wbr>Prefix</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#toaddress" class="tsd-kind-icon">to<wbr>Address</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#topublickeychecksum" class="tsd-kind-icon">to<wbr>Public<wbr>Key<wbr>Checksum</a></li>
@@ -95,16 +97,58 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Utils.ts#L34">src/Utils.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L19">src/Utils.ts:19</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return true if the number or string is an address value. This does not check the network for a valid
+									address, but just checks to see if it is a number</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check to see if it can be a valid address</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>Boolean True if the address field is valid, else false</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="ispublickey" class="tsd-anchor"></a>
+					<h3>is<wbr>Public<wbr>Key</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Public<wbr>Key<span class="tsd-signature-symbol">(</span>publicKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L115">src/Utils.ts:115</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns true if the value is a public key.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>publicKey: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>value is public key - is string and has 64 hex chars</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>True if the key is a public key</p>
 						</li>
 					</ul>
 				</section>
@@ -118,16 +162,57 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Utils.ts#L58">src/Utils.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L130">src/Utils.ts:130</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns true if the public key provided has a valid checksum</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>publicKey: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>to check to see if is a valid checksum key</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>True if the public key has the correct upper/lower case checksum</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="prefix0x" class="tsd-anchor"></a>
+					<h3>prefix0x</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">prefix0x<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L59">src/Utils.ts:59</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Preappends a &#39;0x&#39; value to the front of key value.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to preappend.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Return the string with a &#39;0x&#39; at the front.</p>
 						</li>
 					</ul>
 				</section>
@@ -135,22 +220,31 @@
 					<a name="remove0xprefix" class="tsd-anchor"></a>
 					<h3>remove0x<wbr>Prefix</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">remove0x<wbr>Prefix<span class="tsd-signature-symbol">(</span>publicKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">remove0x<wbr>Prefix<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Utils.ts#L11">src/Utils.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L74">src/Utils.ts:74</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes any leading &#39;0x&#39; value.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>publicKey: <span class="tsd-signature-type">string</span></h5>
+									<h5>value: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to remove the leading &#39;0x&#39;</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Return the value with the missing &#39;0x&#39;</p>
 						</li>
 					</ul>
 				</section>
@@ -164,16 +258,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Utils.ts#L43">src/Utils.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L36">src/Utils.ts:36</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert an Account object, string, number BigInt values to an address number</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The Account object or number to convert to a single address value</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">BigInt</span></h4>
+							<p>Returns a single BigInt value of the address</p>
 						</li>
 					</ul>
 				</section>
@@ -187,16 +290,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Utils.ts#L18">src/Utils.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L91">src/Utils.ts:91</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts a public key to a public key with a checksum. The checksum is calculated
+										by doing as SHA3-256 on the hex values, then for each hex value if the hash value
+									is &gt; 7, then the hex value is upper case.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>publicKey: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to convert to checksum key</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>Checksum upper/lower case hex values</p>
 						</li>
 					</ul>
 				</section>
@@ -218,7 +332,10 @@
 						<a href="_errors_.html">&quot;<wbr>Errors&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="_interfaces_.html">&quot;<wbr>Interfaces&quot;</a>
+						<a href="_iaccountinformation_.html">&quot;IAccount<wbr>Information&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="_iregistryitem_.html">&quot;IRegistry<wbr>Item&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="_keypair_.html">&quot;<wbr>Key<wbr>Pair&quot;</a>
@@ -240,7 +357,13 @@
 						<a href="_utils_.html#isaddress" class="tsd-kind-icon">is<wbr>Address</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_.html#ispublickey" class="tsd-kind-icon">is<wbr>Public<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_.html#ispublickeychecksum" class="tsd-kind-icon">is<wbr>Public<wbr>Key<wbr>Checksum</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_.html#prefix0x" class="tsd-kind-icon">prefix0x</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_.html#remove0xprefix" class="tsd-kind-icon">remove0x<wbr>Prefix</a>

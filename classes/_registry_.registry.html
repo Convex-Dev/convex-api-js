@@ -116,24 +116,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Registry<span class="tsd-signature-symbol">(</span>convex<span class="tsd-signature-symbol">: </span><a href="_api_.api.html" class="tsd-signature-type">API</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_registry_.registry.html" class="tsd-signature-type">Registry</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Registry<span class="tsd-signature-symbol">(</span>convex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConvexAPI</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_registry_.registry.html" class="tsd-signature-type">Registry</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L22">src/Registry.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L22">src/Registry.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Initaliizes a new Registry object, you need to provide a ConvexAPI Object.</p>
 								</div>
+								<p>Best practice is to use the convex.registry property instead of creating a new object</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>convex: <a href="_api_.api.html" class="tsd-signature-type">API</a></h5>
+									<h5>convex: <span class="tsd-signature-type">ConvexAPI</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>API object to access the convex network.</p>
@@ -154,17 +155,17 @@
 					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">BigInt</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L21">src/Registry.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L21">src/Registry.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="convex" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> convex</h3>
-					<div class="tsd-signature tsd-kind-icon">convex<span class="tsd-signature-symbol">:</span> <a href="_api_.api.html" class="tsd-signature-type">API</a></div>
+					<div class="tsd-signature tsd-kind-icon">convex<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConvexAPI</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L20">src/Registry.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L20">src/Registry.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -179,14 +180,14 @@
 					<div class="tsd-signature tsd-kind-icon">items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L22">src/Registry.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L22">src/Registry.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>name: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/_interfaces_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a></h5>
+								<h5><span class="tsd-signature-symbol">[</span>name: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/_iregistryitem_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a></h5>
 							</li>
 						</ul>
 					</div>
@@ -204,7 +205,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L37">src/Registry.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L39">src/Registry.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -226,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L143">src/Registry.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L145">src/Registry.ts:145</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -250,7 +251,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L49">src/Registry.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L51">src/Registry.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -276,13 +277,13 @@
 					<a name="item" class="tsd-anchor"></a>
 					<h3>item</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">item<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_interfaces_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">item<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iregistryitem_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L61">src/Registry.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L63">src/Registry.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -300,7 +301,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_interfaces_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iregistryitem_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>return an IRegistryItem record with the address and owner address of the registered name</p>
 						</li>
 					</ul>
@@ -309,13 +310,13 @@
 					<a name="register" class="tsd-anchor"></a>
 					<h3>register</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">register<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, registerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span>, account<span class="tsd-signature-symbol">: </span><a href="_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_interfaces_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, registerAddress<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span>, account<span class="tsd-signature-symbol">: </span><a href="_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iregistryitem_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L88">src/Registry.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L90">src/Registry.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -344,7 +345,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_interfaces_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_iregistryitem_.iregistryitem.html" class="tsd-signature-type">IRegistryItem</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>an IRegistryItem object with the new address and owner address of the registered item.</p>
 						</li>
 					</ul>
@@ -359,7 +360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L129">src/Registry.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L131">src/Registry.ts:131</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -391,7 +392,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/d297ef8/src/Registry.ts#L114">src/Registry.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Registry.ts#L116">src/Registry.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -435,7 +436,10 @@
 						<a href="../modules/_errors_.html">&quot;<wbr>Errors&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_interfaces_.html">&quot;<wbr>Interfaces&quot;</a>
+						<a href="../modules/_iaccountinformation_.html">&quot;IAccount<wbr>Information&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_iregistryitem_.html">&quot;IRegistry<wbr>Item&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_keypair_.html">&quot;<wbr>Key<wbr>Pair&quot;</a>
