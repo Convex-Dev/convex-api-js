@@ -73,6 +73,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#isaccount" class="tsd-kind-icon">is<wbr>Account</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#isaddress" class="tsd-kind-icon">is<wbr>Address</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#ispublickey" class="tsd-kind-icon">is<wbr>Public<wbr>Key</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#ispublickeychecksum" class="tsd-kind-icon">is<wbr>Public<wbr>Key<wbr>Checksum</a></li>
@@ -88,16 +89,49 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="isaddress" class="tsd-anchor"></a>
-					<h3>is<wbr>Address</h3>
+					<a name="isaccount" class="tsd-anchor"></a>
+					<h3>is<wbr>Account</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Address<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Account<span class="tsd-signature-symbol">(</span>addressAccount<span class="tsd-signature-symbol">: </span><a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L19">src/Utils.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L38">src/Utils.ts:38</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return true if the addressAccount value is an acount object. This does not check the network for a valid
+									account, but just checks to see if it is an Account object</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>addressAccount: <a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to check to see if it can be a valid account object</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>Boolean True if the addressAccount field is valid, else false</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="isaddress" class="tsd-anchor"></a>
+					<h3>is<wbr>Address</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Address<span class="tsd-signature-symbol">(</span>addressAccount<span class="tsd-signature-symbol">: </span><a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L19">src/Utils.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -109,7 +143,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span></h5>
+									<h5>addressAccount: <a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Value to check to see if it can be a valid address</p>
 									</div>
@@ -130,7 +164,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L115">src/Utils.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L128">src/Utils.ts:128</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -162,7 +196,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L130">src/Utils.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L143">src/Utils.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -194,7 +228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L59">src/Utils.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L72">src/Utils.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -226,7 +260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L74">src/Utils.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L87">src/Utils.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -252,13 +286,13 @@
 					<a name="toaddress" class="tsd-anchor"></a>
 					<h3>to<wbr>Address</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Address<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Address<span class="tsd-signature-symbol">(</span>addressAccount<span class="tsd-signature-symbol">: </span><a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BigInt</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L36">src/Utils.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L50">src/Utils.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -269,7 +303,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span></h5>
+									<h5>addressAccount: <a href="../classes/_account_.account.html" class="tsd-signature-type">Account</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BigInt</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The Account object or number to convert to a single address value</p>
 									</div>
@@ -290,7 +324,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/adce82e/src/Utils.ts#L91">src/Utils.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/c871824/src/Utils.ts#L104">src/Utils.ts:104</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -353,6 +387,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_.html#isaccount" class="tsd-kind-icon">is<wbr>Account</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_.html#isaddress" class="tsd-kind-icon">is<wbr>Address</a>
 					</li>
