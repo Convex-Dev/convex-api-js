@@ -5,6 +5,11 @@
 ## Release v0.2.6
 +   Export the Registry
 
+## Release v0.2.6
++   more export of utils
++   export Registry class, and access via API object
++   Code cleanup and more testing
+
 ## Release v0.2.5
 +   Export utils module
 +   process Account object for toAddress utility
