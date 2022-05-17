@@ -8,7 +8,7 @@
 
 import { Account } from './Account'
 import { KeyPair } from './KeyPair'
-import { remove0xPrefix, toAddress } from './Utils'
+import { isAccount, remove0xPrefix, toAddress } from './Utils'
 import { APIRequestError, APIError } from './Errors'
 import { IAccountInformation } from './IAccountInformation'
 import { IRegistryItem } from './IRegistryItem'
@@ -87,7 +87,7 @@ export class API {
      *
      *
      */
-    public async createAccount(keyPair: KeyPair): Promise<Account> {
+    public async createAccount(keyPair: KeyPair, name?: string): Promise<Account> {
         const queryURL = urljoin(this.url, '/api/v1/createAccount')
         const data = {
             accountKey: keyPair.publicKeyAPI,
@@ -98,7 +98,7 @@ export class API {
         })
         if (response.ok) {
             const result = await response.json()
-            return Account.create(keyPair, BigInt(result['address']))
+            return Account.create(keyPair, BigInt(result['address']), name)
         }
         return null
     }
@@ -123,7 +123,7 @@ export class API {
     public async requestFunds(amount: BigInt | number, account: Account): Promise<BigInt> {
         const queryURL = urljoin(this.url, '/api/v1/faucet')
         const data = {
-            address: parseInt(account.address.toString()),
+            address: toAddress(account).toString(),
             amount: parseInt(BigInt(amount).toString()),
         }
         const response = await fetch(queryURL, {
@@ -188,16 +188,11 @@ export class API {
      * ```
      *
      */
-    public async getBalance(addressAccount: Account | BigInt | string): Promise<BigInt> {
+    public async getBalance(addressAccount: Account | BigInt | number | string): Promise<BigInt> {
         const address: BigInt = toAddress(addressAccount)
         let balance: BigInt = BigInt(0)
         try {
             const transaction = `(balance #${address})`
-            /*
-            if (this.language == Language.Scrypt) {
-                transaction = `balance (#${address})`
-            }
-            */
             const result = await this.transaction_query(address, transaction, this.language)
             if (result['value']) {
                 balance = BigInt(result['value'])
@@ -222,19 +217,9 @@ export class API {
      * @returns The address of the deployed function
      *
      */
-    public async getAddress(functionName: string, addressAccount: BigInt | Account): Promise<string> {
-        let address
-        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
-            address = addressAccount
-        } else {
-            address = (<Account>addressAccount).address
-        }
+    public async getAddress(functionName: string, addressAccount: Account | BigInt | number | string): Promise<string> {
+        const address = toAddress(addressAccount)
         const transaction = `(address ${functionName})`
-        /*
-        if (this.language == Language.Scrypt) {
-            transaction = `address (${functionName})`
-        }
-        */
         const result = await this.transaction_query(address, transaction, this.language)
         return result['value']
     }
@@ -264,14 +249,9 @@ export class API {
      * }
      *
      */
-    public async getAccountInfo(addressAccount: BigInt | Account): Promise<IAccountInformation> {
-        let address
-        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
-            address = addressAccount
-        } else {
-            address = (<Account>addressAccount).address
-        }
-        const queryURL = urljoin(this.url, `/api/v1/accounts/${address}`)
+    public async getAccountInfo(addressAccount: Account | BigInt | number | string): Promise<IAccountInformation> {
+        const address: BigInt = toAddress(addressAccount)
+        const queryURL: string = urljoin(this.url, `/api/v1/accounts/${address}`)
         return <IAccountInformation>await this.do_transaction_get('getAccountInfo', queryURL)
     }
 
@@ -308,6 +288,8 @@ export class API {
      *
      * @param name: name of the account to register or has already been registered.
      * @param keyPair: KeyPair to use for the public/private keys
+     * @param ownerAccount: owner of the new/used account - if you provide this then auto topup will not be called
+     * to get sufficient funds to register the account
      *
      * @returns An Account object with the account name and adderss set.
      *
@@ -322,17 +304,21 @@ export class API {
      * ```
      *
      */
-    public async setupAccount(name: string, keyPair: KeyPair): Promise<Account> {
-        let newAccount
+    public async setupAccount(name: string, keyPair: KeyPair, ownerAccount?: Account): Promise<Account> {
+        let newAccount: Account
         const address: BigInt = await this.resolveAccountName(name)
         if (address) {
             newAccount = Account.create(keyPair, address, name)
         } else {
-            newAccount = await this.createAccount(keyPair)
-            await this.topupAccount(newAccount)
-            newAccount = await this.registerAccountName(name, newAccount)
+            newAccount = await this.createAccount(keyPair, name)
+            if (!ownerAccount) {
+                await this.topupAccount(newAccount)
+            }
+            newAccount = await this.registerAccountName(name, newAccount, ownerAccount)
         }
-        await this.topupAccount(newAccount)
+        if (!ownerAccount) {
+            await this.topupAccount(newAccount)
+        }
         return newAccount
     }
 
@@ -342,7 +328,7 @@ export class API {
      *
      * @param name: name of the account to register
      * @param account: Account to spend the fee to register and use the address.
-     * @param address: Optional address to use to register this instead of using the accounts address.
+     * @param ownerAccount: Optional ownerAccount or address to use to register this instead of using the accounts address.
      *
      * @returns an account object with the address set
      *
@@ -361,12 +347,19 @@ export class API {
      * ```
      *
      */
-    public async registerAccountName(name: string, account: Account, address?: BigInt): Promise<Account> {
-        if (!address) {
-            address = account.address
+    public async registerAccountName(
+        name: string,
+        account: Account,
+        ownerAddressAccount?: Account | BigInt | number | string
+    ): Promise<Account> {
+        const registerAddress: BigInt = toAddress(account)
+        let registerAccount: Account = account
+        // if owner account is an account object, then owner account is used as the account to pay for the registration
+        if (isAccount(ownerAddressAccount)) {
+            registerAccount = <Account>ownerAddressAccount
         }
-        if (address) {
-            const item: IRegistryItem = await this.registry.register(`account.${name}`, address, account)
+        if (registerAddress) {
+            const item: IRegistryItem = await this.registry.register(`account.${name}`, registerAddress, registerAccount)
             return Account.create(account.keyPair, item.address, name)
         }
     }
@@ -412,7 +405,7 @@ export class API {
     /**
      * Transfer funds from one account to another.
      *
-     * @param toAddressAccount To address BigInt or account , that the funds need to be sent too.
+     * @param sendToAddressAccount To address an Account, BigInt, number or string , that the funds need to be sent too.
      * @param amount Amount to send for the transfer.
      * @param fromAccount Account to send the funds from. This must be an account object so that the transfer transaction
      * can be sent from the account.
@@ -433,19 +426,13 @@ export class API {
      * ```
      *
      */
-    public async transfer(toAddressAccount: BigInt | Account, amount: BigInt | number, fromAccount: Account): Promise<BigInt> {
-        let toAddress
-        if (Object.prototype.toString.call(toAddressAccount) === '[object BigInt]') {
-            toAddress = toAddressAccount
-        } else {
-            toAddress = (<Account>toAddressAccount).address
-        }
-        const transaction = `(transfer #${toAddress} ${amount})`
-        /*
-        if (this.language == Language.Scrypt) {
-            transaction = `transfer (#${toAddress} ${amount})`
-        }
-        */
+    public async transfer(
+        sendToAddressAccount: Account | BigInt | number | string,
+        amount: BigInt | number,
+        fromAccount: Account
+    ): Promise<BigInt> {
+        const sendToAddress: BigInt = toAddress(sendToAddressAccount)
+        const transaction = `(transfer #${sendToAddress} ${amount})`
         const result = await this.send(transaction, fromAccount)
         return result['value']
     }
@@ -468,28 +455,28 @@ export class API {
      *
      */
     public async send(transaction: string, account: Account, language?: Language): Promise<unknown> {
-        let transaction_language = this.language
-        let retry_counter = 20
+        let transactionLanguage: Language = this.language
+        let retryCounter = 20
         let result = null
         if (language) {
-            transaction_language = language
+            transactionLanguage = language
         }
-        while (retry_counter > 0 && result == null) {
+        while (retryCounter > 0 && result == null) {
             // const info = await this.getAccountInfo(account)
             try {
                 // console.log('trying ', retry_counter)
-                const hashResult = await this.transaction_prepare(account.address, transaction, transaction_language)
+                const hashResult = await this.transaction_prepare(toAddress(account), transaction, transactionLanguage)
                 const hashData = hashResult['hash']
                 const signedData = account.sign(hashData)
-                result = await this.transaction_submit(account.address, account.keyPair.publicKeyAPI, hashData, signedData)
+                result = await this.transaction_submit(toAddress(account), account.keyPair.publicKeyAPI, hashData, signedData)
             } catch (error) {
                 // console.log(error)
                 if (error.code === 'SEQUENCE') {
                     // console.log('sequence error', retry_counter)
-                    if (retry_counter == 0) {
+                    if (retryCounter == 0) {
                         throw error
                     }
-                    retry_counter -= 1
+                    retryCounter -= 1
                     await new Promise((request) => setTimeout(request, 1000 + Math.random() * 2000))
                     result = null
                 } else {
@@ -518,17 +505,16 @@ export class API {
      * ```
      *
      */
-    public async query(transaction: string, addressAccount: BigInt | Account, language?: Language): Promise<unknown> {
-        let transaction_language = this.language
+    public async query(
+        transaction: string,
+        addressAccount: Account | BigInt | number | string,
+        language?: Language
+    ): Promise<unknown> {
+        let transaction_language: Language = this.language
         if (language) {
             transaction_language = language
         }
-        let address
-        if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
-            address = addressAccount
-        } else {
-            address = (<Account>addressAccount).address
-        }
+        const address: BigInt = toAddress(addressAccount)
         return this.transaction_query(address, transaction, transaction_language)
     }
 
@@ -538,9 +524,9 @@ export class API {
         language: Language,
         sequenceNumber?: BigInt
     ): Promise<unknown> {
-        const prepareURL = urljoin(this.url, '/api/v1/transaction/prepare')
+        const prepareURL: string = urljoin(this.url, '/api/v1/transaction/prepare')
         const data = {
-            address: address.toString(),
+            address: toAddress(address).toString(),
             lang: language,
             source: transaction,
             sequence: sequenceNumber,
@@ -549,9 +535,9 @@ export class API {
     }
 
     protected async transaction_submit(address: BigInt, publicKey: string, hashData: string, signedData: string): Promise<unknown> {
-        const submitURL = urljoin(this.url, '/api/v1/transaction/submit')
+        const submitURL: string = urljoin(this.url, '/api/v1/transaction/submit')
         const data = {
-            address: address.toString(),
+            address: toAddress(address).toString(),
             accountKey: remove0xPrefix(publicKey),
             hash: hashData,
             sig: remove0xPrefix(signedData),
@@ -560,9 +546,9 @@ export class API {
     }
 
     protected async transaction_query(address: BigInt, transaction: string, language: Language): Promise<unknown> {
-        const queryURL = urljoin(this.url, '/api/v1/query')
+        const queryURL: string = urljoin(this.url, '/api/v1/query')
         const data = {
-            address: `#${address.toString()}`,
+            address: `#${toAddress(address).toString()}`,
             lang: language,
             source: transaction,
         }

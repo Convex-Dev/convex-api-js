@@ -11,14 +11,15 @@ import { Account } from './Account'
  * Return true if the number or string is an address value. This does not check the network for a valid
  * address, but just checks to see if it is a number
  *
- * @param address Value to check to see if it can be a valid address
+ * @param addressAccount Value to check to see if it can be a valid address
  *
  * @returns Boolean True if the address field is valid, else false
  *
  */
-export function isAddress(address: string | number | BigInt): boolean {
+export function isAddress(addressAccount: Account | BigInt | number | string): boolean {
     try {
-        return BigInt(address) >= BigInt(0)
+        const address: BigInt = toAddress(addressAccount)
+        return address && address >= BigInt(0)
     } catch {
         return false
     }
@@ -26,25 +27,37 @@ export function isAddress(address: string | number | BigInt): boolean {
 }
 
 /**
+ * Return true if the addressAccount value is an acount object. This does not check the network for a valid
+ * account, but just checks to see if it is an Account object
+ *
+ * @param addressAccount Value to check to see if it can be a valid account object
+ *
+ * @returns Boolean True if the addressAccount field is valid, else false
+ *
+ */
+export function isAccount(addressAccount: Account | BigInt | number | string): boolean {
+    return typeof addressAccount === 'object' && addressAccount.constructor.name === 'Account'
+}
+
+/**
  * Convert an Account object, string, number BigInt values to an address number
  *
- * @param address The Account object or number to convert to a single address value
+ * @param addressAccount The Account object or number to convert to a single address value
  *
  * @returns Returns a single BigInt value of the address
  *
  */
-export function toAddress(address: Account | string | number | BigInt): BigInt {
-    let result = address
-    if (Object.prototype.toString.call(address) === '[object BigInt]') {
-        result = BigInt(address)
-    } else if (typeof address === 'string') {
-        result = BigInt(address.replace(/^#/, ''))
-    } else if (typeof address === 'object' && address.constructor.name === 'Account') {
-        result = (<Account>address).address
+export function toAddress(addressAccount: Account | BigInt | number | string): BigInt {
+    let result: BigInt
+    if (Object.prototype.toString.call(addressAccount) === '[object BigInt]') {
+        result = BigInt(addressAccount)
+    } else if (typeof addressAccount === 'string') {
+        result = BigInt(addressAccount.replace(/^#/, ''))
+    } else if (isAccount(addressAccount)) {
+        result = (<Account>addressAccount).address
     } else {
-        result = BigInt(address)
+        result = BigInt(addressAccount)
     }
-
     return result
 }
 

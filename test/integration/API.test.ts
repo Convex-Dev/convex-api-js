@@ -9,7 +9,7 @@ import chai, { assert } from 'chai'
 chai.use(require('chai-as-promised'))
 import { randomBytes } from 'crypto'
 
-import { API, KeyPair } from '../../src'
+import { API, KeyPair, Account } from '../../src'
 import { isAddress, toAddress } from '../../src/Utils'
 
 const PRIVATE_TEST_KEY_TEXT = `
@@ -218,10 +218,10 @@ describe('API Class', () => {
     })
 
     describe('accountNames register and load', async () => {
-        let convex
-        let importKeyPair
-        let accountName
-        let newAccount
+        let convex: API
+        let importKeyPair: KeyPair
+        let accountName: string
+        let newAccount: Account
         before( async () => {
             convex = API.create(CONVEX_URL)
             importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
@@ -234,7 +234,7 @@ describe('API Class', () => {
             assert(newAccount.name)
         })
         it('should resolve the address of the new named account',  async() => {
-            const result = await convex.resolveAccountName(accountName, importKeyPair)
+            const result = await convex.resolveAccountName(accountName)
             assert(result)
             assert.equal(result, newAccount.address)
         })
@@ -246,14 +246,24 @@ describe('API Class', () => {
         })
         it('should resolve the address of the new named account after a clear cache',  async() => {
             convex.registry.clearCache()
-            const result = await convex.resolveAccountName(accountName, importKeyPair)
+            const result = await convex.resolveAccountName(accountName)
             assert(result)
             assert.equal(result, newAccount.address)
+        })
+        it('should create a new account name using the test account as the owner account', async() => {
+            const newAccounName = 'test.convex-api.' + randomBytes(4).toString('hex')
+            await convex.topupAccount(newAccount)
+            const emptyAccount: Account = await convex.setupAccount(newAccounName, importKeyPair, newAccount)
+            assert(emptyAccount)
+            assert(emptyAccount.address)
+            assert(emptyAccount.name)
+            // should be 0 , since with an owner account the setupAccount does not use auto topup
+            assert.equal(await convex.getBalance(emptyAccount), 0)
         })
     })
 
     describe('registry', async () => {
-        let convex
+        let convex: API
         before( async () => {
             convex = API.create(CONVEX_URL)
         })
@@ -264,7 +274,7 @@ describe('API Class', () => {
     })
 
     describe('getAccountInfo', async () => {
-        let convex
+        let convex: API
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
@@ -286,7 +296,7 @@ describe('API Class', () => {
         })
     })
     describe('transfer', async () => {
-        let convex
+        let convex: API
         let accountFrom
         before( async () => {
             convex = API.create(CONVEX_URL)
@@ -308,7 +318,7 @@ describe('API Class', () => {
 
 
     describe('multi threaded send test', async () => {
-        let convex
+        let convex: API
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
@@ -334,7 +344,7 @@ describe('API Class', () => {
     })
 
     describe('multi threaded createAccount test', async () => {
-        let convex
+        let convex: API
         let importKeyPair
         before( async () => {
             convex = API.create(CONVEX_URL)
