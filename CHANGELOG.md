@@ -2,8 +2,10 @@
 
 ## Beta Testing
 
-## Release v0.2.6
-+   Export the Registry
+## Release v0.2.7
++   utils isAccount function, to test if the address number/string/Account is an account object
++   API.setupAccount only calls API.autoTopup if the owner account is not provided
++   Minor bug fixes and cleanup
 
 ## Release v0.2.6
 +   more export of utils
