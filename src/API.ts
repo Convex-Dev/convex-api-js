@@ -10,7 +10,8 @@ import { Account } from './Account'
 import { KeyPair } from './KeyPair'
 import { remove0xPrefix, toAddress } from './Utils'
 import { APIRequestError, APIError } from './Errors'
-import { IAccountInformation, IRegistryItem } from './Interfaces'
+import { IAccountInformation } from './IAccountInformation'
+import { IRegistryItem } from './IRegistryItem'
 import { Registry } from './Registry'
 
 import fetch from 'node-fetch'
@@ -33,12 +34,12 @@ export class API {
     /**
      * Default language to use
      */
-    language: Language
+    public language: Language
 
     /**
      * Registry used to resolve account names
      */
-    registry: Registry
+    readonly registry: Registry
 
     /**
      * Initaliizes a new API object, you need to provide the URL of a Convex Network Node.

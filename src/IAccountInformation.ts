@@ -1,6 +1,6 @@
 /*
-    Interfaces
 
+    Interface IAccountInformation
 */
 
 export interface IAccountInformation {
@@ -13,9 +13,4 @@ export interface IAccountInformation {
     balance: number
     sequence: number
     environment: unknown
-}
-
-export interface IRegistryItem {
-    address: BigInt
-    owner: BigInt
 }

@@ -7,9 +7,9 @@
 */
 
 import { Account } from './Account'
-import { API } from './API'
+import { API as ConvexAPI } from './API'
 import { toAddress } from './Utils'
-import { IRegistryItem } from './Interfaces'
+import { IRegistryItem } from './IRegistryItem'
 
 const QUERY_ACCOUNT_ADDRESS = BigInt(9)
 
@@ -17,17 +17,19 @@ export class Registry {
     /**
      * Registry object to call registry commands
      */
-    readonly convex: API
-    address: BigInt
+    readonly convex: ConvexAPI
+    public address: BigInt
     protected items: { [name: string]: IRegistryItem } = {}
 
     /**
      * Initaliizes a new Registry object, you need to provide a ConvexAPI Object.
      *
+     * Best practice is to use the convex.registry property instead of creating a new object
+     *
      * @param convex API object to access the convex network.
      *
      */
-    public constructor(convex: API) {
+    public constructor(convex: ConvexAPI) {
         this.convex = convex
     }
 

@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+## Release v0.2.6
++   Export the Registry
+
 ## Release v0.2.5
 +   Export utils module
 +   process Account object for toAddress utility
