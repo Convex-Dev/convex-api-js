@@ -90,8 +90,7 @@ export class KeyPair {
      *
      */
     public static async importFromFile(filename: string, password: string): Promise<KeyPair> {
-
-	const fs = await import('fs')
+        const fs = await import('fs')
         if (fs.existsSync(filename)) {
             const data = await fs.promises.readFile(filename)
             return KeyPair.importFromString(data.toString(), password)
@@ -125,7 +124,7 @@ export class KeyPair {
      *
      */
     public async exportToFile(filename: string, password: string): Promise<unknown> {
-	const fs = await import('fs')
+        const fs = await import('fs')
         return await fs.promises.writeFile(filename, this.exportToString(password))
     }
 
