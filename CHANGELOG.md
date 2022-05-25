@@ -2,6 +2,9 @@
 
 ## Beta Testing
 
+## Release v0.2.8
++   move to cross-fetch
+
 ## Release v0.2.7
 +   utils isAccount function, to test if the address number/string/Account is an account object
 +   API.setupAccount only calls API.autoTopup if the owner account is not provided

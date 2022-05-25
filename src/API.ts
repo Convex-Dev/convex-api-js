@@ -15,6 +15,7 @@ import { IRegistryItem } from './IRegistryItem'
 import { Registry } from './Registry'
 
 import fetch from 'node-fetch'
+
 import urljoin from 'url-join'
 
 const enum Language {
