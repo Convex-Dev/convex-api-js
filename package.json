@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/Convex-Dev/convex-api-js#README",
   "dependencies": {
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.2.4",
     "pem-file": "^1.0.1",
     "url-join": "^4.0.1"
   },
