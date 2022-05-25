@@ -1,6 +1,7 @@
 # Change Log
 
-## Beta Testing
+## Release v0.2.9
++   change import of the fs module to be dynamic for client apps
 
 ## Release v0.2.8
 +   move to cross-fetch
