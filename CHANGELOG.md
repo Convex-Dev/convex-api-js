@@ -1,5 +1,8 @@
 # Change Log
 
+## Release 0.2.10
++   removed cypto, pem-file packages and replaced with @noble/ed25519 and crypto-key-composer
+
 ## Release v0.2.9
 +   change import of the fs module to be dynamic for client apps
 
