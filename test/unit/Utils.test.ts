@@ -42,9 +42,9 @@ describe('Utils module', () => {
             const result = toAddress(address)
             assert.equal(result, BigInt(addressNumber))
         })
-        it('should convert an account to address', () => {
+        it('should convert an account to address', async () => {
             const addressNumber = randomInt(0, 2048)
-            const keyPair = KeyPair.create()
+            const keyPair = await KeyPair.create()
             const account = Account.create(keyPair, toAddress(addressNumber))
             const result = toAddress(account)
             assert.equal(result, BigInt(addressNumber))

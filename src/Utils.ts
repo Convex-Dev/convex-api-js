@@ -4,7 +4,7 @@
  *
  */
 
-import { createHash } from 'crypto'
+import { SHA3 } from 'sha3'
 import { Account } from './Account'
 
 /**
@@ -104,7 +104,7 @@ export function remove0xPrefix(value: string): string {
 export function toPublicKeyChecksum(publicKey: string): string {
     const publicKeyClean = remove0xPrefix(publicKey).toLowerCase()
     let result = '0x'
-    const hash = createHash('SHA3-256')
+    const hash = new SHA3(256)
     hash.update(Buffer.from(publicKeyClean, 'hex'))
     const hashData = hash.digest('hex')
     for (let index = 0; index < hashData.length && index < publicKeyClean.length; index++) {

@@ -5,25 +5,22 @@
 
 */
 
-import { KeyObject, generateKeyPairSync, createPrivateKey, createPublicKey, randomBytes, sign } from 'crypto'
-import pem from 'pem-file'
+import * as ed25519 from '@noble/ed25519'
+import { composePrivateKey, decomposePrivateKey } from 'crypto-key-composer'
 
 import { toPublicKeyChecksum, remove0xPrefix } from './Utils'
 
+
 export class KeyPair {
-    readonly privateKey: KeyObject // private key object
-    readonly publicKey: KeyObject // public key object
+    readonly privateKey: any // private key object
+    readonly publicKey: any // public key object
     readonly publicKeyAPI: string // address as hex string without leading '0x'
     readonly publicKeyChecksum: string // address as hex string with checksum upper an lower case hex letters
 
-    constructor(publicKey: KeyObject, privateKey: KeyObject) {
+    constructor(publicKey: any, privateKey: any) {
         this.publicKey = publicKey
         this.privateKey = privateKey
-        const exportPublicKey = publicKey.export({
-            type: 'spki',
-            format: 'pem',
-        })
-        const publicKeyText = pem.decode(exportPublicKey).toString('hex').substring(24)
+        const publicKeyText = ed25519.utils.bytesToHex(this.publicKey)
         this.publicKeyAPI = remove0xPrefix(toPublicKeyChecksum(publicKeyText))
         this.publicKeyChecksum = toPublicKeyChecksum(publicKeyText)
     }
@@ -33,22 +30,10 @@ export class KeyPair {
      *
      * @returns a new KeyPair Object
      */
-    public static create(): KeyPair {
-        // create a temporary password for generating a random private/public keys
-        const password = randomBytes(64).toString('hex')
-        const { publicKey, privateKey } = generateKeyPairSync('ed25519', {
-            publicKeyEncoding: {
-                type: 'spki',
-                format: 'pem',
-            },
-            privateKeyEncoding: {
-                type: 'pkcs8',
-                format: 'pem',
-                cipher: 'aes-256-cbc',
-                passphrase: password,
-            },
-        })
-        return KeyPair.importFromString(privateKey, password, publicKey)
+    public static async create(): Promise<KeyPair> {
+        const privateKey = ed25519.utils.randomPrivateKey()
+        const publicKey = await ed25519.getPublicKey(privateKey)
+        return new KeyPair(publicKey, privateKey)
     }
 
     /**
@@ -63,20 +48,18 @@ export class KeyPair {
      * @returns an KeyPair object with the private and public key pairs.
      *
      */
-    public static importFromString(text: string, password: string, publicKeyText?: string): KeyPair {
-        const privateKey = createPrivateKey({
-            key: text,
-            type: 'pkcs8',
-            passphrase: password,
+    public static async importFromString(text: string, password: string, publicKeyText?: string): Promise<KeyPair> {
+
+        const privateKeyData = decomposePrivateKey(text, {
+            format: 'pkcs8-pem',
+            password: password,
         })
-
-        let publicKey
+//        console.log(privateKeyData)
+        const privateKey = privateKeyData.keyData.seed
+        let publicKey = await ed25519.getPublicKey(privateKey)
         if (publicKeyText) {
-            publicKey = createPublicKey(privateKey)
-        } else {
-            publicKey = createPublicKey(privateKey)
+            publicKey = await ed25519.getPublicKey(privateKey)
         }
-
         return new KeyPair(publicKey, privateKey)
     }
 
@@ -107,14 +90,19 @@ export class KeyPair {
      *
      */
     public exportToString(password: string): string {
-        return this.privateKey
-            .export({
-                type: 'pkcs8',
-                format: 'pem',
-                cipher: 'aes-256-cbc',
-                passphrase: password,
-            })
-            .toString()
+
+        return composePrivateKey({
+            format: 'pkcs8-pem',
+            keyAlgorithm: {
+                id: 'ed25519'
+            },
+            keyData: {
+                seed: this.privateKey
+            },
+        }, {
+            format: 'pkcs8-pem',
+            password: password,
+        })
     }
 
     /**
@@ -140,8 +128,8 @@ export class KeyPair {
      * @returns A hex string signed with a prefix of '0x'
      *
      */
-    public sign(text: string): string {
-        const data = sign(null, Buffer.from(text, 'hex'), this.privateKey)
-        return '0x' + data.toString('hex')
+    public async sign(text: string): Promise<string> {
+        const data = await ed25519.sign(Buffer.from(text, 'hex'), this.privateKey)
+        return '0x' + ed25519.utils.bytesToHex(data)
     }
 }

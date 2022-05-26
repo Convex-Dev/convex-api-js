@@ -30,7 +30,7 @@ describe('API Class', () => {
     describe('requestFunds', async () => {
         it('should request funds from a new account', async () => {
             const convex = API.create(CONVEX_URL)
-            const keyPair = KeyPair.create()
+            const keyPair = await KeyPair.create()
             const account = await convex.createAccount(keyPair)
             const amount = 1000
             const result = await convex.requestFunds(amount, account)
@@ -39,7 +39,7 @@ describe('API Class', () => {
 
         it('should request funds from the test account', async () => {
             const convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             const account = await convex.createAccount(importKeyPair)
             const amount = 1000000
             const result = await convex.requestFunds(amount, account)
@@ -58,7 +58,7 @@ describe('API Class', () => {
 
         it('should return a valid checksum address from a query', async () => {
             const convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             const account = await convex.createAccount(importKeyPair)
             const address = account.address
             const result = await convex.query(`(address #${address})`, account)
@@ -69,7 +69,7 @@ describe('API Class', () => {
     describe('getBalance', async () => {
         it('should get a 0 balance on a new account', async () => {
             const convex = API.create(CONVEX_URL)
-            const keyPair = KeyPair.create()
+            const keyPair = await KeyPair.create()
             const account = await convex.createAccount(keyPair)
             const value = await convex.getBalance(account)
             assert.equal(value, 0)
@@ -77,7 +77,7 @@ describe('API Class', () => {
 
         it('should get a small balance on a new account', async () => {
             const convex = API.create(CONVEX_URL)
-            const keyPair = KeyPair.create()
+            const keyPair = await KeyPair.create()
             const account = await convex.createAccount(keyPair)
             const amount = 100
             const result = await convex.requestFunds(amount, account)
@@ -88,7 +88,7 @@ describe('API Class', () => {
 
         it('should get a small balance on a new account using the address only field', async () => {
             const convex = API.create(CONVEX_URL)
-            const keyPair = KeyPair.create()
+            const keyPair = await KeyPair.create()
             const account = await convex.createAccount(keyPair)
             const amount = 100
             const result = await convex.requestFunds(amount, account)
@@ -103,7 +103,7 @@ describe('API Class', () => {
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.topupAccount(account)
         })
@@ -151,7 +151,7 @@ describe('API Class', () => {
         let functionAddress
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.topupAccount(account)
             functionName = 'test-storage'
@@ -204,7 +204,7 @@ describe('API Class', () => {
         let accountName
         before( async () => {
             convex = API.create(CONVEX_URL)
-            importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             accountName = 'test.convex-api.' + randomBytes(4).toString('hex')
         })
         it('should fail to reslove a new named account',  async() => {
@@ -224,7 +224,7 @@ describe('API Class', () => {
         let newAccount: Account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             accountName = 'test.convex-api.' + randomBytes(4).toString('hex')
         })
         it('should setup and setup/create a new named account',  async() => {
@@ -278,7 +278,7 @@ describe('API Class', () => {
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.requestFunds(TOPUP_AMOUNT, account)
         })
@@ -300,13 +300,13 @@ describe('API Class', () => {
         let accountFrom
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             accountFrom = await convex.createAccount(importKeyPair)
             await convex.topupAccount(accountFrom)
         })
 
         it('should transfer a set amount of funds from the test account to a new account', async () => {
-            const keyPair = KeyPair.create()
+            const keyPair = await KeyPair.create()
             const accountTo = await convex.createAccount(keyPair)
             const amount = BigInt(1000)
             const transferAmount = await convex.transfer(accountTo, amount, accountFrom)
@@ -322,7 +322,7 @@ describe('API Class', () => {
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.topupAccount(account)
         })
@@ -348,7 +348,7 @@ describe('API Class', () => {
         let importKeyPair
         before( async () => {
             convex = API.create(CONVEX_URL)
-            importKeyPair = KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
         })
         it('should run multiple createAccount test', async () => {
             const requestCount = 20

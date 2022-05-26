@@ -468,7 +468,7 @@ export class API {
                 // console.log('trying ', retry_counter)
                 const hashResult = await this.transaction_prepare(toAddress(account), transaction, transactionLanguage)
                 const hashData = hashResult['hash']
-                const signedData = account.sign(hashData)
+                const signedData = await account.sign(hashData)
                 result = await this.transaction_submit(toAddress(account), account.keyPair.publicKeyAPI, hashData, signedData)
             } catch (error) {
                 // console.log(error)

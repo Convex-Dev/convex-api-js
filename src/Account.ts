@@ -34,7 +34,7 @@ export class Account {
      * @returns a signature of the signed text
      *
      */
-    public sign(text: string): string {
-        return this.keyPair.sign(text)
+    public async sign(text: string): Promise<string> {
+        return await this.keyPair.sign(text)
     }
 }
