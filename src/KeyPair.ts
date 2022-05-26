@@ -10,14 +10,13 @@ import { composePrivateKey, decomposePrivateKey } from 'crypto-key-composer'
 
 import { toPublicKeyChecksum, remove0xPrefix } from './Utils'
 
-
 export class KeyPair {
-    readonly privateKey: any // private key object
-    readonly publicKey: any // public key object
+    readonly privateKey: Uint8Array // private key data
+    readonly publicKey: Uint8Array // public key data
     readonly publicKeyAPI: string // address as hex string without leading '0x'
     readonly publicKeyChecksum: string // address as hex string with checksum upper an lower case hex letters
 
-    constructor(publicKey: any, privateKey: any) {
+    constructor(publicKey: Uint8Array, privateKey: Uint8Array) {
         this.publicKey = publicKey
         this.privateKey = privateKey
         const publicKeyText = ed25519.utils.bytesToHex(this.publicKey)
@@ -49,12 +48,10 @@ export class KeyPair {
      *
      */
     public static async importFromString(text: string, password: string, publicKeyText?: string): Promise<KeyPair> {
-
         const privateKeyData = decomposePrivateKey(text, {
             format: 'pkcs8-pem',
             password: password,
         })
-//        console.log(privateKeyData)
         const privateKey = privateKeyData.keyData.seed
         let publicKey = await ed25519.getPublicKey(privateKey)
         if (publicKeyText) {
@@ -90,19 +87,21 @@ export class KeyPair {
      *
      */
     public exportToString(password: string): string {
-
-        return composePrivateKey({
-            format: 'pkcs8-pem',
-            keyAlgorithm: {
-                id: 'ed25519'
+        return composePrivateKey(
+            {
+                format: 'pkcs8-pem',
+                keyAlgorithm: {
+                    id: 'ed25519',
+                },
+                keyData: {
+                    seed: this.privateKey,
+                },
             },
-            keyData: {
-                seed: this.privateKey
-            },
-        }, {
-            format: 'pkcs8-pem',
-            password: password,
-        })
+            {
+                format: 'pkcs8-pem',
+                password: password,
+            }
+        )
     }
 
     /**
