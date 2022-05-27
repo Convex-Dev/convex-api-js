@@ -70,9 +70,17 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported"><a href="../interfaces/_utils_.iwordarray.html" class="tsd-kind-icon">IWord<wbr>Array</a></li>
+							</ul>
+						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#bytearraytowordarray" class="tsd-kind-icon">byte<wbr>Array<wbr>ToWord<wbr>Array</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#hextobytes" class="tsd-kind-icon">hex<wbr>ToBytes</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#isaccount" class="tsd-kind-icon">is<wbr>Account</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#isaddress" class="tsd-kind-icon">is<wbr>Address</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#ispublickey" class="tsd-kind-icon">is<wbr>Public<wbr>Key</a></li>
@@ -81,6 +89,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#remove0xprefix" class="tsd-kind-icon">remove0x<wbr>Prefix</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#toaddress" class="tsd-kind-icon">to<wbr>Address</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#topublickeychecksum" class="tsd-kind-icon">to<wbr>Public<wbr>Key<wbr>Checksum</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_.html#wordarraytobytearray" class="tsd-kind-icon">word<wbr>Array<wbr>ToByte<wbr>Array</a></li>
 							</ul>
 						</section>
 					</div>
@@ -88,6 +97,52 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="bytearraytowordarray" class="tsd-anchor"></a>
+					<h3>byte<wbr>Array<wbr>ToWord<wbr>Array</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">byte<wbr>Array<wbr>ToWord<wbr>Array<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_utils_.iwordarray.html" class="tsd-signature-type">IWordArray</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L182">src/Utils.ts:182</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_utils_.iwordarray.html" class="tsd-signature-type">IWordArray</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="hextobytes" class="tsd-anchor"></a>
+					<h3>hex<wbr>ToBytes</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">hex<wbr>ToBytes<span class="tsd-signature-symbol">(</span>hex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L15">src/Utils.ts:15</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>hex: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="isaccount" class="tsd-anchor"></a>
 					<h3>is<wbr>Account</h3>
@@ -98,7 +153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L38">src/Utils.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L59">src/Utils.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -131,7 +186,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L19">src/Utils.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L40">src/Utils.ts:40</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -164,7 +219,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L128">src/Utils.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L147">src/Utils.ts:147</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -196,7 +251,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L143">src/Utils.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L162">src/Utils.ts:162</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -228,7 +283,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L72">src/Utils.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L93">src/Utils.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -260,7 +315,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L87">src/Utils.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L108">src/Utils.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -292,7 +347,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L50">src/Utils.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L71">src/Utils.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -324,7 +379,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/f2d7371/src/Utils.ts#L104">src/Utils.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L125">src/Utils.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -345,6 +400,29 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 							<p>Checksum upper/lower case hex values</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="wordarraytobytearray" class="tsd-anchor"></a>
+					<h3>word<wbr>Array<wbr>ToByte<wbr>Array</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">word<wbr>Array<wbr>ToByte<wbr>Array<span class="tsd-signature-symbol">(</span>wordArray<span class="tsd-signature-symbol">: </span><a href="../interfaces/_utils_.iwordarray.html" class="tsd-signature-type">IWordArray</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/Convex-Dev/convex-api-js/blob/fe72708/src/Utils.ts#L170">src/Utils.ts:170</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>wordArray: <a href="../interfaces/_utils_.iwordarray.html" class="tsd-signature-type">IWordArray</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Uint8Array</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -387,6 +465,15 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../interfaces/_utils_.iwordarray.html" class="tsd-kind-icon">IWord<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_.html#bytearraytowordarray" class="tsd-kind-icon">byte<wbr>Array<wbr>ToWord<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_.html#hextobytes" class="tsd-kind-icon">hex<wbr>ToBytes</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_.html#isaccount" class="tsd-kind-icon">is<wbr>Account</a>
 					</li>
@@ -410,6 +497,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_.html#topublickeychecksum" class="tsd-kind-icon">to<wbr>Public<wbr>Key<wbr>Checksum</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_.html#wordarraytobytearray" class="tsd-kind-icon">word<wbr>Array<wbr>ToByte<wbr>Array</a>
 					</li>
 				</ul>
 			</nav>
