@@ -12,14 +12,8 @@ import { randomBytes } from 'crypto'
 import { API, KeyPair, Account } from '../../src'
 import { isAddress, toAddress } from '../../src/Utils'
 
-const PRIVATE_TEST_KEY_TEXT = `
------BEGIN ENCRYPTED PRIVATE KEY-----
-MIGbMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAi3qm1zgjCO5gICCAAw
-DAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEENjvj1nzc0Qy22L+Zi+n7yIEQMLW
-o++Jzwlcg3PbW1Y2PxicdFHM3dBOgTWmGsvfZiLhSxTluXTNRCZ8ZLL5pi7JWtCl
-JAr4iFzPLkM18YEP2ZE=
------END ENCRYPTED PRIVATE KEY-----
-`
+
+const PRIVATE_ENCRYPTED_KEY = 'U2FsdGVkX1+zZPlLL1zR8ac9kCp+lHWGsjpUwBINwhpnTJWlu4TctG/Zha/8Mx0ZXjMbb73KZN+N/pBawfTmmw=='
 
 const PRIVATE_TEST_KEY_PASSWORD = 'secret'
 
@@ -29,6 +23,7 @@ const TOPUP_AMOUNT = 10000000
 describe('API Class', () => {
     describe('requestFunds', async () => {
         it('should request funds from a new account', async () => {
+
             const convex = API.create(CONVEX_URL)
             const keyPair = await KeyPair.create()
             const account = await convex.createAccount(keyPair)
@@ -39,7 +34,7 @@ describe('API Class', () => {
 
         it('should request funds from the test account', async () => {
             const convex = API.create(CONVEX_URL)
-            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             const account = await convex.createAccount(importKeyPair)
             const amount = 1000000
             const result = await convex.requestFunds(amount, account)
@@ -58,7 +53,7 @@ describe('API Class', () => {
 
         it('should return a valid checksum address from a query', async () => {
             const convex = API.create(CONVEX_URL)
-            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             const account = await convex.createAccount(importKeyPair)
             const address = account.address
             const result = await convex.query(`(address #${address})`, account)
@@ -103,7 +98,7 @@ describe('API Class', () => {
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.topupAccount(account)
         })
@@ -151,7 +146,7 @@ describe('API Class', () => {
         let functionAddress
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.topupAccount(account)
             functionName = 'test-storage'
@@ -204,7 +199,7 @@ describe('API Class', () => {
         let accountName
         before( async () => {
             convex = API.create(CONVEX_URL)
-            importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             accountName = 'test.convex-api.' + randomBytes(4).toString('hex')
         })
         it('should fail to reslove a new named account',  async() => {
@@ -224,7 +219,7 @@ describe('API Class', () => {
         let newAccount: Account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             accountName = 'test.convex-api.' + randomBytes(4).toString('hex')
         })
         it('should setup and setup/create a new named account',  async() => {
@@ -278,7 +273,7 @@ describe('API Class', () => {
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.requestFunds(TOPUP_AMOUNT, account)
         })
@@ -300,7 +295,7 @@ describe('API Class', () => {
         let accountFrom
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             accountFrom = await convex.createAccount(importKeyPair)
             await convex.topupAccount(accountFrom)
         })
@@ -322,7 +317,7 @@ describe('API Class', () => {
         let account
         before( async () => {
             convex = API.create(CONVEX_URL)
-            const importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            const importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
             account = await convex.createAccount(importKeyPair)
             await convex.topupAccount(account)
         })
@@ -348,7 +343,7 @@ describe('API Class', () => {
         let importKeyPair
         before( async () => {
             convex = API.create(CONVEX_URL)
-            importKeyPair = await KeyPair.importFromString(PRIVATE_TEST_KEY_TEXT, PRIVATE_TEST_KEY_PASSWORD)
+            importKeyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
         })
         it('should run multiple createAccount test', async () => {
             const requestCount = 20

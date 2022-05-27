@@ -4,23 +4,28 @@
  *
  */
 
-import { SHA3 } from 'sha3'
+import cryptojs from 'crypto-js'
+import { sha3_256 } from 'js-sha3'
 import { Account } from './Account'
 
+interface IWordArray {
+    words: Uint32Array
+    sigBytes: number
+}
 export function hexToBytes(hex: string): Uint8Array {
-  if (typeof hex !== 'string') {
-    throw new TypeError('hexToBytes: expected string, got ' + typeof hex);
-  }
-  if (hex.length % 2) throw new Error('hexToBytes: received invalid unpadded hex');
-  const array = new Uint8Array(hex.length / 2);
-  for (let i = 0; i < array.length; i++) {
-    const j = i * 2;
-    const hexByte = hex.slice(j, j + 2);
-    const byte = Number.parseInt(hexByte, 16);
-    if (Number.isNaN(byte) || byte < 0) throw new Error('Invalid byte sequence');
-    array[i] = byte;
-  }
-  return array;
+    if (typeof hex !== 'string') {
+        throw new TypeError('hexToBytes: expected string, got ' + typeof hex)
+    }
+    if (hex.length % 2) throw new Error('hexToBytes: received invalid unpadded hex')
+    const array = new Uint8Array(hex.length / 2)
+    for (let i = 0; i < array.length; i++) {
+        const j = i * 2
+        const hexByte = hex.slice(j, j + 2)
+        const byte = Number.parseInt(hexByte, 16)
+        if (Number.isNaN(byte) || byte < 0) throw new Error('Invalid byte sequence')
+        array[i] = byte
+    }
+    return array
 }
 
 /**
@@ -120,9 +125,7 @@ export function remove0xPrefix(value: string): string {
 export function toPublicKeyChecksum(publicKey: string): string {
     const publicKeyClean = remove0xPrefix(publicKey).toLowerCase()
     let result = '0x'
-    const hash = new SHA3(256)
-    hash.update(Buffer.from(publicKeyClean, 'hex'))
-    const hashData = hash.digest('hex')
+    const hashData = sha3_256(hexToBytes(publicKeyClean))
     for (let index = 0; index < hashData.length && index < publicKeyClean.length; index++) {
         if (parseInt(hashData.charAt(index), 16) > 7) {
             result = result.concat(publicKeyClean.charAt(index).toUpperCase())
@@ -158,4 +161,29 @@ export function isPublicKey(publicKey: string): boolean {
  */
 export function isPublicKeyChecksum(publicKey: string): boolean {
     return remove0xPrefix(publicKey) && remove0xPrefix(publicKey) == remove0xPrefix(toPublicKeyChecksum(publicKey))
+}
+
+/*
+ * Code originally copied from crypto-js for conversion Latin1 to and from WordArray
+ *
+ */
+export function wordArrayToByteArray(wordArray: IWordArray): Uint8Array {
+    const words = wordArray.words
+    const sigBytes = wordArray.sigBytes
+    // Convert from WordArray object to Uint8Array
+    const result = new Uint8Array(sigBytes)
+    for (let i = 0; i < sigBytes; i++) {
+        const value = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff
+        result[i] = value
+    }
+    return result
+}
+
+export function byteArrayToWordArray(data: Uint8Array): IWordArray {
+    // Convert Uint8Array to a word array object
+    const words = []
+    for (let i = 0; i < data.length; i++) {
+        words[i >>> 2] |= (data[i] & 0xff) << (24 - (i % 4) * 8)
+    }
+    return new cryptojs.lib.WordArray.init(words)
 }
