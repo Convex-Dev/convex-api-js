@@ -6,9 +6,9 @@
 */
 
 import * as ed25519 from '@noble/ed25519'
-import { composePrivateKey, decomposePrivateKey } from 'crypto-key-composer'
+// import { composePrivateKey, decomposePrivateKey } from 'crypto-key-composer'
 
-import { toPublicKeyChecksum, remove0xPrefix } from './Utils'
+import { toPublicKeyChecksum, remove0xPrefix, hexToBytes } from './Utils'
 
 export class KeyPair {
     readonly privateKey: Uint8Array // private key data
@@ -48,6 +48,7 @@ export class KeyPair {
      *
      */
     public static async importFromString(text: string, password: string, publicKeyText?: string): Promise<KeyPair> {
+        /*
         const privateKeyData = decomposePrivateKey(text, {
             format: 'pkcs8-pem',
             password: password,
@@ -57,6 +58,9 @@ export class KeyPair {
         if (publicKeyText) {
             publicKey = await ed25519.getPublicKey(privateKey)
         }
+        */
+        const privateKey = hexToBytes(text)
+        const publicKey = await ed25519.getPublicKey(privateKey)
         return new KeyPair(publicKey, privateKey)
     }
 
@@ -87,6 +91,8 @@ export class KeyPair {
      *
      */
     public exportToString(password: string): string {
+        return  ed25519.utils.bytesToHex(this.privateKey)
+        /*
         return composePrivateKey(
             {
                 format: 'pkcs8-pem',
@@ -102,6 +108,7 @@ export class KeyPair {
                 password: password,
             }
         )
+        */
     }
 
     /**

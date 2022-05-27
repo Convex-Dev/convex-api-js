@@ -7,6 +7,22 @@
 import { SHA3 } from 'sha3'
 import { Account } from './Account'
 
+export function hexToBytes(hex: string): Uint8Array {
+  if (typeof hex !== 'string') {
+    throw new TypeError('hexToBytes: expected string, got ' + typeof hex);
+  }
+  if (hex.length % 2) throw new Error('hexToBytes: received invalid unpadded hex');
+  const array = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < array.length; i++) {
+    const j = i * 2;
+    const hexByte = hex.slice(j, j + 2);
+    const byte = Number.parseInt(hexByte, 16);
+    if (Number.isNaN(byte) || byte < 0) throw new Error('Invalid byte sequence');
+    array[i] = byte;
+  }
+  return array;
+}
+
 /**
  * Return true if the number or string is an address value. This does not check the network for a valid
  * address, but just checks to see if it is a number
