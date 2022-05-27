@@ -33,6 +33,8 @@ const PRIVATE_TEST_KEY_PASSWORD = 'secret'
 const SIGN_HASH_TEXT = '5bb1ce718241bfec110552b86bb7cccf0d95b8a5f462fbf6dff7c48543622ba5'
 const SIGN_TEXT = '0x7eceffab47295be3891ea745838a99102bfaf525ec43632366c7ec3f54db4822b5d581573aecde94c420554f963baebbf412e4304ad8636886ddfa7b1049f70e'
 
+const TEST_KEY_FILE = 'test/resources/test_keyfile.dat'
+
 describe('KeyPair class tests', () => {
     describe('Key pair from PEM to new format', async () => {
         it('should import and export a new encrypted format', async () => {
@@ -74,7 +76,7 @@ describe('KeyPair class tests', () => {
         })
     })
 
-    describe('Export keys', () => {
+    describe('Import and Export keys', () => {
         it('should export/import key pair key too text', async () => {
             const keyPair = await KeyPair.create()
             const text = keyPair.exportToString(PRIVATE_TEST_KEY_PASSWORD)
@@ -93,6 +95,13 @@ describe('KeyPair class tests', () => {
             const keyPairSaved = await KeyPair.importFromFile(filename, PRIVATE_TEST_KEY_PASSWORD)
             assert.equal(keyPairSaved.publicKeyAPI, keyPair.publicKeyAPI)
             fs.unlinkSync(filename)
+        })
+        it('should import key from test key file', async () => {
+            const keyPair = await KeyPair.importFromString(PRIVATE_ENCRYPTED_KEY, PRIVATE_TEST_KEY_PASSWORD)
+            assert(keyPair)
+
+            const keyPairSaved = await KeyPair.importFromFile(TEST_KEY_FILE, PRIVATE_TEST_KEY_PASSWORD)
+            assert.equal(keyPairSaved.publicKeyAPI, keyPair.publicKeyAPI)
         })
     })
     describe('Sign text', () => {
