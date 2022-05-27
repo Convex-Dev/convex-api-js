@@ -6,9 +6,9 @@
 */
 
 import * as ed25519 from '@noble/ed25519'
-import { composePrivateKey, decomposePrivateKey } from 'crypto-key-composer'
+import cryptojs from 'crypto-js'
 
-import { toPublicKeyChecksum, remove0xPrefix } from './Utils'
+import { toPublicKeyChecksum, remove0xPrefix, byteArrayToWordArray, wordArrayToByteArray } from './Utils'
 
 export class KeyPair {
     readonly privateKey: Uint8Array // private key data
@@ -31,10 +31,13 @@ export class KeyPair {
      */
     public static async create(): Promise<KeyPair> {
         const privateKey = ed25519.utils.randomPrivateKey()
+        return await KeyPair.createFromPrivateKey(privateKey)
+    }
+
+    public static async createFromPrivateKey(privateKey: Uint8Array): Promise<KeyPair> {
         const publicKey = await ed25519.getPublicKey(privateKey)
         return new KeyPair(publicKey, privateKey)
     }
-
     /**
      * Imports a keypair from a PKCS8 fromated text string. You need to pass the correct password, to decrypt
      * the private key stored in the text string.
@@ -47,17 +50,10 @@ export class KeyPair {
      * @returns an KeyPair object with the private and public key pairs.
      *
      */
-    public static async importFromString(text: string, password: string, publicKeyText?: string): Promise<KeyPair> {
-        const privateKeyData = decomposePrivateKey(text, {
-            format: 'pkcs8-pem',
-            password: password,
-        })
-        const privateKey = privateKeyData.keyData.seed
-        let publicKey = await ed25519.getPublicKey(privateKey)
-        if (publicKeyText) {
-            publicKey = await ed25519.getPublicKey(privateKey)
-        }
-        return new KeyPair(publicKey, privateKey)
+    public static async importFromString(text: string, password: string): Promise<KeyPair> {
+        const privateKeyWords = cryptojs.AES.decrypt(text, password, { format: cryptojs.format.OpenSSL })
+        const privateKey = wordArrayToByteArray(privateKeyWords)
+        return await KeyPair.createFromPrivateKey(privateKey)
     }
 
     /**
@@ -87,21 +83,8 @@ export class KeyPair {
      *
      */
     public exportToString(password: string): string {
-        return composePrivateKey(
-            {
-                format: 'pkcs8-pem',
-                keyAlgorithm: {
-                    id: 'ed25519',
-                },
-                keyData: {
-                    seed: this.privateKey,
-                },
-            },
-            {
-                format: 'pkcs8-pem',
-                password: password,
-            }
-        )
+        const data = cryptojs.AES.encrypt(byteArrayToWordArray(this.privateKey), password, { format: cryptojs.format.OpenSSL })
+        return data.toString()
     }
 
     /**
