@@ -1,5 +1,8 @@
 # Change Log
 
+## Release 0.2.12
++   Export new util functions
+
 ## Release 0.2.11
 +   can import/export private key from openssl standard encrypted base64 format
 +   At the moment PEM PKCS8 format not supported

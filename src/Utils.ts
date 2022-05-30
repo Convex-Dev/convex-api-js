@@ -152,7 +152,7 @@ export function isPublicKeyChecksum(publicKey: string): boolean {
  * Returns true if the string is a hex string
  *
  */
-export function isHexSring(hex: string): boolean {
+export function isHexString(hex: string): boolean {
     return hex !== null && hex.match(/^[0-9a-f]+$/gi) !== null
 }
 
@@ -161,7 +161,7 @@ export function isHexSring(hex: string): boolean {
  * characters from 0 - 9 and a-f
  */
 export function hexToByteArray(hex: string): Uint8Array {
-    if (!isHexSring(hex)) {
+    if (!isHexString(hex)) {
         throw TypeError(`the hex string ${hex} contains non hex characters`)
     }
     const pairs = hex.match(/[0-9a-f]{2}/gi)

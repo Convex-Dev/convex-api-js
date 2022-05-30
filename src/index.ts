@@ -21,5 +21,9 @@ export {
     prefix0x,
     remove0xPrefix,
     toPublicKeyChecksum,
+    isHexString,
+    hexToByteArray,
+    wordArrayToByteArray,
+    byteArrayToWordArray,
 } from './Utils'
 export { Registry } from './Registry'
