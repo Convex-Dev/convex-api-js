@@ -1,5 +1,10 @@
 # Change Log
 
+## Release 0.2.11
++   can import/export private key from openssl standard encrypted base64 format
++   At the moment PEM PKCS8 format not supported
++   utils function 'hexToByteArray', 'isHexString', 'wordArrayToByteArray' and 'byteArrayToWordArray' to support the new crypto library
+
 ## Release 0.2.10
 +   removed cypto, pem-file packages and replaced with @noble/ed25519 and crypto-key-composer
 

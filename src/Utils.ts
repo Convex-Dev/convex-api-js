@@ -12,21 +12,7 @@ interface IWordArray {
     words: Uint32Array
     sigBytes: number
 }
-export function hexToBytes(hex: string): Uint8Array {
-    if (typeof hex !== 'string') {
-        throw new TypeError('hexToBytes: expected string, got ' + typeof hex)
-    }
-    if (hex.length % 2) throw new Error('hexToBytes: received invalid unpadded hex')
-    const array = new Uint8Array(hex.length / 2)
-    for (let i = 0; i < array.length; i++) {
-        const j = i * 2
-        const hexByte = hex.slice(j, j + 2)
-        const byte = Number.parseInt(hexByte, 16)
-        if (Number.isNaN(byte) || byte < 0) throw new Error('Invalid byte sequence')
-        array[i] = byte
-    }
-    return array
-}
+
 
 /**
  * Return true if the number or string is an address value. This does not check the network for a valid
@@ -125,7 +111,7 @@ export function remove0xPrefix(value: string): string {
 export function toPublicKeyChecksum(publicKey: string): string {
     const publicKeyClean = remove0xPrefix(publicKey).toLowerCase()
     let result = '0x'
-    const hashData = sha3_256(hexToBytes(publicKeyClean))
+    const hashData = sha3_256(hexToByteArray(publicKeyClean))
     for (let index = 0; index < hashData.length && index < publicKeyClean.length; index++) {
         if (parseInt(hashData.charAt(index), 16) > 7) {
             result = result.concat(publicKeyClean.charAt(index).toUpperCase())
@@ -163,8 +149,33 @@ export function isPublicKeyChecksum(publicKey: string): boolean {
     return remove0xPrefix(publicKey) && remove0xPrefix(publicKey) == remove0xPrefix(toPublicKeyChecksum(publicKey))
 }
 
+/**
+ * Returns true if the string is a hex string
+ *
+ */
+export function isHexSring(hex: string): boolean {
+    return hex !== null && hex.match(/^[0-9a-f]+$/gi) !== null
+}
+
+/**
+ * Returns a Uint8Array of a hex string. The hex string must only contain
+ * characters from 0 - 9 and a-f
+ */
+export function hexToByteArray(hex: string): Uint8Array {
+    if ( !isHexSring(hex)) {
+        throw TypeError(`the hex string ${hex} contains non hex characters`)
+    }
+    const pairs = hex.match(/[0-9a-f]{2}/ig)
+    const values = pairs.map((p) => {
+        return parseInt(p, 16)
+    })
+    return new Uint8Array(values)
+}
+
+
 /*
  * Code originally copied from crypto-js for conversion Latin1 to and from WordArray
+ * but changed to return/input Uint8Array
  *
  */
 export function wordArrayToByteArray(wordArray: IWordArray): Uint8Array {

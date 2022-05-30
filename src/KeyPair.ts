@@ -39,10 +39,10 @@ export class KeyPair {
         return new KeyPair(publicKey, privateKey)
     }
     /**
-     * Imports a keypair from a PKCS8 fromated text string. You need to pass the correct password, to decrypt
+     * Imports a keypair from a encrypted base64 text string. You need to pass the correct password, to decrypt
      * the private key stored in the text string.
      *
-     * @param text PKCS8 fromated text with the private key encrypted.
+     * @param text Encrpted base64 fromated text with the private key encrypted.
      * @param password Password to decrypt the private key.
      * @param publicKeyText Optional public key encoded in PEM format, if non provided, the public key
      * can be obtained from the private key.
@@ -57,7 +57,7 @@ export class KeyPair {
     }
 
     /**
-     * Imports a private key file. The key file is in the format as PKCS8 text. The private key is encrypted.
+     * Imports a private key file. The key file is in the format as a encrpted base64 text. The private key is encrypted.
      *
      * @param filename Filename containing the encrypted private key.
      * @param password Password to decrypt the private key.
@@ -75,11 +75,11 @@ export class KeyPair {
     }
 
     /**
-     * Export the keypair to a PKCS8 fromatted text string. The private key is encrypted using the provided password.
+     * Export the keypair to a encrypt base64 fromatted text string. The private key is encrypted using the provided password.
      *
      * @param password Password to encrypt the private key.
      *
-     * @returns The encrpted private key as a PKCS8 formatted string.
+     * @returns The encrpted private key as a encrypted base64 formatted string.
      *
      */
     public exportToString(password: string): string {
@@ -88,7 +88,7 @@ export class KeyPair {
     }
 
     /**
-     * Same as `exportToText` this writes the exported tex to a file.
+     * Same as `exportToText` this writes the exported text to a file.
      *
      * @param password Password to encrypt the private key.
      *

@@ -4,7 +4,7 @@
 
 */
 
-import { assert } from 'chai'
+import { assert, expect } from 'chai'
 import { randomInt, randomBytes } from 'crypto'
 
 import { Account } from '../../src/Account'
@@ -13,6 +13,7 @@ import {
     isAddress,
     isPublicKey,
     isPublicKeyChecksum,
+    hexToByteArray,
     prefix0x,
     remove0xPrefix,
     toAddress,
@@ -22,6 +23,12 @@ import {
 } from '../../src/Utils'
 
 const PUBLIC_ADDRESS = '0x5288fec4153b702430771dfac8aed0b21cafca4344dae0d47b97f0bf532b3306'
+const PUBLIC_ADDRESS_BYTES = [
+    0x52, 0x88, 0xFE, 0xC4, 0x15, 0x3B, 0x70, 0x24,
+    0x30, 0x77, 0x1D, 0xFA, 0xC8, 0xAE, 0xD0, 0xB2,
+    0x1C, 0xAF, 0xCA, 0x43, 0x44, 0xDA, 0xE0, 0xD4,
+    0x7B, 0x97, 0xF0, 0xBF, 0x53, 0x2B, 0x33, 0x06
+]
 const PUBLIC_ADDRESS_CHECHKSUM = '0x5288Fec4153b702430771DFAC8AeD0B21CAFca4344daE0d47B97F0bf532b3306'
 
 
@@ -128,6 +135,18 @@ describe('Utils module', () => {
         })
     })
 
+    describe('hexToBytes', () => {
+        it('should convert a hex string to Uint8Array', () => {
+            expect(() => hexToByteArray(PUBLIC_ADDRESS)).to.throw(TypeError, /contains non hex characters/)
+
+            let result = hexToByteArray(remove0xPrefix(PUBLIC_ADDRESS))
+            assert.equal(Uint8Array.from(PUBLIC_ADDRESS_BYTES).toString(), result.toString())
+
+            result = hexToByteArray(remove0xPrefix(PUBLIC_ADDRESS_CHECHKSUM))
+            assert.equal(Uint8Array.from(PUBLIC_ADDRESS_BYTES).toString(), result.toString())
+
+        })
+    })
     describe('Convert Uint8Array to and from WordArray for crypto-js', () => {
         it('should convert to word array', () => {
             const testLength = 64
