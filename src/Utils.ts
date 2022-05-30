@@ -13,7 +13,6 @@ interface IWordArray {
     sigBytes: number
 }
 
-
 /**
  * Return true if the number or string is an address value. This does not check the network for a valid
  * address, but just checks to see if it is a number
@@ -162,16 +161,15 @@ export function isHexSring(hex: string): boolean {
  * characters from 0 - 9 and a-f
  */
 export function hexToByteArray(hex: string): Uint8Array {
-    if ( !isHexSring(hex)) {
+    if (!isHexSring(hex)) {
         throw TypeError(`the hex string ${hex} contains non hex characters`)
     }
-    const pairs = hex.match(/[0-9a-f]{2}/ig)
+    const pairs = hex.match(/[0-9a-f]{2}/gi)
     const values = pairs.map((p) => {
         return parseInt(p, 16)
     })
     return new Uint8Array(values)
 }
-
 
 /*
  * Code originally copied from crypto-js for conversion Latin1 to and from WordArray
