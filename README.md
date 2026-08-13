@@ -1,3 +1,14 @@
+# ⚠️ Retired
+
+**This repository is archived and no longer maintained.**
+
+The JavaScript/TypeScript client library for Convex is now
+**[`@convex-world/convex-ts`](https://github.com/Convex-Dev/convex.ts)**
+([Convex-Dev/convex.ts](https://github.com/Convex-Dev/convex.ts)). This library
+predates the current CNS and REST API and no longer works against modern peers.
+
+---
+
 
 # convex-api-js
 
